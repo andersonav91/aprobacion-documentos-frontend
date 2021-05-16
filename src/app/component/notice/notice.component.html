@@ -1,0 +1,6 @@
+<div class="overlay" *ngIf="(noticeService.message | async).active" class="notice"
+     [ngClass]="{'notice-success': (noticeService.message | async).type === 'success',
+                'notice-error' : (noticeService.message | async).type === 'error' }">
+  {{(noticeService.message | async).content}}
+</div>
+

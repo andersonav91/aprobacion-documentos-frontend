@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app/app.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './login/login.component';
+
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { PortalModule } from '@angular/cdk/portal';
@@ -39,7 +39,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 
+import { AppComponent } from "./component/app/app.component";
+import { LoginComponent } from "./component/login/login.component";
+import { CustomHttpInterceptor } from "./interceptor/custom.http.interceptor";
+import { NoticeComponent } from './component/notice/notice.component';
+import { LoadingComponent } from './component/loading/loading.component';
 
 const materialModules = [
   CdkTreeModule,
@@ -79,7 +85,9 @@ const materialModules = [
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    NoticeComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -88,9 +96,14 @@ const materialModules = [
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    ...materialModules
+    HttpClientModule,
+    ...materialModules,
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: CustomHttpInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent],
   exports: [
     ...materialModules
