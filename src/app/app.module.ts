@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { PortalModule } from '@angular/cdk/portal';
@@ -40,12 +39,17 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import {JwtModule, JwtModuleOptions} from "@auth0/angular-jwt";
 
 import { AppComponent } from "./component/app/app.component";
 import { LoginComponent } from "./component/login/login.component";
-import { CustomHttpInterceptor } from "./interceptor/custom.http.interceptor";
 import { NoticeComponent } from './component/notice/notice.component';
 import { LoadingComponent } from './component/loading/loading.component';
+import { HomeComponent } from './component/home/home.component';
+
+import { CustomHttpInterceptor } from "./interceptor/custom.http.interceptor";
+
+import { UserGuard } from "./guard/user.guard";
 
 const materialModules = [
   CdkTreeModule,
@@ -87,7 +91,8 @@ const materialModules = [
     AppComponent,
     LoginComponent,
     NoticeComponent,
-    LoadingComponent
+    LoadingComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -97,13 +102,14 @@ const materialModules = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    JwtModule.forRoot({}),
     ...materialModules,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: CustomHttpInterceptor,
     multi: true
-  }],
+  }, UserGuard],
   bootstrap: [AppComponent],
   exports: [
     ...materialModules

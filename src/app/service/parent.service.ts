@@ -3,12 +3,16 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import {NoticeService} from "./notice.service";
+import * as SecureLS from 'secure-ls'
+
 
 
 export class ParentService {
 
   private apiEndpointUrl: string = environment.apiEndpointProtocol + "://" +
     environment.apiEndpointUrl;
+
+  protected ls = new SecureLS({});
 
   constructor(
     public httpClient: HttpClient,
