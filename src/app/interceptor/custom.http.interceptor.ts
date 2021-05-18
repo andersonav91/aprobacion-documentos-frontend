@@ -9,10 +9,11 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 
   constructor(private loadingService: LoadingService) { }
 
+  /**
+   * Shows the loading indicator in every http request.
+   */
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
     this.loadingService.show();
-
     return next
       .handle(req)
       .pipe(

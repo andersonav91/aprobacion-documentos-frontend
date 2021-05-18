@@ -18,7 +18,7 @@ export class UserService extends ParentService {
   }
 
   /**
-   * Constructs a `POST` request that consumes the API.
+   * Constructs a `POST` request that consumes the login API.
    */
   login(data: object) {
     this.getMethod('user/login').subscribe((data: any) => console.log(data));
@@ -32,5 +32,4 @@ export class UserService extends ParentService {
     return false;
     // return !this.jwtHelperService.isTokenExpired(token);
   }
-
 }

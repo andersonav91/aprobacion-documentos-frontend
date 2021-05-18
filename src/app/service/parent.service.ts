@@ -33,6 +33,9 @@ export class ParentService {
     return this.httpClient.post(this.apiEndpointUrl + path, body, options).pipe(catchError(error => this.handleError(error,this.noticeService)));
   }
 
+  /**
+   * Catch the error message from HttpService and display it as a notice message.
+   */
   protected handleError(error: HttpErrorResponse, noticeService: NoticeService) {
     let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {

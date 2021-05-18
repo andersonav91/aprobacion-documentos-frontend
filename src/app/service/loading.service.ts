@@ -12,10 +12,16 @@ export class LoadingService {
     this.visibility = new BehaviorSubject(false);
   }
 
+  /**
+   * Shows the loading indicator.
+   */
   show() {
     this.visibility.next(true);
   }
 
+  /**
+   * Hides the loading indicator.
+   */
   hide() {
     this.visibility.next(false);
   }

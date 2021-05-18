@@ -7,6 +7,9 @@ export class UserGuard implements CanActivate {
 
   constructor(private userService: UserService, private router: Router) {}
 
+  /**
+   * Validates the current session and redirects if it is not valid.
+   */
   canActivate(): boolean {
     if (!this.userService.isAuthenticated()) {
       this.router.navigate(['login']);
