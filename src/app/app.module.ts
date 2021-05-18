@@ -55,6 +55,7 @@ import { CustomHttpInterceptor } from "./interceptor/custom.http.interceptor";
 
 // Guards
 import { UserGuard } from "./guard/user.guard";
+import { SidebarComponent } from './component/sidebar/sidebar.component';
 
 const materialModules = [
   CdkTreeModule,
@@ -97,7 +98,8 @@ const materialModules = [
     LoginComponent,
     NoticeComponent,
     LoadingComponent,
-    HomeComponent
+    HomeComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

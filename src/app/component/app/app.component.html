@@ -2,7 +2,7 @@
 
 <mat-toolbar color="primary" class="app-header" *ngIf="userService.isAuthenticated()">
   <mat-toolbar-row>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="showAndHideSidebar()">
       <mat-icon>menu</mat-icon>
     </button>
     <span class="toolbar-title">Aprobación de Documentos</span>

@@ -1,5 +1,6 @@
 import {Component, Output} from '@angular/core';
 import {UserService} from "../../service/user.service";
+import {SidebarService} from "../../service/sidebar.service";
 
 @Component({
   selector: 'app-root',
@@ -9,15 +10,22 @@ import {UserService} from "../../service/user.service";
 export class AppComponent {
 
   private title: string = 'Aprobación Documentos';
+  public showSidebar: boolean = false;
 
   constructor(
-    public userService: UserService
+    public userService: UserService,
+    public sidebarService: SidebarService
   ) {
 
   }
 
-  logout() {
+  logout() {}
 
+  showAndHideSidebar() {
+    this.sidebarService.visibility.subscribe(value => {
+        this.showSidebar = value;
+    });
+    this.showSidebar ? this.sidebarService.hide() : this.sidebarService.show();
   }
 
 }
