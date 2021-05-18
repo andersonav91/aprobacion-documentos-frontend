@@ -6,11 +6,8 @@ import { NoticeService } from "../../service/notice.service";
   templateUrl: './notice.component.html',
   styleUrls: ['./notice.component.scss']
 })
-export class NoticeComponent implements OnInit {
+export class NoticeComponent {
 
   constructor(public noticeService: NoticeService) { }
-
-  ngOnInit(): void {
-  }
 
 }

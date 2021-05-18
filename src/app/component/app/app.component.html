@@ -1,8 +1,14 @@
 <app-notice></app-notice>
 
-<mat-toolbar color="primary" class="app-header" *ngIf="false">
+<mat-toolbar color="primary" class="app-header" *ngIf="userService.isAuthenticated()">
   <mat-toolbar-row>
-    <span>Toolbar</span>
+    <button mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="toolbar-title">Aprobación de Documentos</span>
+    <div fxFlex fxLayout fxLayoutAlign ="flex-end">
+      <span class="user-data"> Usuario Admin (Admin) </span>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>
 

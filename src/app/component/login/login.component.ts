@@ -7,7 +7,7 @@ import {UserService} from "../../service/user.service";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   public loginForm: FormGroup;
 
@@ -16,9 +16,6 @@ export class LoginComponent implements OnInit {
     private userService: UserService
   ) {
     this.loginForm = this.createLoginForm();
-  }
-
-  ngOnInit(): void {
   }
 
   createLoginForm() {
