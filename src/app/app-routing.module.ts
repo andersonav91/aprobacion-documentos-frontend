@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from "./component/login/login.component";
 import { HomeComponent } from "./component/home/home.component";
-import { UserGuard } from "./guard/user.guard";
+import { AuthGuard } from "./guard/auth.guard";
 
 
 const routes: Routes = [
@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    canActivate: [UserGuard]
+    canActivate: [AuthGuard]
   },
   { path: '**', redirectTo: '' }
 

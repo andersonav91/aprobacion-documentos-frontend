@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import * as SecureLS from 'secure-ls';
 
 // Routes
 import { AppRoutingModule } from './app-routing.module';
@@ -54,8 +55,10 @@ import { HomeComponent } from './component/home/home.component';
 import { CustomHttpInterceptor } from "./interceptor/custom.http.interceptor";
 
 // Guards
-import { UserGuard } from "./guard/user.guard";
+import { AuthGuard } from "./guard/auth.guard";
 import { SidebarComponent } from './component/sidebar/sidebar.component';
+
+let ls = new SecureLS({});
 
 const materialModules = [
   CdkTreeModule,
@@ -92,6 +95,10 @@ const materialModules = [
   MatTooltipModule
 ];
 
+export function tokenGetter() {
+  return ls.get('token');
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -109,14 +116,20 @@ const materialModules = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    JwtModule.forRoot({}),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('token');
+        }
+      }
+    }),
     ...materialModules,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: CustomHttpInterceptor,
     multi: true
-  }, UserGuard],
+  }, AuthGuard],
   bootstrap: [AppComponent],
   exports: [
     ...materialModules

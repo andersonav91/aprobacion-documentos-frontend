@@ -29,4 +29,5 @@ export class NoticeService {
   hide() {
     this.message.next({content: '', type: '', active: false});
   }
+
 }

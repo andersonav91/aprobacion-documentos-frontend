@@ -1,6 +1,8 @@
-import {Component, Output} from '@angular/core';
-import {UserService} from "../../service/user.service";
-import {SidebarService} from "../../service/sidebar.service";
+import {Component, } from '@angular/core';
+import { SidebarService } from "../../service/sidebar.service";
+import { AuthService } from "../../service/auth.service";
+import * as SecureLS from 'secure-ls';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -13,10 +15,9 @@ export class AppComponent {
   public showSidebar: boolean = false;
 
   constructor(
-    public userService: UserService,
+    public authService: AuthService,
     public sidebarService: SidebarService
   ) {
-
   }
 
   logout() {}

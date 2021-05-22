@@ -1,16 +1,16 @@
-<app-notice></app-notice>
-
-<mat-toolbar color="primary" class="app-header" *ngIf="userService.isAuthenticated()">
+<mat-toolbar color="primary" class="app-header" *ngIf="authService.isAuthenticated()">
   <mat-toolbar-row>
     <button mat-icon-button (click)="showAndHideSidebar()">
       <mat-icon>menu</mat-icon>
     </button>
     <span class="toolbar-title">Aprobación de Documentos</span>
     <div fxFlex fxLayout fxLayoutAlign ="flex-end">
-      <span class="user-data"> Usuario Admin (Admin) </span>
+      <span class="user-data"> {{(authService.currentUser | async)?.name}} </span>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
+
+<app-notice></app-notice>
 
 <app-loading></app-loading>
 

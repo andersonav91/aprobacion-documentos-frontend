@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoadingService } from "../../service/loading.service";
 
 @Component({
@@ -8,6 +8,8 @@ import { LoadingService } from "../../service/loading.service";
 })
 export class LoadingComponent {
 
-  constructor(public loadingService: LoadingService) { }
+  constructor(
+    public loadingService: LoadingService
+  ) { }
 
 }
