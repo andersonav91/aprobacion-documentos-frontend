@@ -7,15 +7,15 @@
 
     <form class="login-form" [formGroup]="loginForm" (ngSubmit)="sendLoginForm()">
       <mat-card-content>
-        <mat-form-field class="example-full-width">
+        <mat-form-field class="field-full-width">
           <input matInput placeholder="Correo" formControlName="email">
+          <mat-error *ngIf="f.email.touched && f.email.invalid">Email es requerido.</mat-error>
         </mat-form-field>
-        <mat-error *ngIf="f.email.touched && f.email.invalid">Email es requerido.</mat-error>
-
-        <mat-form-field class="example-full-width">
+        <mat-form-field class="field-full-width">
           <input matInput placeholder="Contraseña" formControlName="password" type="password">
+          <mat-error *ngIf="f.password.touched && f.password.invalid">Contraseña es requerido.</mat-error>
         </mat-form-field>
-        <mat-error *ngIf="f.password.touched && f.password.invalid">Contraseña es requerido.</mat-error>
+
       </mat-card-content>
       <button mat-stroked-button color="primary" class="btn-block" type="submit" [disabled]="loginForm.invalid">Ingresar</button>
     </form>

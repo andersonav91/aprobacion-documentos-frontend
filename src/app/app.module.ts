@@ -56,7 +56,6 @@ import { CustomHttpInterceptor } from "./interceptor/custom.http.interceptor";
 
 // Guards
 import { AuthGuard } from "./guard/auth.guard";
-import { SidebarComponent } from './component/sidebar/sidebar.component';
 
 let ls = new SecureLS({});
 
@@ -105,8 +104,7 @@ export function tokenGetter() {
     LoginComponent,
     NoticeComponent,
     LoadingComponent,
-    HomeComponent,
-    SidebarComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,

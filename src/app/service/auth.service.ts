@@ -59,4 +59,14 @@ export class AuthService extends ParentService {
     return JSON.parse(this.ls.get("userData"));
   }
 
+  /**
+   * Logout the user from the app
+   */
+  logout() {
+    this.ls.remove("token");
+    this.ls.remove("userData");
+    this.setCurrentUser(new User());
+    this.router.navigate(['/login'])
+  }
+
 }
