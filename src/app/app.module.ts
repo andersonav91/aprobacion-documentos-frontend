@@ -118,9 +118,7 @@ export function tokenGetter() {
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => {
-          return localStorage.getItem('token');
-        }
+        tokenGetter: tokenGetter
       }
     }),
     ...materialModules,
