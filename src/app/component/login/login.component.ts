@@ -1,24 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {UserService} from "../../service/user.service";
+import { AuthService } from "../../service/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   public loginForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private authService: AuthService,
+    private router: Router
   ) {
+    if(this.authService.isAuthenticated()) {
+      this.router.navigate(['']);
+    }
     this.loginForm = this.createLoginForm();
-  }
-
-  ngOnInit(): void {
   }
 
   createLoginForm() {
@@ -29,7 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   sendLoginForm() {
-    this.userService.login({
+    this.authService.login({
       email: this.f.email.value,
       password: this.f.password.value,
     });

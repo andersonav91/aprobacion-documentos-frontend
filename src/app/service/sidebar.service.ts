@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoadingService {
+export class SidebarService {
 
   public visibility: BehaviorSubject<any>;
 
@@ -13,16 +13,17 @@ export class LoadingService {
   }
 
   /**
-   * Shows the loading indicator.
+   * Shows the sidebar.
    */
   show() {
     this.visibility.next(true);
   }
 
   /**
-   * Hides the loading indicator.
+   * Hides the sidebar.
    */
   hide() {
     this.visibility.next(false);
   }
+
 }

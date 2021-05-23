@@ -1,0 +1,61 @@
+ul {
+  list-style-type: none;
+}
+
+.sidenav-container {
+  height: 100%;
+}
+
+.user-data {
+  font-weight: normal;
+  font-size: 18px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.logout {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+mat-sidenav {
+  margin: 16px;
+  width: 200px;
+  border-right: none;
+  border-radius: 5px;
+  padding: 16px;
+  text-align: center;
+}
+
+.full-content {
+  height: calc(100vh - 40px);
+}
+
+.part-content {
+  height: calc(100vh - 100px);
+}
+
+.content-margin {
+  margin-left: 32px !important;
+}
+
+.content {
+  border-radius: 5px;
+  margin: 16px;
+  margin-left: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-sidenav-container-full {
+  height: calc(100vh);
+}
+
+.mat-list-text {
+  padding-left: 0 ! important;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content {
+  padding: 0px !important
+}

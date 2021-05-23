@@ -10,16 +10,9 @@ export class UserService extends ParentService {
 
   constructor(
     public httpClient: HttpClient,
-    public noticeService: NoticeService,
+    public noticeService: NoticeService
   ) {
     super(httpClient, noticeService);
-  }
-
-  /**
-   * Constructs a `POST` request that consumes the API.
-   */
-  login(data: object) {
-    this.getMethod('user/login').subscribe((data: any) => console.log(data));
   }
 
 }

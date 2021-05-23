@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import * as SecureLS from 'secure-ls';
 
+// Routes
 import { AppRoutingModule } from './app-routing.module';
 
+// Modules
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { PortalModule } from '@angular/cdk/portal';
@@ -40,12 +42,22 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { JwtModule, JwtModuleOptions } from "@auth0/angular-jwt";
 
+// Components
 import { AppComponent } from "./component/app/app.component";
 import { LoginComponent } from "./component/login/login.component";
-import { CustomHttpInterceptor } from "./interceptor/custom.http.interceptor";
 import { NoticeComponent } from './component/notice/notice.component';
 import { LoadingComponent } from './component/loading/loading.component';
+import { HomeComponent } from './component/home/home.component';
+
+// Interceptors
+import { CustomHttpInterceptor } from "./interceptor/custom.http.interceptor";
+
+// Guards
+import { AuthGuard } from "./guard/auth.guard";
+
+let ls = new SecureLS({});
 
 const materialModules = [
   CdkTreeModule,
@@ -82,12 +94,17 @@ const materialModules = [
   MatTooltipModule
 ];
 
+export function tokenGetter() {
+  return ls.get('token');
+}
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     NoticeComponent,
-    LoadingComponent
+    LoadingComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -97,13 +114,18 @@ const materialModules = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter
+      }
+    }),
     ...materialModules,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: CustomHttpInterceptor,
     multi: true
-  }],
+  }, AuthGuard],
   bootstrap: [AppComponent],
   exports: [
     ...materialModules
