@@ -39,12 +39,17 @@ mat-sidenav {
   margin-left: 32px !important;
 }
 
+.content-centered {
+  justify-content: center;
+  align-items: center;
+}
+
 .content {
   border-radius: 5px;
   margin: 16px;
   margin-left: 16px;
   display: flex;
-  padding: 10px;
+  padding: 15px;
 }
 
 mat-list-item{
