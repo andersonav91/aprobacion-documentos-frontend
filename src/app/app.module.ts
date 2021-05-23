@@ -58,6 +58,8 @@ import { TokenHttpInterceptor } from "./interceptor/token.http.interceptor";
 // Guards
 import { AuthGuard } from "./guard/auth.guard";
 import { DocumentTypeListComponent } from './component/document-type/document-type-list/document-type-list.component';
+import { DocumentTypeFormComponent } from './component/document-type/document-type-form/document-type-form.component';
+import { DocumentTypeNewComponent } from './component/document-type/document-type-new/document-type-new.component';
 
 let ls = new SecureLS({});
 
@@ -107,7 +109,9 @@ export function tokenGetter() {
     NoticeComponent,
     LoadingComponent,
     HomeComponent,
-    DocumentTypeListComponent
+    DocumentTypeListComponent,
+    DocumentTypeFormComponent,
+    DocumentTypeNewComponent
   ],
   imports: [
     BrowserModule,

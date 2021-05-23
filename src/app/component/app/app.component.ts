@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { SidebarService } from "../../service/sidebar.service";
 import { AuthService } from "../../service/auth.service";
-import { Menu } from "../../model/menu";
-import {Router} from "@angular/router";
+import { MenuModel } from "../../model/menu";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,7 @@ export class AppComponent {
   private title: string = 'Aprobación Documentos';
   public showSidebar: boolean = false;
 
-  menuItems: Menu[] = [
+  menuItems: MenuModel[] = [
     {
       name: 'home',
       title: 'Inicio',
@@ -59,7 +59,7 @@ export class AppComponent {
     this.showSidebar ? this.sidebarService.hide() : this.sidebarService.show();
   }
 
-  invokeMenu(menu: Menu) {
+  invokeMenu(menu: MenuModel) {
     switch (menu.name.toLowerCase()) {
       case 'logout':
         this.logout();

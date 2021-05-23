@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { ParentService } from "./parent.service";
 import { NoticeService } from "./notice.service";
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { User } from "../model/user";
+import { UserModel } from "../model/user";
 import { BehaviorSubject } from "rxjs";
 import { Router } from "@angular/router";
 
@@ -12,7 +12,7 @@ import { Router } from "@angular/router";
 })
 export class AuthService extends ParentService {
 
-  public currentUser: BehaviorSubject<User>;
+  public currentUser: BehaviorSubject<UserModel>;
 
   constructor(
     public httpClient: HttpClient,
@@ -21,7 +21,7 @@ export class AuthService extends ParentService {
     private router: Router
   ) {
     super(httpClient, noticeService);
-    this.currentUser = new BehaviorSubject(new User());
+    this.currentUser = new BehaviorSubject(new UserModel());
   }
 
   /**
@@ -29,7 +29,7 @@ export class AuthService extends ParentService {
    */
   login(data: object) {
     this.postMethod('auth', data, {}).subscribe((data: any) => {
-      var user = Object.assign(new User(), data);
+      var user = Object.assign(new UserModel(), data);
       this.ls.set('token', user.token);
       this.ls.set('userData', JSON.stringify(user));
       this.setCurrentUser(Object.assign(user));
@@ -48,7 +48,7 @@ export class AuthService extends ParentService {
   /**
    * Set the current user
    */
-  setCurrentUser(currentUser: User) {
+  setCurrentUser(currentUser: UserModel) {
     this.currentUser.next(currentUser);
   }
 
@@ -65,7 +65,7 @@ export class AuthService extends ParentService {
   logout() {
     this.ls.remove("token");
     this.ls.remove("userData");
-    this.setCurrentUser(new User());
+    this.setCurrentUser(new UserModel());
     this.router.navigate(['/login'])
   }
 
