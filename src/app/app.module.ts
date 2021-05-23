@@ -53,9 +53,11 @@ import { HomeComponent } from './component/home/home.component';
 
 // Interceptors
 import { CustomHttpInterceptor } from "./interceptor/custom.http.interceptor";
+import { TokenHttpInterceptor } from "./interceptor/token.http.interceptor";
 
 // Guards
 import { AuthGuard } from "./guard/auth.guard";
+import { DocumentTypeListComponent } from './component/document-type/document-type-list/document-type-list.component';
 
 let ls = new SecureLS({});
 
@@ -104,7 +106,8 @@ export function tokenGetter() {
     LoginComponent,
     NoticeComponent,
     LoadingComponent,
-    HomeComponent
+    HomeComponent,
+    DocumentTypeListComponent
   ],
   imports: [
     BrowserModule,
@@ -124,6 +127,10 @@ export function tokenGetter() {
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: CustomHttpInterceptor,
+    multi: true
+  }, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenHttpInterceptor,
     multi: true
   }, AuthGuard],
   bootstrap: [AppComponent],

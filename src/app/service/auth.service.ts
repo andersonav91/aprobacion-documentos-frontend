@@ -28,7 +28,7 @@ export class AuthService extends ParentService {
    * Constructs a `POST` request that consumes the login API.
    */
   login(data: object) {
-    this.postMethod('auth', data).subscribe((data: any) => {
+    this.postMethod('auth', data, {}).subscribe((data: any) => {
       var user = Object.assign(new User(), data);
       this.ls.set('token', user.token);
       this.ls.set('userData', JSON.stringify(user));

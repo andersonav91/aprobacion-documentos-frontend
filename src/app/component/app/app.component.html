@@ -14,9 +14,9 @@
   <mat-sidenav class="mat-elevation-z8" mode="side" opened="true" *ngIf="authService.isAuthenticated() && (sidebarService.visibility | async)"
                [ngClass]="authService.isAuthenticated() ? 'part-content' : 'full-content'">
     <mat-list>
-      <mat-list-item *ngFor="let menu of menuItems">
+      <mat-list-item *ngFor="let menu of menuItems" (click)="this.invokeMenu(menu)">
         <mat-icon mat-list-icon>{{menu.icon}}</mat-icon>
-        <div mat-line>{{menu.name}}</div>
+        <span>{{menu.title}}</span>
         <mat-divider *ngIf="menu.separator"></mat-divider>
       </mat-list-item>
     </mat-list>
