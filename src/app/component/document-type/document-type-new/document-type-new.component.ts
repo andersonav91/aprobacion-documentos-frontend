@@ -24,12 +24,11 @@ export class DocumentTypeNewComponent implements OnInit {
 
   addDocumentType(data: any) {
     let documentType: DocumentTypeModel = Object.assign(new DocumentTypeModel(), data);
-    /*this.documentTypeService.saveDocumentType(documentType)
+    this.documentTypeService.saveDocumentType(documentType)
       .subscribe((response: any) => {
         this.noticeService.show("Tipo de Documento creado correctamente.", "success");
         this.cancel();
-    });*/
-    this.noticeService.show("Tipo de Documento creado correctamente.", "success");
+    });
   }
 
   cancel() {
