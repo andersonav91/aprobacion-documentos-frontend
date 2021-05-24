@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NoticeService } from "../../service/notice.service";
+import {SidebarService} from "../../service/sidebar.service";
 
 @Component({
   selector: 'app-notice',
@@ -8,6 +9,9 @@ import { NoticeService } from "../../service/notice.service";
 })
 export class NoticeComponent {
 
-  constructor(public noticeService: NoticeService) { }
+  constructor(
+    public noticeService: NoticeService,
+    public sidebarService: SidebarService
+  ) { }
 
 }

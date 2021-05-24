@@ -14,6 +14,9 @@ export class DocumentTypeFormComponent implements OnInit {
   @Input()
   isNew: boolean = true;
 
+  @Input()
+  model: any = {};
+
   @Output() onSubmit = new EventEmitter();
   @Output() onCancel = new EventEmitter();
 
