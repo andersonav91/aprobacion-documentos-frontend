@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {Observable} from "rxjs";
+import {DocumentTypeModel} from "../../../model/document-type";
 
 
 @Component({
@@ -11,14 +13,11 @@ export class DocumentTypeFormComponent implements OnInit {
 
   public documentTypeForm: FormGroup;
 
-  @Input()
-  isNew: boolean = true;
-
-  @Input()
-  model: any = {};
-
+  @Input() isNew: boolean = true;
+  @Input() model: any = {};
   @Output() onSubmit = new EventEmitter();
   @Output() onCancel = new EventEmitter();
+  @Input() eventModel: Observable<DocumentTypeModel> = new Observable();
 
   constructor(
     private formBuilder: FormBuilder
@@ -27,6 +26,12 @@ export class DocumentTypeFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.eventModel.subscribe((documentType: DocumentTypeModel) => {
+      if(! this.isNew) {
+        delete documentType.id
+        this.documentTypeForm.setValue(documentType);
+      }
+    });
   }
 
   createDocumentTypeForm() {

@@ -14,8 +14,10 @@ export class DocumentTypeListComponent implements OnInit {
   dataSource: any[] = [];
   @ViewChild(MatPaginator) paginator?: MatPaginator;
 
-  constructor(private documentTypeService: DocumentTypeService) {
-    this.documentTypeService.list().subscribe((data: any) => {
+  constructor(
+    private documentTypeService: DocumentTypeService
+  ) {
+    this.documentTypeService.listDocumentTypes().subscribe((data: any) => {
       this.dataSource = data;
     });
   }

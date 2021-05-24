@@ -11,8 +11,6 @@ import {NoticeService} from "../../../service/notice.service";
 })
 export class DocumentTypeNewComponent implements OnInit {
 
-  model: DocumentTypeModel = new DocumentTypeModel();
-
   constructor(
     private router: Router,
     private documentTypeService: DocumentTypeService,

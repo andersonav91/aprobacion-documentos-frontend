@@ -19,7 +19,7 @@ export class DocumentTypeService extends ParentService {
   /**
    * Constructs a `GET` request that obtains the full list of document types.
    */
-  list(): any {
+  listDocumentTypes(): any {
     return this.getMethod('document-types')
   }
 
@@ -28,6 +28,20 @@ export class DocumentTypeService extends ParentService {
    */
   saveDocumentType(data: DocumentTypeModel): any {
     return this.postMethod('document-types', data);
+  }
+
+  /**
+   * Constructs a `GET` request that obtain the data for a document type.
+   */
+  getDocumentType(id: number): any {
+    return this.getMethod('document-types/' + id);
+  }
+
+  /**
+   * Constructs a `PUT` request that edits a document type.
+   */
+  editDocumentType(data: DocumentTypeModel): any {
+    return this.putMethod('document-types/' + data.id, data);
   }
 
 }

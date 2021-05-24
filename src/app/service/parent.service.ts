@@ -34,6 +34,13 @@ export class ParentService {
   }
 
   /**
+   * Constructs a `PUT` request that consumes the API.
+   */
+  protected putMethod(path: string, body: any | null, options?: object) {
+    return this.httpClient.put(this.apiEndpointUrl + path, body, options).pipe(catchError(error => this.handleError(error, this.noticeService)));
+  }
+
+  /**
    * Catch the error message from HttpService and display it as a notice message.
    */
   protected handleError(error: HttpErrorResponse, noticeService: NoticeService) {
