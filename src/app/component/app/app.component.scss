@@ -28,15 +28,20 @@ mat-sidenav {
 }
 
 .full-content {
-  height: calc(100vh - 40px);
+  height: calc(100vh - 65px);
 }
 
 .part-content {
-  height: calc(100vh - 100px);
+  height: calc(100vh - 130px);
 }
 
 .content-margin {
   margin-left: 32px !important;
+}
+
+.content-centered {
+  justify-content: center;
+  align-items: center;
 }
 
 .content {
@@ -44,8 +49,11 @@ mat-sidenav {
   margin: 16px;
   margin-left: 16px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 15px;
+}
+
+mat-list-item{
+  cursor: pointer;
 }
 
 .mat-sidenav-container-full {
@@ -58,4 +66,8 @@ mat-sidenav {
 
 .mat-list-base .mat-list-item .mat-list-item-content {
   padding: 0px !important
+}
+
+.mat-list-base .mat-list-item {
+  font-size: 12px !important;
 }

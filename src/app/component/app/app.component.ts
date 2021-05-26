@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { SidebarService } from "../../service/sidebar.service";
 import { AuthService } from "../../service/auth.service";
-import { Menu } from "../../model/menu";
+import { MenuModel } from "../../model/menu";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -13,27 +14,37 @@ export class AppComponent {
   private title: string = 'Aprobación Documentos';
   public showSidebar: boolean = false;
 
-  menuItems: Menu[] = [
+  menuItems: MenuModel[] = [
     {
-      name: 'Inicio',
+      name: 'home',
+      title: 'Inicio',
       icon: 'home',
       separator: false
     },
     {
-      name: 'Perfil',
+      name: 'profile',
+      title: 'Perfil',
       icon: 'account_circle',
       separator: true
     },
     {
-      name: 'Salir',
+      name: 'document_type',
+      title: 'Tipo Documentos',
+      icon: 'contact_page',
+      separator: true,
+    },
+    {
+      name: 'logout',
+      title: 'Salir',
       icon: 'logout',
-      separator: false
+      separator: false,
     }
   ];
 
   constructor(
     public authService: AuthService,
-    public sidebarService: SidebarService
+    public sidebarService: SidebarService,
+    private router: Router
   ) {
   }
 
@@ -46,6 +57,20 @@ export class AppComponent {
         this.showSidebar = value;
     });
     this.showSidebar ? this.sidebarService.hide() : this.sidebarService.show();
+  }
+
+  invokeMenu(menu: MenuModel) {
+    switch (menu.name.toLowerCase()) {
+      case 'logout':
+        this.logout();
+        break;
+      case 'document_type':
+        this.router.navigate(['/document-type']);
+        break;
+      case 'home':
+        this.router.navigate(['']);
+        break;
+    };
   }
 
 }

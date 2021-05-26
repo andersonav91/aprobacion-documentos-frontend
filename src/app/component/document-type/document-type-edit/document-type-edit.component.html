@@ -1,0 +1,4 @@
+<h2>Editar Tipo de Documento / {{model.name}}</h2>
+
+<app-document-type-form [isNew]="false" (onSubmit)="editDocumentType($event)"
+                        (onCancel)="cancel()" [eventModel]="eventSubject.asObservable()"></app-document-type-form>

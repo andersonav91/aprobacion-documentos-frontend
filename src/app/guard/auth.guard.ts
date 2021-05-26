@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { CanActivate, Router } from "@angular/router";
 import { AuthService } from "../service/auth.service";
-import { User } from "../model/user";
+import { UserModel } from "../model/user";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
       return false;
     }
     // There is an user, setting up
-    let user: User = Object.assign(new User(), this.authService.getCurrentUserFromStorage());
+    let user: UserModel = Object.assign(new UserModel(), this.authService.getCurrentUserFromStorage());
     this.authService.setCurrentUser(user);
     return true;
   }

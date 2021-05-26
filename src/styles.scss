@@ -15,6 +15,11 @@ body {
   background: #e2e2e2;
 }
 
+/* Please add required components here */
+app-document-type-list, app-document-type-form, app-document-type-new {
+  width: 100%;
+}
+
 .app-header {
   justify-content: space-between;
   position: fixed;
@@ -96,3 +101,31 @@ body {
   padding: 0.8375em 0;
 }
 
+.add-item {
+  float: right;
+  margin-bottom: 5px !important;
+}
+
+.container {
+  padding: 10px;
+}
+
+.form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.form-element {
+  padding: 5px 0px 25px 2px;
+  width: 100%;
+  font-size: 16px;
+}
+
+.form-container {
+  width: 100%;
+}
+
+.cancel-button {
+  margin-left: 5px !important;
+}
