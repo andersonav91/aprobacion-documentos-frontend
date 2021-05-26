@@ -61,6 +61,7 @@ import { DocumentTypeListComponent } from './component/document-type/document-ty
 import { DocumentTypeFormComponent } from './component/document-type/document-type-form/document-type-form.component';
 import { DocumentTypeNewComponent } from './component/document-type/document-type-new/document-type-new.component';
 import { DocumentTypeEditComponent } from './component/document-type/document-type-edit/document-type-edit.component';
+import { StatusListComponent } from './component/status/status-list/status-list.component';
 
 let ls = new SecureLS({});
 
@@ -113,7 +114,8 @@ export function tokenGetter() {
     DocumentTypeListComponent,
     DocumentTypeFormComponent,
     DocumentTypeNewComponent,
-    DocumentTypeEditComponent
+    DocumentTypeEditComponent,
+    StatusListComponent
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import { AuthGuard } from "./guard/auth.guard";
 import {DocumentTypeListComponent} from "./component/document-type/document-type-list/document-type-list.component";
 import {DocumentTypeNewComponent} from "./component/document-type/document-type-new/document-type-new.component";
 import {DocumentTypeEditComponent} from "./component/document-type/document-type-edit/document-type-edit.component";
+import {StatusListComponent} from "./component/status/status-list/status-list.component";
 
 
 const routes: Routes = [
@@ -28,6 +29,11 @@ const routes: Routes = [
   {
     path: 'document-type/new',
     component: DocumentTypeNewComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'status',
+    component: StatusListComponent,
     canActivate: [AuthGuard]
   },
   { path: '**', redirectTo: '' }

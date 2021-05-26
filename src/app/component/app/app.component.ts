@@ -34,6 +34,12 @@ export class AppComponent {
       separator: true,
     },
     {
+      name: 'status',
+      title: 'Estados',
+      icon: 'swap_horiz',
+      separator: true,
+    },
+    {
       name: 'logout',
       title: 'Salir',
       icon: 'logout',
@@ -66,6 +72,9 @@ export class AppComponent {
         break;
       case 'document_type':
         this.router.navigate(['/document-type']);
+        break;
+      case 'status':
+        this.router.navigate(['/status']);
         break;
       case 'home':
         this.router.navigate(['']);
