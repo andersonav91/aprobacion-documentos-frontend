@@ -1,0 +1,4 @@
+<h2>Editar Estado / {{model.name}}</h2>
+
+<app-status-form [isNew]="false" (onSubmit)="editStatus($event)"
+                        (onCancel)="cancel()" [eventModel]="eventSubject.asObservable()"></app-status-form>

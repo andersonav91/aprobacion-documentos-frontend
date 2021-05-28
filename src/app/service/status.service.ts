@@ -20,28 +20,28 @@ export class StatusService extends ParentService {
    * Constructs a `GET` request that obtains the full list of statuses.
    */
   listStatuses(): any {
-    return this.getMethod('statuses')
+    return this.getMethod('states')
   }
 
   /**
    * Constructs a `POST` request that saves a status.
    */
   saveStatus(data: StatusModel): any {
-    return this.postMethod('statuses', data);
+    return this.postMethod('states', data);
   }
 
   /**
    * Constructs a `GET` request that obtain the data for a status.
    */
   getStatus(id: number): any {
-    return this.getMethod('statuses/' + id);
+    return this.getMethod('states/' + id);
   }
 
   /**
    * Constructs a `PUT` request that edits a status.
    */
   editStatus(data: StatusModel): any {
-    return this.putMethod('status/' + data.id, data);
+    return this.putMethod('states/' + data.id, data);
   }
 
 }

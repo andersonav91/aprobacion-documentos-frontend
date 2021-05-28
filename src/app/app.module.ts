@@ -50,6 +50,14 @@ import { LoginComponent } from "./component/login/login.component";
 import { NoticeComponent } from './component/notice/notice.component';
 import { LoadingComponent } from './component/loading/loading.component';
 import { HomeComponent } from './component/home/home.component';
+import { DocumentTypeListComponent } from './component/document-type/document-type-list/document-type-list.component';
+import { DocumentTypeFormComponent } from './component/document-type/document-type-form/document-type-form.component';
+import { DocumentTypeNewComponent } from './component/document-type/document-type-new/document-type-new.component';
+import { DocumentTypeEditComponent } from './component/document-type/document-type-edit/document-type-edit.component';
+import { StatusListComponent } from './component/status/status-list/status-list.component';
+import { StatusFormComponent } from './component/status/status-form/status-form.component';
+import { StatusNewComponent } from './component/status/status-new/status-new.component';
+import { StatusEditComponent } from './component/status/status-edit/status-edit.component';
 
 // Interceptors
 import { CustomHttpInterceptor } from "./interceptor/custom.http.interceptor";
@@ -57,11 +65,6 @@ import { TokenHttpInterceptor } from "./interceptor/token.http.interceptor";
 
 // Guards
 import { AuthGuard } from "./guard/auth.guard";
-import { DocumentTypeListComponent } from './component/document-type/document-type-list/document-type-list.component';
-import { DocumentTypeFormComponent } from './component/document-type/document-type-form/document-type-form.component';
-import { DocumentTypeNewComponent } from './component/document-type/document-type-new/document-type-new.component';
-import { DocumentTypeEditComponent } from './component/document-type/document-type-edit/document-type-edit.component';
-import { StatusListComponent } from './component/status/status-list/status-list.component';
 
 let ls = new SecureLS({});
 
@@ -115,7 +118,10 @@ export function tokenGetter() {
     DocumentTypeFormComponent,
     DocumentTypeNewComponent,
     DocumentTypeEditComponent,
-    StatusListComponent
+    StatusListComponent,
+    StatusFormComponent,
+    StatusNewComponent,
+    StatusEditComponent
   ],
   imports: [
     BrowserModule,

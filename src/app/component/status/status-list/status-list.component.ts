@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator} from "@angular/material/paginator";
-import {StatusService} from "../../../service/status.service";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from "@angular/material/paginator";
+import { StatusService } from "../../../service/status.service";
 
 @Component({
   selector: 'app-status-list',
