@@ -3,9 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from "./component/login/login.component";
 import { HomeComponent } from "./component/home/home.component";
 import { AuthGuard } from "./guard/auth.guard";
-import {DocumentTypeListComponent} from "./component/document-type/document-type-list/document-type-list.component";
-import {DocumentTypeNewComponent} from "./component/document-type/document-type-new/document-type-new.component";
-import {DocumentTypeEditComponent} from "./component/document-type/document-type-edit/document-type-edit.component";
+import { DocumentTypeListComponent } from "./component/document-type/document-type-list/document-type-list.component";
+import { DocumentTypeNewComponent } from "./component/document-type/document-type-new/document-type-new.component";
+import { DocumentTypeEditComponent } from "./component/document-type/document-type-edit/document-type-edit.component";
+import { StatusListComponent } from "./component/status/status-list/status-list.component";
+import { StatusEditComponent } from "./component/status/status-edit/status-edit.component";
+import { StatusNewComponent } from "./component/status/status-new/status-new.component";
 
 
 const routes: Routes = [
@@ -28,6 +31,21 @@ const routes: Routes = [
   {
     path: 'document-type/new',
     component: DocumentTypeNewComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'status',
+    component: StatusListComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'status/:id/edit',
+    component: StatusEditComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'status/new',
+    component: StatusNewComponent,
     canActivate: [AuthGuard]
   },
   { path: '**', redirectTo: '' }

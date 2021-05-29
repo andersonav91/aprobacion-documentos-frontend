@@ -25,7 +25,8 @@
   <mat-sidenav-content>
     <app-notice></app-notice>
     <div class="content mat-elevation-z8"
-         [ngClass]="authService.isAuthenticated() ? 'part-content ' + ((sidebarService.visibility | async) ? 'content-margin' : '') : 'full-content content-centered'">
+         [ngClass]="authService.isAuthenticated() ? 'part-content ' + ((sidebarService.visibility | async) ? 'content-margin' : '') : 'full-content content-centered'"
+         #content>
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
