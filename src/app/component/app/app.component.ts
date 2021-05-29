@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { SidebarService } from "../../service/sidebar.service";
 import { AuthService } from "../../service/auth.service";
 import { MenuModel } from "../../model/menu";
 import { Router } from "@angular/router";
+import { NoticeService } from "../../service/notice.service";
+import { LoadingService } from "../../service/loading.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   private title: string = 'Aprobación Documentos';
   public showSidebar: boolean = false;
+  @ViewChild('content', {static: true}) content: ElementRef;
 
   menuItems: MenuModel[] = [
     {
@@ -50,12 +53,28 @@ export class AppComponent {
   constructor(
     public authService: AuthService,
     public sidebarService: SidebarService,
-    private router: Router
+    private router: Router,
+    private noticeService: NoticeService,
+    private loadingService: LoadingService
   ) {
+  }
+
+  ngOnInit(): void {
+    this.noticeService.message.subscribe((obj: any) => {
+      if(! obj.init) {
+        if(obj.active) {
+          this.content.nativeElement.style.height = (this.content.nativeElement.offsetHeight - 92) + 'px';
+        } else {
+          this.content.nativeElement.style.height = (this.content.nativeElement.offsetHeight + 32) + 'px';
+        }
+      }
+    });
   }
 
   logout() {
     this.authService.logout();
+    this.loadingService.show();
+    window.location.reload();
   }
 
   showAndHideSidebar() {

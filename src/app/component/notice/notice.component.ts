@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import { NoticeService } from "../../service/notice.service";
 import {SidebarService} from "../../service/sidebar.service";
 

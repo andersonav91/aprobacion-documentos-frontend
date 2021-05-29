@@ -9,14 +9,14 @@ export class NoticeService {
   public message: BehaviorSubject<any>;
 
   constructor() {
-    this.message = new BehaviorSubject({content: '', type: '', active: false});
+    this.message = new BehaviorSubject({content: '', type: '', active: false, init: true});
   }
 
   /**
    * Shows a message with and specific kind, then the message is hide after 5 seconds.
    */
   show(content: string, type: string) {
-    this.message.next({content: content, type: type, active: true});
+    this.message.next({content: content, type: type, active: true, init: false});
     const source = timer(5000);
     const clock = source.subscribe(val => {
       this.hide();
@@ -27,7 +27,7 @@ export class NoticeService {
    * Hide a message.
    */
   hide() {
-    this.message.next({content: '', type: '', active: false});
+    this.message.next({content: '', type: '', active: false, init: false});
   }
 
 }
