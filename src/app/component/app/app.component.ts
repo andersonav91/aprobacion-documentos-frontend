@@ -1,10 +1,8 @@
-import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SidebarService } from "../../service/sidebar.service";
 import { AuthService } from "../../service/auth.service";
 import { MenuModel } from "../../model/menu";
 import { Router } from "@angular/router";
-import { NoticeService } from "../../service/notice.service";
-import { LoadingService } from "../../service/loading.service";
 
 @Component({
   selector: 'app-root',
@@ -13,7 +11,6 @@ import { LoadingService } from "../../service/loading.service";
 })
 export class AppComponent implements OnInit {
 
-  private title: string = 'Aprobación Documentos';
   public showSidebar: boolean = false;
   @ViewChild('content', {static: true}) content: ElementRef;
 
@@ -59,8 +56,6 @@ export class AppComponent implements OnInit {
     public authService: AuthService,
     public sidebarService: SidebarService,
     private router: Router,
-    private noticeService: NoticeService,
-    private loadingService: LoadingService
   ) {
   }
 
@@ -69,7 +64,6 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.authService.logout();
-    this.loadingService.show();
   }
 
   showAndHideSidebar() {
@@ -93,7 +87,7 @@ export class AppComponent implements OnInit {
       case 'home':
         this.router.navigate(['']);
         break;
-    };
+    }
   }
 
 }

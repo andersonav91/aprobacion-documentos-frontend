@@ -12,44 +12,53 @@ import { StatusNewComponent } from "./component/status/status-new/status-new.com
 
 
 const routes: Routes = [
-  {path: 'login', component: LoginComponent},
+  {
+    path: 'login',
+    component: LoginComponent
+  },
   {
     path: '',
     component: HomeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['all'] }
   },
   {
     path: 'document-type',
     component: DocumentTypeListComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
   },
   {
     path: 'document-type/:id/edit',
     component: DocumentTypeEditComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
   },
   {
     path: 'document-type/new',
     component: DocumentTypeNewComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
   },
   {
     path: 'status',
     component: StatusListComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
   },
   {
     path: 'status/:id/edit',
     component: StatusEditComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
   },
   {
     path: 'status/new',
     component: StatusNewComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
   },
   { path: '**', redirectTo: '' }
-
 ];
 
 @NgModule({
