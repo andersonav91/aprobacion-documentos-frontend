@@ -6,6 +6,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserModel } from "../model/user";
 import { BehaviorSubject } from "rxjs";
 import { Router } from "@angular/router";
+import { SidebarService } from "./sidebar.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class AuthService extends ParentService {
     public httpClient: HttpClient,
     public noticeService: NoticeService,
     private jwtHelperService: JwtHelperService,
-    private router: Router
+    private router: Router,
+    private sidebarService: SidebarService,
   ) {
     super(httpClient, noticeService);
     this.currentUser = new BehaviorSubject(new UserModel());
@@ -34,6 +36,7 @@ export class AuthService extends ParentService {
       this.ls.set('userData', JSON.stringify(user));
       this.setCurrentUser(Object.assign(user));
       this.router.navigate(['']);
+      this.sidebarService.show();
     });
   }
 
