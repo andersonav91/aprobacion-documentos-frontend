@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { SidebarService } from "../../service/sidebar.service";
 import { AuthService } from "../../service/auth.service";
 import { MenuModel } from "../../model/menu";
@@ -22,31 +22,36 @@ export class AppComponent implements OnInit {
       name: 'home',
       title: 'Inicio',
       icon: 'home',
-      separator: false
+      separator: false,
+      roles: ['all']
     },
     {
       name: 'profile',
       title: 'Perfil',
       icon: 'account_circle',
-      separator: true
+      separator: true,
+      roles: ['all']
     },
     {
       name: 'document_type',
       title: 'Tipo Documentos',
       icon: 'contact_page',
       separator: true,
+      roles: ['admin']
     },
     {
       name: 'status',
       title: 'Estados',
       icon: 'swap_horiz',
       separator: true,
+      roles: ['admin']
     },
     {
       name: 'logout',
       title: 'Salir',
       icon: 'logout',
       separator: false,
+      roles: ['all']
     }
   ];
 
@@ -60,21 +65,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.noticeService.message.subscribe((obj: any) => {
-      if(! obj.init) {
-        if(obj.active) {
-          this.content.nativeElement.style.height = (this.content.nativeElement.offsetHeight - 92) + 'px';
-        } else {
-          this.content.nativeElement.style.height = (this.content.nativeElement.offsetHeight + 32) + 'px';
-        }
-      }
-    });
   }
 
   logout() {
     this.authService.logout();
     this.loadingService.show();
-    window.location.reload();
   }
 
   showAndHideSidebar() {

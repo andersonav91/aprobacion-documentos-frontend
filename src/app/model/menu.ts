@@ -3,4 +3,5 @@ export interface MenuModel {
   title: string;
   icon: string;
   separator?: boolean;
+  roles: any[];
 }

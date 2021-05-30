@@ -11,14 +11,15 @@
 </mat-toolbar>
 
 <mat-sidenav-container [ngClass]="authService.isAuthenticated() ? '' : 'mat-sidenav-container-full'">
-  <mat-sidenav class="mat-elevation-z8" mode="side" opened="true" *ngIf="authService.isAuthenticated() && (sidebarService.visibility | async)"
-               [ngClass]="authService.isAuthenticated() ? 'part-content' : 'full-content'">
+  <mat-sidenav class="mat-elevation-z8" mode="side" opened="true" *ngIf="authService.isAuthenticated() && (sidebarService.visibility | async)">
     <mat-list>
-      <mat-list-item *ngFor="let menu of menuItems" (click)="this.invokeMenu(menu)">
-        <mat-icon mat-list-icon>{{menu.icon}}</mat-icon>
-        <span>{{menu.title}}</span>
-        <mat-divider *ngIf="menu.separator"></mat-divider>
-      </mat-list-item>
+      <ng-container *ngFor="let menu of menuItems">
+        <mat-list-item *ngIf="(authService.currentUser | async)?.hasValidRole(menu.roles)" (click)="this.invokeMenu(menu)">
+            <mat-icon mat-list-icon>{{menu.icon}}</mat-icon>
+            <span>{{menu.title}}</span>
+            <mat-divider *ngIf="menu.separator"></mat-divider>
+        </mat-list-item>
+      </ng-container>
     </mat-list>
   </mat-sidenav>
 
