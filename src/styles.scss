@@ -17,7 +17,8 @@ body {
 
 /* Please add required components here */
 app-document-type-list, app-document-type-form, app-document-type-new, app-document-type-edit,
-app-status-list, app-status-form, app-status-new, app-status-edit{
+app-status-list, app-status-form, app-status-new, app-status-edit,
+app-user-list, app-user-form, app-user-new, app-user-edit{
   width: 100%;
 }
 
@@ -118,7 +119,7 @@ app-status-list, app-status-form, app-status-new, app-status-edit{
 }
 
 .form-element {
-  padding: 5px 0px 25px 2px;
+  padding: 5px 0 25px 2px;
   width: 100%;
   font-size: 16px;
 }

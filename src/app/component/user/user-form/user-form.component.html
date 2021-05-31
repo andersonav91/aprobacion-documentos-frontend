@@ -1,0 +1,51 @@
+<div class="form-container">
+  <form class="login-form form" [formGroup]="userForm" (ngSubmit)="sendUserForm()">
+
+    <mat-card-content>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Nombre" formControlName="name">
+        <mat-error *ngIf="f.name.touched && f.name.invalid">Nombre es requerido.</mat-error>
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-content>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Email" formControlName="email">
+        <mat-error *ngIf="f.email.touched && f.email.invalid">Email es requerido.</mat-error>
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-content>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Nombre de Usuario" formControlName="username">
+        <mat-error *ngIf="f.username.touched && f.username.invalid">Nombre de Usuario es requerido.</mat-error>
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-content>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Teléfono" formControlName="phone">
+        <mat-error *ngIf="f.phone.touched && f.phone.invalid">Teléfono es requerido.</mat-error>
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-content>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Contraseña" formControlName="password" type="password">
+        <mat-error *ngIf="f.password.touched && f.password.invalid">Contraseña es requerido.</mat-error>
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-content>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Repetición Contraseña" formControlName="passwordRepeat" type="password">
+        <mat-error *ngIf="f.passwordRepeat.touched && f.passwordRepeat.invalid">Repetición Contraseña es requerido.</mat-error>
+      </mat-form-field>
+    </mat-card-content>
+    <div class="form-element">
+      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!userForm.valid">{{(isNew ? 'Guardar' : 'Editar')}}</button>
+      <button mat-raised-button type="button" class="button cancel-button" (click)="cancelUserForm()">Cancelar</button>
+    </div>
+
+  </form>
+</div>

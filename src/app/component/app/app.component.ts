@@ -37,6 +37,13 @@ export class AppComponent implements OnInit {
       roles: ['admin']
     },
     {
+      name: 'user',
+      title: 'Usuarios',
+      icon: 'person',
+      separator: true,
+      roles: ['admin']
+    },
+    {
       name: 'status',
       title: 'Estados',
       icon: 'swap_horiz',
@@ -83,6 +90,9 @@ export class AppComponent implements OnInit {
         break;
       case 'status':
         this.router.navigate(['/status']);
+        break;
+      case 'user':
+        this.router.navigate(['/user']);
         break;
       case 'home':
         this.router.navigate(['']);

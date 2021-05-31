@@ -42,7 +42,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
-import { JwtModule, JwtModuleOptions } from "@auth0/angular-jwt";
+import { JwtModule } from "@auth0/angular-jwt";
 
 // Components
 import { AppComponent } from "./component/app/app.component";
@@ -65,6 +65,10 @@ import { TokenHttpInterceptor } from "./interceptor/token.http.interceptor";
 
 // Guards
 import { AuthGuard } from "./guard/auth.guard";
+import { UserListComponent } from './component/user/user-list/user-list.component';
+import { UserFormComponent } from './component/user/user-form/user-form.component';
+import { UserNewComponent } from './component/user/user-new/user-new.component';
+import { UserEditComponent } from './component/user/user-edit/user-edit.component';
 
 let ls = new SecureLS({});
 
@@ -121,7 +125,11 @@ export function tokenGetter() {
     StatusListComponent,
     StatusFormComponent,
     StatusNewComponent,
-    StatusEditComponent
+    StatusEditComponent,
+    UserListComponent,
+    UserFormComponent,
+    UserNewComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,

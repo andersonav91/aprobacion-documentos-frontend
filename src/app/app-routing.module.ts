@@ -9,6 +9,9 @@ import { DocumentTypeEditComponent } from "./component/document-type/document-ty
 import { StatusListComponent } from "./component/status/status-list/status-list.component";
 import { StatusEditComponent } from "./component/status/status-edit/status-edit.component";
 import { StatusNewComponent } from "./component/status/status-new/status-new.component";
+import { UserListComponent } from "./component/user/user-list/user-list.component";
+import { UserEditComponent } from "./component/user/user-edit/user-edit.component";
+import { UserNewComponent } from "./component/user/user-new/user-new.component";
 
 
 const routes: Routes = [
@@ -55,6 +58,24 @@ const routes: Routes = [
   {
     path: 'status/new',
     component: StatusNewComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
+  },
+  {
+    path: 'user',
+    component: UserListComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
+  },
+  {
+    path: 'user/:id/edit',
+    component: UserEditComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
+  },
+  {
+    path: 'user/new',
+    component: UserNewComponent,
     canActivate: [AuthGuard],
     data: { roles: ['admin'] }
   },
