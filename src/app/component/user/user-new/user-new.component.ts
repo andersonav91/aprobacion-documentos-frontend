@@ -22,6 +22,8 @@ export class UserNewComponent implements OnInit {
 
   addUser(data: any) {
     let user: UserModel = Object.assign(new UserModel(), data);
+    user.usersRoles = [{id: data.role, name: ''}];
+
     this.userService.saveUser(user)
       .subscribe((response: any) => {
         this.noticeService.show("Usuario creado correctamente.", "success");
@@ -31,6 +33,10 @@ export class UserNewComponent implements OnInit {
 
   cancel() {
     this.router.navigate(['/user']);
+  }
+
+  changePassword(data: any) {
+    console.log('changing password');
   }
 
 }

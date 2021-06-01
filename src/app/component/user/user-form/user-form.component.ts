@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { Observable } from "rxjs";
 import { UserModel } from "../../../model/user";
+import { RoleService } from "../../../service/role.service";
+import { RoleModel } from "../../../model/role";
+import {AuthService} from "../../../service/auth.service";
 
 @Component({
   selector: 'app-user-form',
@@ -11,6 +14,8 @@ import { UserModel } from "../../../model/user";
 export class UserFormComponent implements OnInit {
 
   public userForm: FormGroup;
+  public passwordForm: FormGroup;
+  public roles: RoleModel[];
 
   @Input() isNew: boolean = true;
   @Input() model: any = {};
@@ -18,10 +23,20 @@ export class UserFormComponent implements OnInit {
   @Output() onCancel = new EventEmitter();
   @Input() eventModel: Observable<UserModel> = new Observable();
 
+  @Output() onPasswordSubmit = new EventEmitter();
+  @Output() onPasswordCancel = new EventEmitter();
+
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private roleService: RoleService,
+    public authService: AuthService,
   ) {
     this.userForm = this.createUserForm();
+    this.passwordForm = this.createPasswordForm();
+    this.roleService.listRoles().subscribe((data: any[]) => {
+      this.roles = data.map(item => Object.assign(new RoleModel(), item));
+    });
+
   }
 
   ngOnInit(): void {
@@ -31,20 +46,40 @@ export class UserFormComponent implements OnInit {
         // validate this fields
         delete user.usersRoles;
         delete user.token;
+        user.passwordRepeat = '';
+        user.password = '';
+        delete user.currentPassword;
         this.userForm.setValue(user);
       }
     });
+
   }
 
   createUserForm() {
-    return this.formBuilder.group({
+    let tmpForm: FormGroup = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', Validators.required],
       username: ['', Validators.required],
       phone: ['', Validators.required],
+      role: ['', Validators.required],
+    });
+
+    if(this.isNew) {
+      tmpForm.addControl('password', new FormControl('', Validators.required));
+      tmpForm.addControl('passwordRepeat', new FormControl('', Validators.required));
+    }
+
+    return tmpForm;
+  }
+
+  createPasswordForm() {
+    let tmpForm: FormGroup = this.formBuilder.group({
       password: ['', Validators.required],
       passwordRepeat: ['', Validators.required],
+      currentPassword: ['', Validators.required]
     });
+
+    return tmpForm;
   }
 
   sendUserForm() {
@@ -59,6 +94,20 @@ export class UserFormComponent implements OnInit {
 
   get f() {
     return this.userForm.controls;
+  }
+
+  get fp() {
+    return this.passwordForm.controls;
+  }
+
+  sendPasswordForm() {
+    if(this.passwordForm.valid){
+      this.onPasswordSubmit.emit(this.passwordForm.value);
+    }
+  }
+
+  cancelPasswordForm() {
+    this.onPasswordCancel.emit();
   }
 
 }

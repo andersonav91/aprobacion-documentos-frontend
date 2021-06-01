@@ -1,4 +1,6 @@
 <h2>Nuevo Usuario</h2>
 
 <app-user-form [isNew]="true" (onSubmit)="addUser($event)"
-                 (onCancel)="cancel()"></app-user-form>
+               (onPasswordCancel)="cancel()"
+               (onPasswordSubmit)="changePassword($event)"
+               (onCancel)="cancel()"></app-user-form>

@@ -53,4 +53,8 @@ export class UserEditComponent implements OnInit {
     this.router.navigate(['/user']);
   }
 
+  changepassword(data: any) {
+    console.log(data);
+  }
+
 }

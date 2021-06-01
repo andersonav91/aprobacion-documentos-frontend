@@ -3,6 +3,7 @@ export class UserModel {
   email?: string = '';
   password?: string = '';
   passwordRepeat?: string = '';
+  currentPassword?: string = '';
   username?: string = '';
   name?: string = '';
   usersRoles?: any[] = [];
