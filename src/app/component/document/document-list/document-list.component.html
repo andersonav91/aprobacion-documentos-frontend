@@ -1,0 +1,61 @@
+<h2>Documentos</h2>
+
+<div fxLayout fxLayoutAlign="start center">
+  <mat-form-field appearance="fill" class="form-element" fxFlex="40%">
+    <mat-label>Tipos de Documentos</mat-label>
+    <select matNativeControl (change)="setDocumentType($event.target)">
+      <option value=""></option>
+      <option *ngFor="let documentType of documentTypes" value="{{documentType.id}}">{{documentType.name}}</option>
+    </select>
+  </mat-form-field>
+</div>
+
+<table mat-table [dataSource]="dataSource">
+
+  <ng-container matColumnDef="position">
+    <th mat-header-cell *matHeaderCellDef> # </th>
+    <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> Identificador </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef> Fecha </th>
+    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="observation">
+    <th mat-header-cell *matHeaderCellDef> Observación </th>
+    <td mat-cell *matCellDef="let element"> {{element.observation}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="document">
+    <th mat-header-cell *matHeaderCellDef> Documento </th>
+    <td mat-cell *matCellDef="let element"> {{element.document.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="path">
+    <th mat-header-cell *matHeaderCellDef> Ruta </th>
+    <td mat-cell *matCellDef="let element"> {{element.document.path}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+    <td mat-cell *matCellDef="let row">
+      <button mat-icon-button matTooltip="Click para editar" class="iconbutton" color="primary"
+              [routerLink]="['/document/' + row.id + '/edit']">
+        <mat-icon aria-label="Edit">edit</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [pageSizeOptions]="[limit]" [length]="totalRows"
+               [hidePageSize]="true" (page)="pageChanged($event)"></mat-paginator>
+

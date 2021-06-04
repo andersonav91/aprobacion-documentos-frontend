@@ -4,9 +4,13 @@
   font-size: 16px;
 }
 
-
 .form {
   min-width: 150px;
-  max-width: 90vw;
+  max-width: 86vw;
   width: 100%;
+}
+
+.mat-card-content {
+  display: inline !important;
+  margin-bottom: 16px;
 }

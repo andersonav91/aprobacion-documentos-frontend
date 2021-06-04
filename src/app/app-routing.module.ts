@@ -12,6 +12,7 @@ import { StatusNewComponent } from "./component/status/status-new/status-new.com
 import { UserListComponent } from "./component/user/user-list/user-list.component";
 import { UserEditComponent } from "./component/user/user-edit/user-edit.component";
 import { UserNewComponent } from "./component/user/user-new/user-new.component";
+import {DocumentListComponent} from "./component/document/document-list/document-list.component";
 
 
 const routes: Routes = [
@@ -78,6 +79,12 @@ const routes: Routes = [
     component: UserNewComponent,
     canActivate: [AuthGuard],
     data: { roles: ['admin'] }
+  },
+  {
+    path: 'document',
+    component: DocumentListComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['all'] }
   },
   { path: '**', redirectTo: '' }
 ];

@@ -69,6 +69,7 @@ import { UserListComponent } from './component/user/user-list/user-list.componen
 import { UserFormComponent } from './component/user/user-form/user-form.component';
 import { UserNewComponent } from './component/user/user-new/user-new.component';
 import { UserEditComponent } from './component/user/user-edit/user-edit.component';
+import { DocumentListComponent } from './component/document/document-list/document-list.component';
 
 let ls = new SecureLS({});
 
@@ -129,7 +130,8 @@ export function tokenGetter() {
     UserListComponent,
     UserFormComponent,
     UserNewComponent,
-    UserEditComponent
+    UserEditComponent,
+    DocumentListComponent
   ],
   imports: [
     BrowserModule,

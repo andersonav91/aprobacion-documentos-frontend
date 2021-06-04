@@ -31,14 +31,14 @@ export class LoginComponent implements OnInit {
 
   createLoginForm() {
     return this.formBuilder.group({
-      email: ['', Validators.required],
+      username: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
   sendLoginForm() {
     this.authService.login({
-      email: this.f.email.value,
+      username: this.f.username.value,
       password: this.f.password.value,
     });
   }

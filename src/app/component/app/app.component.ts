@@ -30,9 +30,16 @@ export class AppComponent implements OnInit {
       roles: ['all']
     },
     {
+      name: 'document',
+      title: 'Documentos',
+      icon: 'fact_check',
+      separator: true,
+      roles: ['all']
+    },
+    {
       name: 'document_type',
       title: 'Tipo Documentos',
-      icon: 'contact_page',
+      icon: 'analytics',
       separator: true,
       roles: ['admin']
     },
@@ -93,6 +100,9 @@ export class AppComponent implements OnInit {
         break;
       case 'user':
         this.router.navigate(['/user']);
+        break;
+      case 'document':
+        this.router.navigate(['/document']);
         break;
       case 'home':
         this.router.navigate(['']);

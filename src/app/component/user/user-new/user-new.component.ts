@@ -22,7 +22,7 @@ export class UserNewComponent implements OnInit {
 
   addUser(data: any) {
     let user: UserModel = Object.assign(new UserModel(), data);
-    user.usersRoles = [{id: data.role, name: ''}];
+    user.usersRoles = [{id: data.role}];
 
     this.userService.saveUser(user)
       .subscribe((response: any) => {

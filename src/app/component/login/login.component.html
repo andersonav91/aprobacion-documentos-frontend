@@ -8,8 +8,8 @@
     <form class="login-form" [formGroup]="loginForm" (ngSubmit)="sendLoginForm()">
       <mat-card-content>
         <mat-form-field class="field-full-width">
-          <input matInput placeholder="Username" formControlName="email">
-          <mat-error *ngIf="f.email.touched && f.email.invalid">Username es requerido.</mat-error>
+          <input matInput placeholder="Nombre de Usuario" formControlName="username">
+          <mat-error *ngIf="f.username.touched && f.username.invalid">Nombre de Usuario es requerido.</mat-error>
         </mat-form-field>
         <mat-form-field class="field-full-width">
           <input matInput placeholder="Contraseña" formControlName="password" type="password">
