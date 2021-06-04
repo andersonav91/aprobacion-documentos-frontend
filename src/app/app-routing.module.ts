@@ -13,6 +13,7 @@ import { UserListComponent } from "./component/user/user-list/user-list.componen
 import { UserEditComponent } from "./component/user/user-edit/user-edit.component";
 import { UserNewComponent } from "./component/user/user-new/user-new.component";
 import {DocumentListComponent} from "./component/document/document-list/document-list.component";
+import {DocumentShowComponent} from "./component/document/document-show/document-show.component";
 
 
 const routes: Routes = [
@@ -83,6 +84,12 @@ const routes: Routes = [
   {
     path: 'document',
     component: DocumentListComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['all'] }
+  },
+  {
+    path: 'document/:id/show',
+    component: DocumentShowComponent,
     canActivate: [AuthGuard],
     data: { roles: ['all'] }
   },

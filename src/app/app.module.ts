@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import * as SecureLS from 'secure-ls';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 // Routes
 import { AppRoutingModule } from './app-routing.module';
@@ -70,6 +71,7 @@ import { UserFormComponent } from './component/user/user-form/user-form.componen
 import { UserNewComponent } from './component/user/user-new/user-new.component';
 import { UserEditComponent } from './component/user/user-edit/user-edit.component';
 import { DocumentListComponent } from './component/document/document-list/document-list.component';
+import { DocumentShowComponent } from './component/document/document-show/document-show.component';
 
 let ls = new SecureLS({});
 
@@ -131,7 +133,8 @@ export function tokenGetter() {
     UserFormComponent,
     UserNewComponent,
     UserEditComponent,
-    DocumentListComponent
+    DocumentListComponent,
+    DocumentShowComponent
   ],
   imports: [
     BrowserModule,
@@ -141,6 +144,7 @@ export function tokenGetter() {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    PdfViewerModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter
