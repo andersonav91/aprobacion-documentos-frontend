@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { NoticeService } from "../../../service/notice.service";
 import { UserModel } from "../../../model/user";
 import { UserService } from "../../../service/user.service";
+import {AuthService} from "../../../service/auth.service";
 
 @Component({
   selector: 'app-user-edit',
@@ -15,12 +16,14 @@ export class UserEditComponent implements OnInit {
   public model: UserModel = new UserModel();
   public eventSubject: Subject<UserModel> = new Subject<UserModel>();
   private id: number = 0;
+  currentUser: UserModel;
 
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
-    private noticeService: NoticeService
+    private noticeService: NoticeService,
+    private authService: AuthService
   ) {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.id = Number(params.get('id'));
@@ -28,11 +31,16 @@ export class UserEditComponent implements OnInit {
         this.model = Object.assign(new UserModel(), data);
         this.emitModel();
       });
-    })
+    });
 
+    this.currentUser = Object.assign(new UserModel(), this.authService.getCurrentUserFromStorage());
   }
 
   ngOnInit(): void {
+    if(! this.currentUser.hasValidRole(['admin']) && this.id !== this.currentUser.id) {
+      this.router.navigate(['']);
+      this.noticeService.show("No tiene permisos para realizar esta acción.", "error");
+    }
   }
 
   emitModel() {
@@ -54,7 +62,11 @@ export class UserEditComponent implements OnInit {
   }
 
   changepassword(data: any) {
-    console.log(data);
+    let formData = {'newPassword': data.password, 'oldPassword': data.currentPassword};
+    this.userService.changePassword(this.id, formData).subscribe((response: any) => {
+      this.noticeService.show("Contraseña cambiada correctamente.", "success");
+      this.cancel();
+    });
   }
 
 }

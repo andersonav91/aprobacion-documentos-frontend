@@ -3,6 +3,7 @@ import { SidebarService } from "../../service/sidebar.service";
 import { AuthService } from "../../service/auth.service";
 import { MenuModel } from "../../model/menu";
 import { Router } from "@angular/router";
+import { UserModel } from "../../model/user";
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,8 @@ export class AppComponent implements OnInit {
 
   public showSidebar: boolean = false;
   @ViewChild('content', {static: true}) content: ElementRef;
+
+  currentUser: UserModel;
 
   menuItems: MenuModel[] = [
     {
@@ -71,6 +74,7 @@ export class AppComponent implements OnInit {
     public sidebarService: SidebarService,
     private router: Router,
   ) {
+    this.currentUser = Object.assign(new UserModel(), this.authService.getCurrentUserFromStorage());
   }
 
   ngOnInit(): void {
@@ -106,6 +110,9 @@ export class AppComponent implements OnInit {
         break;
       case 'home':
         this.router.navigate(['']);
+        break;
+      case 'profile':
+        this.router.navigate(['/user/' + this.currentUser.id + '/edit']);
         break;
     }
   }

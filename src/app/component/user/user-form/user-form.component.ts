@@ -5,6 +5,7 @@ import { UserModel } from "../../../model/user";
 import { RoleService } from "../../../service/role.service";
 import { RoleModel } from "../../../model/role";
 import {AuthService} from "../../../service/auth.service";
+import {ErrorStateMatcher} from "../../../util/error.state.matcher";
 
 @Component({
   selector: 'app-user-form',
@@ -25,6 +26,8 @@ export class UserFormComponent implements OnInit {
 
   @Output() onPasswordSubmit = new EventEmitter();
   @Output() onPasswordCancel = new EventEmitter();
+
+  matcher = new ErrorStateMatcher();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -77,7 +80,7 @@ export class UserFormComponent implements OnInit {
       password: ['', Validators.required],
       passwordRepeat: ['', Validators.required],
       currentPassword: ['', Validators.required]
-    });
+    }, { validators: this.checkPasswords });
 
     return tmpForm;
   }
@@ -108,6 +111,13 @@ export class UserFormComponent implements OnInit {
 
   cancelPasswordForm() {
     this.onPasswordCancel.emit();
+  }
+
+  checkPasswords(group: FormGroup) {
+    const password = group.get('password').value;
+    const passwordRepeat = group.get('passwordRepeat').value;
+
+    return password === passwordRepeat ? null : { notSame: true }
   }
 
 }

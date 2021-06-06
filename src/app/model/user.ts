@@ -8,6 +8,7 @@ export class UserModel {
   name?: string = '';
   usersRoles?: any[] = [];
   token?: string = '';
+  role?: number = 0;
 
   constructor() {
   }
