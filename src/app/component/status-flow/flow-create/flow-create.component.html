@@ -1,0 +1,21 @@
+<h2>Crear Flujo</h2>
+
+<div fxLayout fxLayoutAlign="start top">
+  <div fxFlex="40%">
+    <mat-form-field appearance="fill" class="form-element" >
+      <mat-label>Tipos de Documentos</mat-label>
+      <select matNativeControl (change)="setDocumentType($event.target)">
+        <option value=""></option>
+        <option *ngFor="let documentType of documentTypes" value="{{documentType.id}}">{{documentType.name}}</option>
+      </select>
+    </mat-form-field>
+    <div class="form-element">
+      <button mat-raised-button color="primary" type="button" (click)="saveFlow()" class="button">Guardar</button>
+      <button mat-raised-button type="button" class="button cancel-button" (click)="cancelFlow()">Cancelar</button>
+    </div>
+  </div>
+
+  <div cdkDropList (cdkDropListDropped)="reorderList($event)" class="dragdrop-wrapper" fxFlex="40%">
+    <div class="dragdrop-inner" *ngFor="let status of statuses" cdkDrag> {{status.name}} </div>
+  </div>
+</div>

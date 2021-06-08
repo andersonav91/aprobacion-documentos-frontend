@@ -72,6 +72,8 @@ import { UserNewComponent } from './component/user/user-new/user-new.component';
 import { UserEditComponent } from './component/user/user-edit/user-edit.component';
 import { DocumentListComponent } from './component/document/document-list/document-list.component';
 import { DocumentShowComponent } from './component/document/document-show/document-show.component';
+import { FlowCreateComponent } from './component/status-flow/flow-create/flow-create.component';
+import { DragDropModule } from "@angular/cdk/drag-drop";
 
 let ls = new SecureLS({});
 
@@ -107,7 +109,8 @@ const materialModules = [
   MatGridListModule,
   MatRadioModule,
   MatDatepickerModule,
-  MatTooltipModule
+  MatTooltipModule,
+  DragDropModule
 ];
 
 export function tokenGetter() {
@@ -134,7 +137,8 @@ export function tokenGetter() {
     UserNewComponent,
     UserEditComponent,
     DocumentListComponent,
-    DocumentShowComponent
+    DocumentShowComponent,
+    FlowCreateComponent
   ],
   imports: [
     BrowserModule,

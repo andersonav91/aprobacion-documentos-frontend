@@ -14,6 +14,7 @@ import { UserEditComponent } from "./component/user/user-edit/user-edit.componen
 import { UserNewComponent } from "./component/user/user-new/user-new.component";
 import {DocumentListComponent} from "./component/document/document-list/document-list.component";
 import {DocumentShowComponent} from "./component/document/document-show/document-show.component";
+import {FlowCreateComponent} from "./component/status-flow/flow-create/flow-create.component";
 
 
 const routes: Routes = [
@@ -92,6 +93,12 @@ const routes: Routes = [
     component: DocumentShowComponent,
     canActivate: [AuthGuard],
     data: { roles: ['all'] }
+  },
+  {
+    path: 'flow',
+    component: FlowCreateComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
   },
   { path: '**', redirectTo: '' }
 ];

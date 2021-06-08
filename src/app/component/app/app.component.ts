@@ -61,6 +61,13 @@ export class AppComponent implements OnInit {
       roles: ['admin']
     },
     {
+      name: 'flow',
+      title: 'Flujos',
+      icon: 'low_priority',
+      separator: true,
+      roles: ['admin']
+    },
+    {
       name: 'logout',
       title: 'Salir',
       icon: 'logout',
@@ -110,6 +117,9 @@ export class AppComponent implements OnInit {
         break;
       case 'home':
         this.router.navigate(['']);
+        break;
+      case 'flow':
+        this.router.navigate(['/flow']);
         break;
       case 'profile':
         this.router.navigate(['/user/' + this.currentUser.id + '/edit']);
