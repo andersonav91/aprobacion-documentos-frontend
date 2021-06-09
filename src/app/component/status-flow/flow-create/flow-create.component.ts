@@ -43,7 +43,6 @@ export class FlowCreateComponent implements OnInit {
 
   reorderList(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.statuses, event.previousIndex, event.currentIndex);
-    console.log(this.statuses);
   }
 
   cancelFlow() {
@@ -51,6 +50,9 @@ export class FlowCreateComponent implements OnInit {
   }
 
   saveFlow() {
+    if(! this.currentDocumentTypeId || this.currentDocumentTypeId == 0) {
+      return;
+    }
     let data: any = Object.assign({listAssignationState: [], documentTypeId: this.currentDocumentTypeId});
     let position = 1;
     for(var state of this.statuses) {

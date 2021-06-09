@@ -6,6 +6,7 @@ export class UserModel {
   currentPassword?: string = '';
   username?: string = '';
   name?: string = '';
+  userRoles?: any[] = [];
   usersRoles?: any[] = [];
   token?: string = '';
   role?: number = 0;
@@ -23,7 +24,7 @@ export class UserModel {
     if(roles.some(role => {return role.toLowerCase() == 'all'})) {
       return true;
     }
-    let userRoles = this.usersRoles?.map(obj => {
+    let userRoles = this.userRoles?.map(obj => {
       return obj.role.name;
     });
     return (userRoles!.filter(obj => {

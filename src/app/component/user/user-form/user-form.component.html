@@ -13,14 +13,14 @@
 
         <mat-card-content>
           <mat-form-field class="form-element">
-            <input matInput placeholder="Email" formControlName="email">
-            <mat-error *ngIf="f.email.touched && f.email.invalid">Email es requerido.</mat-error>
+            <input matInput placeholder="Email" formControlName="email" type="email">
+            <mat-error *ngIf="f.email.touched && f.email.invalid">Email es requerido y debe tener un formato válido.</mat-error>
           </mat-form-field>
         </mat-card-content>
 
         <mat-card-content>
           <mat-form-field class="form-element">
-            <input matInput placeholder="Nombre de Usuario" formControlName="username" [readonly]="! isNew">
+            <input matInput placeholder="Nombre de Usuario" formControlName="username">
             <mat-error *ngIf="f.username.touched && f.username.invalid">Nombre de Usuario es requerido.</mat-error>
           </mat-form-field>
         </mat-card-content>
@@ -45,7 +45,6 @@
           <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!userForm.valid">{{(isNew ? 'Guardar' : 'Editar')}}</button>
           <button mat-raised-button type="button" class="button cancel-button" (click)="cancelUserForm()">Cancelar</button>
         </div>
-
       </form>
     </div>
 
@@ -98,8 +97,8 @@
 
     <mat-card-content>
       <mat-form-field class="form-element">
-        <input matInput placeholder="Email" formControlName="email">
-        <mat-error *ngIf="f.email.touched && f.email.invalid">Email es requerido.</mat-error>
+        <input matInput placeholder="Email" formControlName="email" formControlName="email">
+        <mat-error *ngIf="f.email.touched && f.email.invalid">Email es requerido y debe tener un formato válido.</mat-error>
       </mat-form-field>
     </mat-card-content>
 
@@ -126,8 +125,9 @@
 
     <mat-card-content>
       <mat-form-field class="form-element">
-        <input matInput placeholder="Repetición Contraseña" formControlName="passwordRepeat" type="password">
+        <input matInput placeholder="Repetición Contraseña" formControlName="passwordRepeat" type="password" [errorStateMatcher]="matcher">
         <mat-error *ngIf="f.passwordRepeat.touched && f.passwordRepeat.invalid">Repetición Contraseña es requerido.</mat-error>
+        <mat-error *ngIf="f.passwordRepeat.touched && this.userForm.hasError('notSame')">Las contraseñas no coinciden.</mat-error>
       </mat-form-field>
     </mat-card-content>
 

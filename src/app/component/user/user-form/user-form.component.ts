@@ -47,30 +47,49 @@ export class UserFormComponent implements OnInit {
       if(! this.isNew) {
         delete user.id;
         // validate this fields
-        delete user.usersRoles;
+        user.role = user.usersRoles[0].role.id;
+        delete user.userRoles;
         delete user.token;
-        user.passwordRepeat = '';
-        user.password = '';
+        delete user.passwordRepeat;
+        delete user.password;
+        delete user.usersRoles;
         delete user.currentPassword;
         this.userForm.setValue(user);
       }
     });
 
+    if(this.isNew) {
+      this.userForm.addControl('password', new FormControl('', Validators.required));
+      this.userForm.addControl('passwordRepeat', new FormControl('', Validators.required));
+    }
   }
 
   createUserForm() {
-    let tmpForm: FormGroup = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', Validators.required],
-      username: ['', Validators.required],
-      phone: ['', Validators.required],
-      role: ['', Validators.required],
-    });
+
+    let tmpForm: FormGroup = null;
 
     if(this.isNew) {
-      tmpForm.addControl('password', new FormControl('', Validators.required));
-      tmpForm.addControl('passwordRepeat', new FormControl('', Validators.required));
+      tmpForm = this.formBuilder.group({
+        name: ['', Validators.required],
+        email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+        username: ['', Validators.required],
+        phone: ['', Validators.required],
+        role: ['', Validators.required],
+        password: ['', Validators.required],
+        passwordRepeat: ['', Validators.required],
+      }, { validators: this.checkPasswords });
+    } else {
+      tmpForm = this.formBuilder.group({
+        name: ['', Validators.required],
+        email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+        username: ['', Validators.required],
+        phone: ['', Validators.required],
+        role: ['', Validators.required],
+      });
     }
+
+
+
 
     return tmpForm;
   }
