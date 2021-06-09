@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import * as SecureLS from 'secure-ls';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 // Routes
 import { AppRoutingModule } from './app-routing.module';
@@ -42,7 +43,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
-import { JwtModule, JwtModuleOptions } from "@auth0/angular-jwt";
+import { JwtModule } from "@auth0/angular-jwt";
 
 // Components
 import { AppComponent } from "./component/app/app.component";
@@ -65,6 +66,14 @@ import { TokenHttpInterceptor } from "./interceptor/token.http.interceptor";
 
 // Guards
 import { AuthGuard } from "./guard/auth.guard";
+import { UserListComponent } from './component/user/user-list/user-list.component';
+import { UserFormComponent } from './component/user/user-form/user-form.component';
+import { UserNewComponent } from './component/user/user-new/user-new.component';
+import { UserEditComponent } from './component/user/user-edit/user-edit.component';
+import { DocumentListComponent } from './component/document/document-list/document-list.component';
+import { DocumentShowComponent } from './component/document/document-show/document-show.component';
+import { FlowCreateComponent } from './component/status-flow/flow-create/flow-create.component';
+import { DragDropModule } from "@angular/cdk/drag-drop";
 
 let ls = new SecureLS({});
 
@@ -100,7 +109,8 @@ const materialModules = [
   MatGridListModule,
   MatRadioModule,
   MatDatepickerModule,
-  MatTooltipModule
+  MatTooltipModule,
+  DragDropModule
 ];
 
 export function tokenGetter() {
@@ -121,7 +131,14 @@ export function tokenGetter() {
     StatusListComponent,
     StatusFormComponent,
     StatusNewComponent,
-    StatusEditComponent
+    StatusEditComponent,
+    UserListComponent,
+    UserFormComponent,
+    UserNewComponent,
+    UserEditComponent,
+    DocumentListComponent,
+    DocumentShowComponent,
+    FlowCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -131,6 +148,7 @@ export function tokenGetter() {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    PdfViewerModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter

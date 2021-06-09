@@ -31,7 +31,8 @@ export class AuthService extends ParentService {
    */
   login(data: object) {
     this.postMethod('auth', data, {}).subscribe((data: any) => {
-      var user = Object.assign(new UserModel(), data);
+      var user: UserModel = Object.assign(new UserModel(), data);
+      user.userRoles = user.usersRoles;
       this.ls.set('token', user.token);
       this.ls.set('userData', JSON.stringify(user));
       this.setCurrentUser(Object.assign(user));
@@ -59,7 +60,7 @@ export class AuthService extends ParentService {
    * Get the current user from local storage
    */
   getCurrentUserFromStorage() {
-    return JSON.parse(this.ls.get("userData"));
+    return this.ls.get("userData") != '' ? JSON.parse(this.ls.get("userData")) : null;
   }
 
   /**

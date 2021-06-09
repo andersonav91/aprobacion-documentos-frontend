@@ -1,0 +1,7 @@
+<h2>Editar Usuario / {{model.name}}</h2>
+
+<app-user-form [isNew]="false" (onSubmit)="editUser($event)"
+               (onCancel)="cancel()"
+               (onPasswordCancel)="cancel()"
+               (onPasswordSubmit)="changepassword($event)"
+               [eventModel]="eventSubject.asObservable()"></app-user-form>

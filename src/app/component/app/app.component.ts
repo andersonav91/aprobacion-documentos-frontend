@@ -3,6 +3,7 @@ import { SidebarService } from "../../service/sidebar.service";
 import { AuthService } from "../../service/auth.service";
 import { MenuModel } from "../../model/menu";
 import { Router } from "@angular/router";
+import { UserModel } from "../../model/user";
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,8 @@ export class AppComponent implements OnInit {
 
   public showSidebar: boolean = false;
   @ViewChild('content', {static: true}) content: ElementRef;
+
+  currentUser: UserModel;
 
   menuItems: MenuModel[] = [
     {
@@ -30,9 +33,23 @@ export class AppComponent implements OnInit {
       roles: ['all']
     },
     {
+      name: 'document',
+      title: 'Documentos',
+      icon: 'fact_check',
+      separator: true,
+      roles: ['all']
+    },
+    {
       name: 'document_type',
       title: 'Tipo Documentos',
-      icon: 'contact_page',
+      icon: 'analytics',
+      separator: true,
+      roles: ['admin']
+    },
+    {
+      name: 'user',
+      title: 'Usuarios',
+      icon: 'person',
       separator: true,
       roles: ['admin']
     },
@@ -40,6 +57,13 @@ export class AppComponent implements OnInit {
       name: 'status',
       title: 'Estados',
       icon: 'swap_horiz',
+      separator: true,
+      roles: ['admin']
+    },
+    {
+      name: 'flow',
+      title: 'Flujos',
+      icon: 'low_priority',
       separator: true,
       roles: ['admin']
     },
@@ -57,6 +81,7 @@ export class AppComponent implements OnInit {
     public sidebarService: SidebarService,
     private router: Router,
   ) {
+    this.currentUser = Object.assign(new UserModel(), this.authService.getCurrentUserFromStorage());
   }
 
   ngOnInit(): void {
@@ -84,8 +109,20 @@ export class AppComponent implements OnInit {
       case 'status':
         this.router.navigate(['/status']);
         break;
+      case 'user':
+        this.router.navigate(['/user']);
+        break;
+      case 'document':
+        this.router.navigate(['/document']);
+        break;
       case 'home':
         this.router.navigate(['']);
+        break;
+      case 'flow':
+        this.router.navigate(['/flow']);
+        break;
+      case 'profile':
+        this.router.navigate(['/user/' + this.currentUser.id + '/edit']);
         break;
     }
   }

@@ -44,13 +44,13 @@ export class ParentService {
    * Catch the error message from HttpService and display it as a notice message.
    */
   protected handleError(error: HttpErrorResponse, noticeService: NoticeService) {
-    let errorMessage = 'Unknown error!';
+    let errorMessage = 'Error Desconocido!';
     if (error.error instanceof ErrorEvent) {
       // Client-side errors
       errorMessage = `Error: ${error.error.message}`;
     } else {
       // Server-side errors
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      errorMessage = `Error Code: ${error.status}, Message: ${error.message}`;
     }
     this.noticeService.show(errorMessage, 'error');
     return throwError(errorMessage);

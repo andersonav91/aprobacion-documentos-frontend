@@ -27,7 +27,7 @@ export class StatusFormComponent implements OnInit {
   ngOnInit(): void {
     this.eventModel.subscribe((status: StatusModel) => {
       if(! this.isNew) {
-        delete status.id
+        delete status.id;
         this.statusForm.setValue(status);
       }
     });
@@ -52,6 +52,5 @@ export class StatusFormComponent implements OnInit {
   get f() {
     return this.statusForm.controls;
   }
-
 
 }

@@ -21,7 +21,8 @@
       "es2018",
       "dom"
     ],
-    "noStrictGenericChecks": true
+    "noStrictGenericChecks": true,
+    "strictNullChecks":false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
