@@ -51,4 +51,11 @@ export class UserService extends ParentService {
     return this.putMethod('users/change-password/' + id, data);
   }
 
+  /**
+   * Constructs a `PUT` request that changes the user password as an admin user.
+   */
+  changePasswordAdmin(id: number, data: any): any {
+    return this.putMethod('users/change-password-admin/' + id, data);
+  }
+
 }

@@ -20,7 +20,7 @@
 
         <mat-card-content>
           <mat-form-field class="form-element">
-            <input matInput placeholder="Nombre de Usuario" formControlName="username">
+            <input matInput placeholder="Nombre de Usuario" formControlName="username" [readonly]="! (authService.currentUser | async)?.hasValidRole(['admin'])">
             <mat-error *ngIf="f.username.touched && f.username.invalid">Nombre de Usuario es requerido.</mat-error>
           </mat-form-field>
         </mat-card-content>
@@ -52,8 +52,7 @@
   <mat-tab label="Contraseña">
     <div class="form-container">
       <form class="login-form form" [formGroup]="passwordForm" (ngSubmit)="sendPasswordForm()">
-
-        <mat-card-content>
+        <mat-card-content *ngIf="! (authService.currentUser | async)?.hasValidRole(['admin'])">
           <mat-form-field class="form-element">
             <input matInput placeholder="Contraseña Actual" formControlName="currentPassword" type="password">
             <mat-error *ngIf="fp.currentPassword.touched && fp.currentPassword.invalid">Contraseña Actual es requerido.</mat-error>
@@ -104,7 +103,7 @@
 
     <mat-card-content>
       <mat-form-field class="form-element">
-        <input matInput placeholder="Nombre de Usuario" formControlName="username" [readonly]="! isNew">
+        <input matInput placeholder="Nombre de Usuario" formControlName="username" [readonly]="! (authService.currentUser | async)?.hasValidRole(['admin'])">
         <mat-error *ngIf="f.username.touched && f.username.invalid">Nombre de Usuario es requerido.</mat-error>
       </mat-form-field>
     </mat-card-content>

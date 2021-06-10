@@ -62,11 +62,19 @@ export class UserEditComponent implements OnInit {
   }
 
   changepassword(data: any) {
-    let formData = {'newPassword': data.password, 'oldPassword': data.currentPassword};
-    this.userService.changePassword(this.id, formData).subscribe((response: any) => {
-      this.noticeService.show("Contraseña cambiada correctamente.", "success");
-      this.cancel();
-    });
+    if(this.currentUser.hasValidRole(['admin'])) {
+      let formData = {'newPassword': data.password};
+      this.userService.changePasswordAdmin(this.id, formData).subscribe((response: any) => {
+        this.noticeService.show("Contraseña cambiada correctamente.", "success");
+        this.cancel();
+      });
+    } else {
+      let formData = {'newPassword': data.password, 'oldPassword': data.currentPassword};
+      this.userService.changePassword(this.id, formData).subscribe((response: any) => {
+        this.noticeService.show("Contraseña cambiada correctamente.", "success");
+        this.cancel();
+      });
+    }
   }
 
 }

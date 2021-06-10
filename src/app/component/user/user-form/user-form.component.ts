@@ -28,6 +28,7 @@ export class UserFormComponent implements OnInit {
   @Output() onPasswordCancel = new EventEmitter();
 
   matcher = new ErrorStateMatcher();
+  currentUser: UserModel;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,6 +41,7 @@ export class UserFormComponent implements OnInit {
       this.roles = data.map(item => Object.assign(new RoleModel(), item));
     });
 
+    this.currentUser = Object.assign(new UserModel(), this.authService.getCurrentUserFromStorage());
   }
 
   ngOnInit(): void {
@@ -50,8 +52,6 @@ export class UserFormComponent implements OnInit {
         user.role = user.usersRoles[0].role.id;
         delete user.userRoles;
         delete user.token;
-        delete user.passwordRepeat;
-        delete user.password;
         delete user.usersRoles;
         delete user.currentPassword;
         this.userForm.setValue(user);
@@ -61,6 +61,10 @@ export class UserFormComponent implements OnInit {
     if(this.isNew) {
       this.userForm.addControl('password', new FormControl('', Validators.required));
       this.userForm.addControl('passwordRepeat', new FormControl('', Validators.required));
+    }
+
+    if(this.currentUser.hasValidRole(['admin'])) {
+      this.passwordForm.removeControl('currentPassword');
     }
   }
 
@@ -87,9 +91,6 @@ export class UserFormComponent implements OnInit {
         role: ['', Validators.required],
       });
     }
-
-
-
 
     return tmpForm;
   }
