@@ -18,6 +18,7 @@ export class FlowCreateComponent implements OnInit {
   documentTypes: DocumentTypeModel[];
   currentDocumentTypeId: number = 0;
   statuses: StatusModel[];
+  currentFlow: any = null;
 
   constructor(
     private documentTypeService: DocumentTypeService,
@@ -29,9 +30,7 @@ export class FlowCreateComponent implements OnInit {
     this.documentTypeService.listDocumentTypes().subscribe((data: any[]) => {
       this.documentTypes = data.map(item => Object.assign(new DocumentTypeModel(), item));
     });
-    this.statusService.listStatuses().subscribe((data: any[]) => {
-      this.statuses = data.map(item => Object.assign(new StatusModel(), item));
-    });
+    this.getAllStatuses();
   }
 
   ngOnInit(): void {
@@ -39,6 +38,20 @@ export class FlowCreateComponent implements OnInit {
 
   setDocumentType(target: any) {
     this.currentDocumentTypeId = target.value;
+    if(this.currentDocumentTypeId && this.currentDocumentTypeId != 0) {
+      this.flowService.getFlow(this.currentDocumentTypeId).subscribe((data: any) => {
+        this.statuses = data.flowStates.map((item: any) => Object.assign(new StatusModel(), item.state));
+      });
+    } else {
+      this.getAllStatuses();
+    }
+
+  }
+
+  getAllStatuses() {
+    this.statusService.listStatuses().subscribe((data: any[]) => {
+      this.statuses = data.map(item => Object.assign(new StatusModel(), item));
+    });
   }
 
   reorderList(event: CdkDragDrop<string[]>) {

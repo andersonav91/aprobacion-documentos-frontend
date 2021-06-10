@@ -23,5 +23,12 @@ export class FlowService extends ParentService {
     return this.postMethod('flows-states', data);
   }
 
+  /**
+   * Constructs a `GET` request that obtain the states for a flow.
+   */
+  getFlow(documentTypeId: number): any {
+    return this.getMethod('flows/' + documentTypeId);
+  }
+
 
 }

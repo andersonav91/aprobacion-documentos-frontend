@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import * as SecureLS from 'secure-ls';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 // Routes
 import { AppRoutingModule } from './app-routing.module';
@@ -74,6 +73,7 @@ import { DocumentListComponent } from './component/document/document-list/docume
 import { DocumentShowComponent } from './component/document/document-show/document-show.component';
 import { FlowCreateComponent } from './component/status-flow/flow-create/flow-create.component';
 import { DragDropModule } from "@angular/cdk/drag-drop";
+import {PdfJsViewerModule} from "ng2-pdfjs-viewer";
 
 let ls = new SecureLS({});
 
@@ -148,12 +148,12 @@ export function tokenGetter() {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    PdfViewerModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter
       }
     }),
+    PdfJsViewerModule,
     ...materialModules,
   ],
   providers: [{
