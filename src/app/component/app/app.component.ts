@@ -81,7 +81,9 @@ export class AppComponent implements OnInit {
     public sidebarService: SidebarService,
     private router: Router,
   ) {
-    this.currentUser = Object.assign(new UserModel(), this.authService.getCurrentUserFromStorage());
+    this.authService.currentUser.subscribe((user: UserModel) => {
+      this.currentUser = user;
+    });
   }
 
   ngOnInit(): void {

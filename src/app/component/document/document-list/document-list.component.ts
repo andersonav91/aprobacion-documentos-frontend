@@ -31,7 +31,9 @@ export class DocumentListComponent implements OnInit {
     private authService: AuthService,
     private documentTypeService: DocumentTypeService
   ) {
-    this.currentUser = Object.assign(new UserModel(), this.authService.getCurrentUserFromStorage());
+    this.authService.currentUser.subscribe((user: UserModel) => {
+      this.currentUser = user;
+    });
     this.documentTypeService.listDocumentTypes().subscribe((data: any[]) => {
       this.documentTypes = data.map(item => Object.assign(new DocumentTypeModel(), item));
     });

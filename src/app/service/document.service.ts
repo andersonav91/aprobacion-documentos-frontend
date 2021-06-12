@@ -24,4 +24,11 @@ export class DocumentService extends ParentService {
       this.getMethod('documents/' + userId + '?page=' + (offset / limit) + '&size=' + limit + '&documentType=' + documentTypeId);
   }
 
+  /**
+   * Constructs a `GET` request that obtains an specific document by the id and the user id.
+   */
+  getDocument(userId: number, documentId: number): any {
+    return this.getMethod('documents/' + userId + '/' + documentId);
+  }
+
 }

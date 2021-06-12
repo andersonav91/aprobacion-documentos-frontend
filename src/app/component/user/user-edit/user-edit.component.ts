@@ -25,6 +25,12 @@ export class UserEditComponent implements OnInit {
     private noticeService: NoticeService,
     private authService: AuthService
   ) {
+    this.authService.currentUser.subscribe((user: UserModel) => {
+      this.currentUser = user;
+    });
+  }
+
+  ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.id = Number(params.get('id'));
       this.userService.getUser(this.id).subscribe((data: any) => {
@@ -32,15 +38,17 @@ export class UserEditComponent implements OnInit {
         this.emitModel();
       });
     });
-
-    this.currentUser = Object.assign(new UserModel(), this.authService.getCurrentUserFromStorage());
-  }
-
-  ngOnInit(): void {
-    if(! this.currentUser.hasValidRole(['admin']) && this.id !== this.currentUser.id) {
+    if(! this.validUser()) {
       this.router.navigate(['']);
       this.noticeService.show("No tiene permisos para realizar esta acción.", "error");
+    };
+  }
+
+  validUser() {
+    if(! this.currentUser.hasValidRole(['admin']) && this.id !== this.currentUser.id) {
+      return false;
     }
+    return true;
   }
 
   emitModel() {
@@ -62,11 +70,18 @@ export class UserEditComponent implements OnInit {
   }
 
   changepassword(data: any) {
-    let formData = {'newPassword': data.password, 'oldPassword': data.currentPassword};
-    this.userService.changePassword(this.id, formData).subscribe((response: any) => {
-      this.noticeService.show("Contraseña cambiada correctamente.", "success");
-      this.cancel();
-    });
+    if(this.currentUser.hasValidRole(['admin'])) {
+      let formData = {'newPassword': data.password};
+      this.userService.changePasswordAdmin(this.id, formData).subscribe((response: any) => {
+        this.noticeService.show("Contraseña cambiada correctamente.", "success");
+        this.cancel();
+      });
+    } else {
+      let formData = {'newPassword': data.password, 'oldPassword': data.currentPassword};
+      this.userService.changePassword(this.id, formData).subscribe((response: any) => {
+        this.noticeService.show("Contraseña cambiada correctamente.", "success");
+      });
+    }
   }
 
 }

@@ -44,4 +44,11 @@ export class StatusService extends ParentService {
     return this.putMethod('states/' + data.id, data);
   }
 
+  /**
+   * Constructs a `GET` request that obtains the full list of statuses pending in a document flow.
+   */
+  listPendingStatuses(idDocumentType: number): any {
+    return this.getMethod('documents/' + idDocumentType + '/states')
+  }
+
 }

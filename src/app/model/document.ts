@@ -3,6 +3,9 @@ export class DocumentModel {
   date?: string = '';
   observation?: string = '';
   document?: any = {};
+  name?: string = '';
+  path?: string = '';
+  traceabilities?: any[];
 
   constructor() {
   }
