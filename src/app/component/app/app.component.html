@@ -5,7 +5,7 @@
     </button>
     <span class="toolbar-title">Aprobación de Documentos</span>
     <div fxFlex fxLayout fxLayoutAlign ="flex-end">
-      <span class="user-data">{{(authService.currentUser | async)?.name}}</span>
+      <span class="user-data">{{(authService.currentUser | async)?.name}} ({{(authService.currentUser | async)?.getRolesList()}})</span>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

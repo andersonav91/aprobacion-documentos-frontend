@@ -74,7 +74,7 @@ const routes: Routes = [
     path: 'user/:id/edit',
     component: UserEditComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['admin'] }
+    data: { roles: ['all'] }
   },
   {
     path: 'user/new',

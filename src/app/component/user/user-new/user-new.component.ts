@@ -38,5 +38,4 @@ export class UserNewComponent implements OnInit {
   changePassword(data: any) {
     console.log('changing password');
   }
-
 }

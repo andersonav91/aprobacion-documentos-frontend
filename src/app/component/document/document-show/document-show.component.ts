@@ -23,7 +23,9 @@ export class DocumentShowComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
   ) {
-    this.currentUser = Object.assign(new UserModel(), this.authService.getCurrentUserFromStorage());
+    this.authService.currentUser.subscribe((user: UserModel) => {
+      this.currentUser = user;
+    });
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.id = Number(params.get('id'));
       this.documentService.getDocument(this.currentUser.id, this.id).subscribe((data: any[]) => {

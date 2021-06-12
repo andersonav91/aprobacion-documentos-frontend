@@ -40,8 +40,9 @@ export class UserFormComponent implements OnInit {
     this.roleService.listRoles().subscribe((data: any[]) => {
       this.roles = data.map(item => Object.assign(new RoleModel(), item));
     });
-
-    this.currentUser = Object.assign(new UserModel(), this.authService.getCurrentUserFromStorage());
+    this.authService.currentUser.subscribe((user: UserModel) => {
+      this.currentUser = user;
+    });
   }
 
   ngOnInit(): void {

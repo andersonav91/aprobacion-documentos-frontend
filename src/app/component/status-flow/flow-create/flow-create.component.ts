@@ -41,7 +41,7 @@ export class FlowCreateComponent implements OnInit {
     this.currentDocumentTypeId = target.value;
     if(this.currentDocumentTypeId && this.currentDocumentTypeId != 0) {
       this.flowService.getFlow(this.currentDocumentTypeId).subscribe((data: any) => {
-        this.statuses = data.flowStates.map((item: any) => Object.assign(new StatusModel(), item.state));
+        this.statuses = data ? data.flowStates.map((item: any) => Object.assign(new StatusModel(), item.state)) : [];
         this.statusService.listPendingStatuses(this.currentDocumentTypeId).subscribe((data: any[]) => {
           this.pendingStatuses = data.map((item: any) => Object.assign(new StatusModel(), item));
         });
