@@ -3,7 +3,7 @@ import { DocumentTypeService } from "../../../service/document-type.service";
 import { DocumentTypeModel } from "../../../model/document-type";
 import { StatusModel } from "../../../model/status";
 import { StatusService } from "../../../service/status.service";
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
 import { Router } from "@angular/router";
 import { FlowService } from "../../../service/flow.service";
 import {NoticeService} from "../../../service/notice.service";
@@ -18,6 +18,7 @@ export class FlowCreateComponent implements OnInit {
   documentTypes: DocumentTypeModel[];
   currentDocumentTypeId: number = 0;
   statuses: StatusModel[];
+  pendingStatuses: StatusModel[] = [];
   currentFlow: any = null;
 
   constructor(
@@ -41,8 +42,12 @@ export class FlowCreateComponent implements OnInit {
     if(this.currentDocumentTypeId && this.currentDocumentTypeId != 0) {
       this.flowService.getFlow(this.currentDocumentTypeId).subscribe((data: any) => {
         this.statuses = data.flowStates.map((item: any) => Object.assign(new StatusModel(), item.state));
+        this.statusService.listPendingStatuses(this.currentDocumentTypeId).subscribe((data: any[]) => {
+          this.pendingStatuses = data.map((item: any) => Object.assign(new StatusModel(), item));
+        });
       });
-    } else {
+    }
+     else {
       this.getAllStatuses();
     }
 
@@ -54,8 +59,15 @@ export class FlowCreateComponent implements OnInit {
     });
   }
 
-  reorderList(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.statuses, event.previousIndex, event.currentIndex);
+  reorderList(event: CdkDragDrop<StatusModel[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(this.statuses, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    }
   }
 
   cancelFlow() {
@@ -76,7 +88,6 @@ export class FlowCreateComponent implements OnInit {
     this.flowService.saveFlow(data)
       .subscribe((response: any) => {
         this.noticeService.show("Flujo creado correctamente.", "success");
-        this.cancelFlow();
       });
   }
 

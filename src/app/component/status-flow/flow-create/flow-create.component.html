@@ -1,7 +1,8 @@
 <h2>Crear Flujo</h2>
 
 <div fxLayout fxLayoutAlign="start top">
-  <div fxFlex="40%">
+  <div fxFlex="31%">
+    <h4>Tipo Documento</h4>
     <mat-form-field appearance="fill" class="form-element" >
       <mat-label>Tipos de Documentos</mat-label>
       <select matNativeControl (change)="setDocumentType($event.target)">
@@ -15,7 +16,19 @@
     </div>
   </div>
 
-  <div cdkDropList (cdkDropListDropped)="reorderList($event)" class="dragdrop-wrapper" fxFlex="40%">
-    <div class="dragdrop-inner" *ngFor="let status of statuses" cdkDrag> {{status.name}} </div>
+  <div fxFlex="31%" class="status-list">
+    <h4>Estados Actuales</h4>
+    <div cdkDropList (cdkDropListDropped)="reorderList($event)" class="dragdrop-wrapper" id="currentStatuses" [cdkDropListData]="statuses"
+         #currentStatusesList="cdkDropList" [cdkDropListConnectedTo]="[pendingStatusesList]">
+      <div class="dragdrop-inner" *ngFor="let status of statuses" cdkDrag> {{status.name}} </div>
+    </div>
+  </div>
+
+  <div fxFlex="31%" class="status-list">
+    <h4>Estados Pendientes</h4>
+    <div cdkDropList (cdkDropListDropped)="reorderList($event)" class="dragdrop-wrapper" id="pendingStatuses" [cdkDropListData]="pendingStatuses"
+         #pendingStatusesList="cdkDropList" [cdkDropListConnectedTo]="[currentStatusesList]">
+      <div class="dragdrop-inner" *ngFor="let status of pendingStatuses" cdkDrag> {{status.name}} </div>
+    </div>
   </div>
 </div>
