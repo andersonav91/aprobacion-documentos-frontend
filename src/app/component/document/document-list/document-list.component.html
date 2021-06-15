@@ -1,11 +1,22 @@
-<h2>Documentos</h2>
+<h2>Gestión de Documentos</h2>
 
 <div fxLayout fxLayoutAlign="start center">
-  <mat-form-field appearance="fill" class="form-element" fxFlex="40%">
+  <mat-form-field appearance="fill" class="form-element" fxFlex="30%">
     <mat-label>Tipos de Documentos</mat-label>
     <select matNativeControl (change)="setDocumentType($event.target)">
       <option value=""></option>
       <option *ngFor="let documentType of documentTypes" value="{{documentType.id}}">{{documentType.name}}</option>
+    </select>
+  </mat-form-field>
+
+  <div class="form-element" fxFlex="2%">
+  </div>
+
+  <mat-form-field appearance="fill" class="form-element" fxFlex="30%">
+    <mat-label>Estado del Documento</mat-label>
+    <select matNativeControl (change)="setDocumentStatus($event.target)">
+      <option value="DP" selected>En Proceso</option>
+      <option value="DF">Finalizado</option>
     </select>
   </mat-form-field>
 </div>
@@ -45,15 +56,10 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Acciones</th>
     <td mat-cell *matCellDef="let row">
-      <button mat-icon-button matTooltip="Click para editar" class="iconbutton" color="primary"
-              [routerLink]="['/document/' + row.id + '/edit']">
-        <mat-icon aria-label="Edit">edit</mat-icon>
-      </button>
       <button mat-icon-button matTooltip="Click para gestionar" class="iconbutton" color="warn"
               [routerLink]="['/document/' + row.id + '/show']">
         <mat-icon aria-label="View">find_in_page</mat-icon>
       </button>
-
     </td>
   </ng-container>
 

@@ -23,6 +23,7 @@ export class DocumentListComponent implements OnInit {
   totalRows: number = 0;
   documentTypes: DocumentTypeModel[];
   filter: number = 0;
+  status: string = 'DP';
   offset: number = 0;
   limit: number = 5;
 
@@ -36,16 +37,15 @@ export class DocumentListComponent implements OnInit {
     });
     this.documentTypeService.listDocumentTypes().subscribe((data: any[]) => {
       this.documentTypes = data.map(item => Object.assign(new DocumentTypeModel(), item));
+      this.getData();
     });
-    this.getData();
   }
 
   ngOnInit(): void {
-
   }
 
   getData() {
-    this.documentService.listDocuments(this.currentUser.id!, this.offset, this.limit, this.filter).subscribe((data: any) => {
+    this.documentService.listDocuments(this.currentUser.id!, this.offset, this.limit, this.filter, this.status).subscribe((data: any) => {
       this.dataSource = new MatTableDataSource(
         data.documents.map((item: any) => Object.assign(new DocumentModel(), item))
       );
@@ -62,6 +62,11 @@ export class DocumentListComponent implements OnInit {
 
   setDocumentType(target: any) {
     this.filter = target.value;
+    this.getData();
+  }
+
+  setDocumentStatus(target: any) {
+    this.status = target.value;
     this.getData();
   }
 

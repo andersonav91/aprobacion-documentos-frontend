@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { DocumentService } from "../../../service/document.service";
 import { AuthService } from "../../../service/auth.service";
 import { UserModel } from "../../../model/user";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { DocumentModel } from "../../../model/document";
+import {MatTableDataSource} from "@angular/material/table";
+import {DocumentTypeModel} from "../../../model/document-type";
+import {NoticeService} from "../../../service/notice.service";
 
 @Component({
   selector: 'app-document-show',
@@ -16,15 +19,20 @@ export class DocumentShowComponent implements OnInit {
   currentDocument: DocumentModel;
   currentUser: UserModel;
   id: number = 0;
-  observations: string[];
+  userId: number = 0;
+  observations: string[] = [];
+
+  @ViewChild('observation') observation: ElementRef;
 
   constructor(
     private documentService: DocumentService,
     private authService: AuthService,
     private route: ActivatedRoute,
+    public noticeService: NoticeService
   ) {
     this.authService.currentUser.subscribe((user: UserModel) => {
       this.currentUser = user;
+      this.userId = user.id;
     });
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.id = Number(params.get('id'));
@@ -38,12 +46,17 @@ export class DocumentShowComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  approveDocument() {}
+  approveDocument() {
+    let data: any = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value };
+    this.documentService.approveDocument(data).subscribe((data: any[]) => {
+      this.noticeService.show("Observación agregada correctamente.", "success");
+    });
+  }
 
   denyDocument() {}
 
-  getObservations(document: any) {
-    if(! document) {
+  getObservations(document: any): any[] {
+    if(! document || (document && ! document.traceabilities)) {
       return [];
     }
     return document.traceabilities.map((item: any) => { return item.observation; });

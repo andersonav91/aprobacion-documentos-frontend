@@ -18,10 +18,10 @@ export class DocumentService extends ParentService {
   /**
    * Constructs a `GET` request that obtains the full list of documents by the user id.
    */
-  listDocuments(userId: number, offset: number, limit: number, documentTypeId: number): any {
+  listDocuments(userId: number, offset: number, limit: number, documentTypeId: number, documentState: string): any {
     return documentTypeId == 0 || documentTypeId === null ?
-      this.getMethod('documents/' + userId + '?page=' + (offset / limit) + '&size=' + limit) :
-      this.getMethod('documents/' + userId + '?page=' + (offset / limit) + '&size=' + limit + '&documentType=' + documentTypeId);
+      this.getMethod('documents/' + userId + '?page=' + (offset / limit) + '&size=' + limit + '&state=' + documentState) :
+      this.getMethod('documents/' + userId + '?page=' + (offset / limit) + '&size=' + limit + '&documentType=' + documentTypeId + '&state=' + documentState);
   }
 
   /**
@@ -29,6 +29,13 @@ export class DocumentService extends ParentService {
    */
   getDocument(userId: number, documentId: number): any {
     return this.getMethod('documents/' + userId + '/' + documentId);
+  }
+
+  /**
+   * Constructs a `POST` request that change the status of a document and adds a comment to it.
+   */
+  approveDocument(documentData: any): any {
+    return this.postMethod('documents/manage-documents/', documentData);
   }
 
 }
