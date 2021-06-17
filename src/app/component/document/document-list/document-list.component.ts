@@ -15,17 +15,17 @@ import { DocumentTypeModel } from "../../../model/document-type";
 })
 export class DocumentListComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'id', 'date', 'observation', 'document', 'path', 'actions'];
-  dataSource: MatTableDataSource<DocumentModel>;
   @ViewChild(MatPaginator, {read: true}) paginator: MatPaginator;
 
-  currentUser: UserModel;
-  totalRows: number = 0;
-  documentTypes: DocumentTypeModel[];
-  filter: number = 0;
-  status: string = 'DP';
-  offset: number = 0;
-  limit: number = 5;
+  public displayedColumns: string[] = ['position', 'id', 'date', 'observation', 'document', 'path', 'actions'];
+  public dataSource: MatTableDataSource<DocumentModel>;
+  public currentUser: UserModel;
+  public totalRows: number = 0;
+  public documentTypes: DocumentTypeModel[];
+  public filter: number = 0;
+  public status: string = 'DP';
+  public offset: number = 0;
+  public limit: number = 5;
 
   constructor(
     private documentService: DocumentService,

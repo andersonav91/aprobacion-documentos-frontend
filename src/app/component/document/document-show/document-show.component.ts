@@ -15,15 +15,14 @@ import {NoticeService} from "../../../service/notice.service";
 })
 export class DocumentShowComponent implements OnInit {
 
-  documentStatusEnabled: string = 'PROCESO';
-  documentStatusEnded: string = 'FINALIZADO';
-
-  pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
-  currentDocument: DocumentModel;
-  currentUser: UserModel;
-  id: number = 0;
-  userId: number = 0;
-  observations: string[] = [];
+  public documentStatusEnabled: string = 'PROCESO';
+  public documentStatusEnded: string = 'FINALIZADO';
+  public pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
+  public currentDocument: DocumentModel;
+  public currentUser: UserModel;
+  public id: number = 0;
+  public userId: number = 0;
+  public observations: string[] = [];
 
   @ViewChild('observation') observation: ElementRef;
 

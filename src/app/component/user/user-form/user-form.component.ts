@@ -6,6 +6,8 @@ import { RoleService } from "../../../service/role.service";
 import { RoleModel } from "../../../model/role";
 import { AuthService } from "../../../service/auth.service";
 import { MatchValidator } from "../../../util/match.validator";
+import { StatusService } from "../../../service/status.service";
+import { StatusModel } from "../../../model/status";
 
 @Component({
   selector: 'app-user-form',
@@ -17,22 +19,23 @@ export class UserFormComponent implements OnInit {
   public userForm: FormGroup;
   public passwordForm: FormGroup;
   public roles: RoleModel[];
+  public statuses: StatusModel[];
+  public currentUser: UserModel;
 
   @Input() isNew: boolean;
   @Input() model: any = {};
-  @Output() onSubmit = new EventEmitter();
-  @Output() onCancel = new EventEmitter();
   @Input() eventModel: Observable<UserModel> = new Observable();
 
+  @Output() onSubmit = new EventEmitter();
+  @Output() onCancel = new EventEmitter();
   @Output() onPasswordSubmit = new EventEmitter();
   @Output() onPasswordCancel = new EventEmitter();
-
-  currentUser: UserModel;
 
   constructor(
     private formBuilder: FormBuilder,
     private roleService: RoleService,
     public authService: AuthService,
+    public statusService: StatusService
   ) {
 
   }
@@ -70,6 +73,10 @@ export class UserFormComponent implements OnInit {
     if(this.currentUser.hasValidRole(['admin'])) {
       this.passwordForm.removeControl('currentPassword');
     }
+
+    this.statusService.listStatuses().subscribe((statuses: StatusModel[]) => {
+      this.statuses = statuses;
+    });
   }
 
   createUserForm() {
