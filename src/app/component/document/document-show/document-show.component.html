@@ -1,21 +1,27 @@
 <h2>Gestionar Documento / {{currentDocument ? currentDocument.name : ''}}</h2>
 
-<div fxLayout fxLayoutAlign="start top" style="max-height: 100%; height: 100%">
-  <div fxFlex="55%" style="max-height: 100%; height: 100%">
-    <div style="max-width: 100%; max-height: 100%; height: 80%;">
+<div class="show-document-container" fxLayout fxLayoutAlign="start top">
+  <div fxFlex="55%" class="pdf-container">
+    <div class="pdf-visor" >
       <ng2-pdfjs-viewer #pdfViewerAutoLoad [pdfSrc]="pdfSrc"></ng2-pdfjs-viewer>
     </div>
   </div>
   <div fxFlex="45%" style="margin: 10px; margin-left: 20px;">
     <h3>Observaciones</h3>
-    <ol><li *ngFor="let observation of observations">{{observation}}</li></ol>
-    <mat-form-field appearance="fill" class="form-element" >
+
+    <div class="observations">
+      <div class="overlay notice notice-success" *ngIf="observations.length == 0">
+        No hay observaciones para este documento.
+      </div>
+      <ol><li *ngFor="let observation of observations">{{observation}}</li></ol>
+    </div>
+    <mat-form-field appearance="fill" class="form-element" *ngIf="! isEnded(currentDocument)">
       <mat-label>Observaciones</mat-label>
-      <textarea matInput
+      <textarea matInput #observation
                 placeholder="Observaciones">
-  </textarea>
+      </textarea>
     </mat-form-field>
-    <div class="form-element">
+    <div class="form-element" *ngIf="! isEnded(currentDocument)">
       <button mat-raised-button color="primary" type="button" (click)="approveDocument()" class="button">Aprobar Documento</button>
       <button mat-raised-button type="button" class="button cancel-button" (click)="denyDocument()">Rechazar Documento</button>
     </div>

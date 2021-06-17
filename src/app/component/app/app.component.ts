@@ -12,12 +12,12 @@ import { UserModel } from "../../model/user";
 })
 export class AppComponent implements OnInit {
 
-  public showSidebar: boolean = false;
   @ViewChild('content', {static: true}) content: ElementRef;
 
-  currentUser: UserModel;
+  public showSidebar: boolean = false;
+  public currentUser: UserModel;
 
-  menuItems: MenuModel[] = [
+  public menuItems: MenuModel[] = [
     {
       name: 'home',
       title: 'Inicio',
@@ -34,10 +34,10 @@ export class AppComponent implements OnInit {
     },
     {
       name: 'document',
-      title: 'Documentos',
+      title: 'Gestión Documentos',
       icon: 'fact_check',
       separator: true,
-      roles: ['all']
+      roles: ['asesor']
     },
     {
       name: 'document_type',

@@ -50,7 +50,7 @@ export class ParentService {
       errorMessage = `Error: ${error.error.message}`;
     } else {
       // Server-side errors
-      errorMessage = `Error Code: ${error.status}, Message: ${error.message}`;
+      errorMessage = `Código Error: ${error.status}, Mensaje: ${error.error.message}`;
     }
     this.noticeService.show(errorMessage, 'error');
     return throwError(errorMessage);

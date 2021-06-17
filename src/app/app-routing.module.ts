@@ -86,7 +86,7 @@ const routes: Routes = [
     path: 'document',
     component: DocumentListComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['all'] }
+    data: { roles: ['asesor'] }
   },
   {
     path: 'document/:id/show',

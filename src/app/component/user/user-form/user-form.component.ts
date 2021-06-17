@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { UserModel } from "../../../model/user";
 import { RoleService } from "../../../service/role.service";
 import { RoleModel } from "../../../model/role";
-import {AuthService} from "../../../service/auth.service";
-import {ErrorStateMatcher} from "../../../util/error.state.matcher";
+import { AuthService } from "../../../service/auth.service";
+import { MatchValidator } from "../../../util/match.validator";
+import { StatusService } from "../../../service/status.service";
+import { StatusModel } from "../../../model/status";
 
 @Component({
   selector: 'app-user-form',
@@ -17,24 +19,28 @@ export class UserFormComponent implements OnInit {
   public userForm: FormGroup;
   public passwordForm: FormGroup;
   public roles: RoleModel[];
+  public statuses: StatusModel[];
+  public currentUser: UserModel;
 
-  @Input() isNew: boolean = true;
+  @Input() isNew: boolean;
   @Input() model: any = {};
-  @Output() onSubmit = new EventEmitter();
-  @Output() onCancel = new EventEmitter();
   @Input() eventModel: Observable<UserModel> = new Observable();
 
+  @Output() onSubmit = new EventEmitter();
+  @Output() onCancel = new EventEmitter();
   @Output() onPasswordSubmit = new EventEmitter();
   @Output() onPasswordCancel = new EventEmitter();
-
-  matcher = new ErrorStateMatcher();
-  currentUser: UserModel;
 
   constructor(
     private formBuilder: FormBuilder,
     private roleService: RoleService,
     public authService: AuthService,
+    public statusService: StatusService
   ) {
+
+  }
+
+  ngOnInit(): void {
     this.userForm = this.createUserForm();
     this.passwordForm = this.createPasswordForm();
     this.roleService.listRoles().subscribe((data: any[]) => {
@@ -43,9 +49,7 @@ export class UserFormComponent implements OnInit {
     this.authService.currentUser.subscribe((user: UserModel) => {
       this.currentUser = user;
     });
-  }
 
-  ngOnInit(): void {
     this.eventModel.subscribe((user: UserModel) => {
       if(! this.isNew) {
         delete user.id;
@@ -55,6 +59,8 @@ export class UserFormComponent implements OnInit {
         delete user.token;
         delete user.usersRoles;
         delete user.currentPassword;
+        delete user.passwordRepeat;
+        delete user.password;
         this.userForm.setValue(user);
       }
     });
@@ -67,6 +73,10 @@ export class UserFormComponent implements OnInit {
     if(this.currentUser.hasValidRole(['admin'])) {
       this.passwordForm.removeControl('currentPassword');
     }
+
+    this.statusService.listStatuses().subscribe((statuses: StatusModel[]) => {
+      this.statuses = statuses;
+    });
   }
 
   createUserForm() {
@@ -82,14 +92,14 @@ export class UserFormComponent implements OnInit {
         role: ['', Validators.required],
         password: ['', Validators.required],
         passwordRepeat: ['', Validators.required],
-      }, { validators: this.checkPasswords });
+      }, { validators: MatchValidator('password', 'passwordRepeat') });
     } else {
       tmpForm = this.formBuilder.group({
         name: ['', Validators.required],
         email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
         username: ['', Validators.required],
         phone: ['', Validators.required],
-        role: ['', Validators.required],
+        role: [{value: '', disabled: ! this.isNew}, Validators.required],
       });
     }
 
@@ -101,7 +111,7 @@ export class UserFormComponent implements OnInit {
       password: ['', Validators.required],
       passwordRepeat: ['', Validators.required],
       currentPassword: ['', Validators.required]
-    }, { validators: this.checkPasswords });
+    }, { validators: MatchValidator('password', 'passwordRepeat') });
 
     return tmpForm;
   }
