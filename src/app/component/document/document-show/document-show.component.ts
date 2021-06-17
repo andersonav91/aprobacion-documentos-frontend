@@ -15,6 +15,9 @@ import {NoticeService} from "../../../service/notice.service";
 })
 export class DocumentShowComponent implements OnInit {
 
+  documentStatusEnabled: string = 'PROCESO';
+  documentStatusEnded: string = 'FINALIZADO';
+
   pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
   currentDocument: DocumentModel;
   currentUser: UserModel;
@@ -60,6 +63,10 @@ export class DocumentShowComponent implements OnInit {
       return [];
     }
     return document.traceabilities.map((item: any) => { return item.observation; });
+  }
+
+  isEnded(document: DocumentModel): boolean {
+    return document && document.documentState == this.documentStatusEnded ? true : false;
   }
 
 }

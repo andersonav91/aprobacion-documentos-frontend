@@ -6,6 +6,7 @@ export class DocumentModel {
   name?: string = '';
   path?: string = '';
   traceabilities?: any[];
+  documentState?: string = '';
 
   constructor() {
   }
