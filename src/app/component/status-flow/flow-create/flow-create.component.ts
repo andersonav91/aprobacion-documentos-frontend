@@ -6,7 +6,7 @@ import { StatusService } from "../../../service/status.service";
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
 import { Router } from "@angular/router";
 import { FlowService } from "../../../service/flow.service";
-import {NoticeService} from "../../../service/notice.service";
+import { NoticeService } from "../../../service/notice.service";
 
 @Component({
   selector: 'app-flow-create',
@@ -15,11 +15,10 @@ import {NoticeService} from "../../../service/notice.service";
 })
 export class FlowCreateComponent implements OnInit {
 
-  documentTypes: DocumentTypeModel[];
-  currentDocumentTypeId: number = 0;
-  statuses: StatusModel[];
-  pendingStatuses: StatusModel[] = [];
-  currentFlow: any = null;
+  public documentTypes: DocumentTypeModel[];
+  public currentDocumentTypeId: number = 0;
+  public statuses: StatusModel[];
+  public pendingStatuses: StatusModel[] = [];
 
   constructor(
     private documentTypeService: DocumentTypeService,

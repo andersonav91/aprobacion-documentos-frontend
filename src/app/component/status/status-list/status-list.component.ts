@@ -12,8 +12,8 @@ import { StatusModel } from "../../../model/status";
 })
 export class StatusListComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'id', 'name', 'actions'];
-  dataSource: MatTableDataSource<StatusModel>;
+  public displayedColumns: string[] = ['position', 'id', 'name', 'actions'];
+  public dataSource: MatTableDataSource<StatusModel>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 

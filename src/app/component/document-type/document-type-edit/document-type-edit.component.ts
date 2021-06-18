@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DocumentTypeService } from "../../../service/document-type.service";
 import { DocumentTypeModel } from "../../../model/document-type";
-import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {Subject} from "rxjs";
-import {NoticeService} from "../../../service/notice.service";
+import { ActivatedRoute, ParamMap, Router } from "@angular/router";
+import { Subject } from "rxjs";
+import { NoticeService } from "../../../service/notice.service";
 
 @Component({
   selector: 'app-document-type-edit',
