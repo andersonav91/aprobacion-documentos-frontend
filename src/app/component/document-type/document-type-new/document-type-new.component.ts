@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { DocumentTypeService } from "../../../service/document-type.service";
 import { DocumentTypeModel } from "../../../model/document-type";
-import {NoticeService} from "../../../service/notice.service";
+import { NoticeService } from "../../../service/notice.service";
 
 @Component({
   selector: 'app-document-type-new',

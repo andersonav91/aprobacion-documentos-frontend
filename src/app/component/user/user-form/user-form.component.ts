@@ -1,13 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { UserModel } from "../../../model/user";
 import { RoleService } from "../../../service/role.service";
 import { RoleModel } from "../../../model/role";
 import { AuthService } from "../../../service/auth.service";
-import { MatchValidator } from "../../../util/match.validator";
+import { MatchValidator } from "../../../validator/match.validator";
 import { StatusService } from "../../../service/status.service";
 import { StatusModel } from "../../../model/status";
+import { COMMA, ENTER } from "@angular/cdk/keycodes";
+import { map, startWith } from 'rxjs/operators';
+import { MatChipInputEvent } from "@angular/material/chips";
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 
 @Component({
   selector: 'app-user-form',
@@ -19,7 +23,6 @@ export class UserFormComponent implements OnInit {
   public userForm: FormGroup;
   public passwordForm: FormGroup;
   public roles: RoleModel[];
-  public statuses: StatusModel[];
   public currentUser: UserModel;
 
   @Input() isNew: boolean;
@@ -31,13 +34,62 @@ export class UserFormComponent implements OnInit {
   @Output() onPasswordSubmit = new EventEmitter();
   @Output() onPasswordCancel = new EventEmitter();
 
+
+  public visible = true;
+  public selectable = true;
+  public removable = true;
+  public separatorKeysCodes: number[] = [ENTER, COMMA];
+  public statusCtrl = new FormControl('');
+  public filteredStatuses: Observable<StatusModel[]>;
+  public statuses: StatusModel[] = [];
+  public allStatuses: StatusModel[] = [];
+
+  @ViewChild('statusInput') statusInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+
+
   constructor(
     private formBuilder: FormBuilder,
     private roleService: RoleService,
     public authService: AuthService,
     public statusService: StatusService
   ) {
+    this.filteredStatuses = this.statusCtrl.valueChanges.pipe(
+      startWith(null),
+      map((status: string | null) => status ? this._filter(status) : this.allStatuses.slice()));
+  }
 
+  private _filter(value: string): StatusModel[] {
+    const filterValue = value.toLowerCase();
+    return this.allStatuses.filter(status => status.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.statuses.push(this.allStatuses.find((status: StatusModel) => status.name == value));
+    }
+    event.chipInput!.clear();
+    this.statusCtrl.setValue(null);
+  }
+
+  remove(value: string): void {
+    console.log(value, this.statuses);
+    const index = this.statuses.indexOf(this.statuses.find((status: StatusModel) => status.name == value));
+    if (index >= 0) {
+      this.statuses.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    if(
+      this.statuses.filter((status: StatusModel) =>
+        status.name.toLowerCase() == event.option.viewValue.toLowerCase()).length == 0
+    ) {
+      this.statuses.push(this.allStatuses.find((status: StatusModel) => status.name == event.option.viewValue));
+    }
+    this.statusInput.nativeElement.value = '';
+    this.statusCtrl.setValue(null);
   }
 
   ngOnInit(): void {
@@ -68,6 +120,7 @@ export class UserFormComponent implements OnInit {
     if(this.isNew) {
       this.userForm.addControl('password', new FormControl('', Validators.required));
       this.userForm.addControl('passwordRepeat', new FormControl('', Validators.required));
+      this.userForm.addControl('statuses', this.statusCtrl);
     }
 
     if(this.currentUser.hasValidRole(['admin'])) {
@@ -75,7 +128,7 @@ export class UserFormComponent implements OnInit {
     }
 
     this.statusService.listStatuses().subscribe((statuses: StatusModel[]) => {
-      this.statuses = statuses;
+      this.allStatuses = statuses;
     });
   }
 

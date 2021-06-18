@@ -43,6 +43,8 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { JwtModule } from "@auth0/angular-jwt";
+import { DragDropModule } from "@angular/cdk/drag-drop";
+import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
 
 // Components
 import { AppComponent } from "./component/app/app.component";
@@ -58,13 +60,6 @@ import { StatusListComponent } from './component/status/status-list/status-list.
 import { StatusFormComponent } from './component/status/status-form/status-form.component';
 import { StatusNewComponent } from './component/status/status-new/status-new.component';
 import { StatusEditComponent } from './component/status/status-edit/status-edit.component';
-
-// Interceptors
-import { CustomHttpInterceptor } from "./interceptor/custom.http.interceptor";
-import { TokenHttpInterceptor } from "./interceptor/token.http.interceptor";
-
-// Guards
-import { AuthGuard } from "./guard/auth.guard";
 import { UserListComponent } from './component/user/user-list/user-list.component';
 import { UserFormComponent } from './component/user/user-form/user-form.component';
 import { UserNewComponent } from './component/user/user-new/user-new.component';
@@ -72,8 +67,13 @@ import { UserEditComponent } from './component/user/user-edit/user-edit.componen
 import { DocumentListComponent } from './component/document/document-list/document-list.component';
 import { DocumentShowComponent } from './component/document/document-show/document-show.component';
 import { FlowCreateComponent } from './component/status-flow/flow-create/flow-create.component';
-import { DragDropModule } from "@angular/cdk/drag-drop";
-import {PdfJsViewerModule} from "ng2-pdfjs-viewer";
+
+// Interceptors
+import { CustomHttpInterceptor } from "./interceptor/custom.http.interceptor";
+import { TokenHttpInterceptor } from "./interceptor/token.http.interceptor";
+
+// Guards
+import { AuthGuard } from "./guard/auth.guard";
 
 let ls = new SecureLS({});
 

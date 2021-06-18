@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { ParentService } from "./parent.service";
 import { NoticeService } from "./notice.service";
-import {DocumentTypeModel} from "../model/document-type";
+import { DocumentTypeModel } from "../model/document-type";
 
 @Injectable({
   providedIn: 'root'

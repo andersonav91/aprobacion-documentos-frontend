@@ -1,12 +1,10 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DocumentService } from "../../../service/document.service";
 import { AuthService } from "../../../service/auth.service";
 import { UserModel } from "../../../model/user";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { DocumentModel } from "../../../model/document";
-import {MatTableDataSource} from "@angular/material/table";
-import {DocumentTypeModel} from "../../../model/document-type";
-import {NoticeService} from "../../../service/notice.service";
+import { NoticeService } from "../../../service/notice.service";
 
 @Component({
   selector: 'app-document-show',

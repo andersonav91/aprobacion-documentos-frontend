@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {Observable} from "rxjs";
-import {DocumentTypeModel} from "../../../model/document-type";
-
+import { Observable } from "rxjs";
+import { DocumentTypeModel } from "../../../model/document-type";
 
 @Component({
   selector: 'app-document-type-form',

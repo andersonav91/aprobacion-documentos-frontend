@@ -12,8 +12,8 @@ import { MatSort } from "@angular/material/sort";
 })
 export class DocumentTypeListComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'id', 'name', 'actions'];
-  dataSource: MatTableDataSource<DocumentTypeModel>;
+  public displayedColumns: string[] = ['position', 'id', 'name', 'actions'];
+  public dataSource: MatTableDataSource<DocumentTypeModel>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { ParentService } from "./parent.service";
 import { NoticeService } from "./notice.service";
-import {UserModel} from "../model/user";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +28,5 @@ export class FlowService extends ParentService {
   getFlow(documentTypeId: number): any {
     return this.getMethod('flows/' + documentTypeId);
   }
-
 
 }

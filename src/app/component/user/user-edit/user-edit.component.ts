@@ -4,7 +4,7 @@ import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { NoticeService } from "../../../service/notice.service";
 import { UserModel } from "../../../model/user";
 import { UserService } from "../../../service/user.service";
-import {AuthService} from "../../../service/auth.service";
+import { AuthService } from "../../../service/auth.service";
 
 @Component({
   selector: 'app-user-edit',
@@ -16,7 +16,7 @@ export class UserEditComponent implements OnInit {
   public model: UserModel = new UserModel();
   public eventSubject: Subject<UserModel> = new Subject<UserModel>();
   private id: number = 0;
-  currentUser: UserModel;
+  public currentUser: UserModel;
 
   constructor(
     private userService: UserService,
