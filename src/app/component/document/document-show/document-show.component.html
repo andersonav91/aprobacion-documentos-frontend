@@ -17,9 +17,7 @@
     </div>
     <mat-form-field appearance="fill" class="form-element" *ngIf="! isEnded(currentDocument)">
       <mat-label>Observaciones</mat-label>
-      <textarea matInput #observation
-                placeholder="Observaciones">
-      </textarea>
+      <textarea matInput #observation placeholder="Observaciones"></textarea>
     </mat-form-field>
     <div class="form-element" *ngIf="! isEnded(currentDocument)">
       <button mat-raised-button color="primary" type="button" (click)="approveDocument()" class="button">Aprobar Documento</button>

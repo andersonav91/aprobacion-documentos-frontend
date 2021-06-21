@@ -171,7 +171,7 @@ export class UserFormComponent implements OnInit {
 
   sendUserForm() {
     if(this.userForm.valid){
-      this.onSubmit.emit(this.userForm.value);
+      this.onSubmit.emit(Object.assign(this.userForm.value, {userStates: this.statuses}));
     }
   }
 

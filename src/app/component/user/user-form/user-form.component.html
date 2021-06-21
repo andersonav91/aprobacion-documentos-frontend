@@ -34,7 +34,7 @@
 
         <mat-card-content *ngIf="(authService.currentUser | async)?.hasValidRole(['admin'])">
           <mat-form-field appearance="fill" class="form-element">
-            <mat-label>Roles</mat-label>
+            <mat-label>Rol</mat-label>
             <select matNativeControl required formControlName="role">
               <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</option>
             </select>
@@ -132,7 +132,7 @@
 
     <mat-card-content *ngIf="(authService.currentUser | async)?.hasValidRole(['admin'])">
       <mat-form-field appearance="fill" class="form-element">
-        <mat-label>Roles</mat-label>
+        <mat-label>Rol</mat-label>
         <select matNativeControl required formControlName="role" >
           <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</option>
         </select>

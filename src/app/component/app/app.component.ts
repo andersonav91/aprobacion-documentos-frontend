@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
       title: 'Gestión Documentos',
       icon: 'fact_check',
       separator: true,
-      roles: ['asesor']
+      roles: ['all']
     },
     {
       name: 'document_type',

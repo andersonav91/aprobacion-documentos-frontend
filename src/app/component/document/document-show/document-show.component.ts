@@ -47,13 +47,18 @@ export class DocumentShowComponent implements OnInit {
   }
 
   approveDocument() {
-    let data: any = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value };
+    let data: any = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value, action: 'AP'};
     this.documentService.approveDocument(data).subscribe((data: any[]) => {
-      this.noticeService.show("Observación agregada correctamente.", "success");
+      this.noticeService.show("Documento aprobado correctamente.", "success");
     });
   }
 
-  denyDocument() {}
+  denyDocument() {
+    let data: any = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value, action: 'DF'};
+    this.documentService.approveDocument(data).subscribe((data: any[]) => {
+      this.noticeService.show("Documento rechazado correctamente.", "success");
+    });
+  }
 
   getObservations(document: any): any[] {
     if(! document || (document && ! document.traceabilities)) {
