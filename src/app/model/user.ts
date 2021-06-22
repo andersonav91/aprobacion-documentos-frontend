@@ -10,6 +10,7 @@ export class UserModel {
   usersRoles?: any[] = [];
   token?: string = '';
   role?: number = 0;
+  active: boolean = true;
 
   constructor() {
   }

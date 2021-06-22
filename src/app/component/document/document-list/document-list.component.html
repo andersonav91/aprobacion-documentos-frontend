@@ -60,6 +60,11 @@
               [routerLink]="['/document/' + row.id + '/show']">
         <mat-icon aria-label="View">find_in_page</mat-icon>
       </button>
+
+      <button mat-icon-button matTooltip="Click para cambiar el flujo" class="iconbutton" color="primary"
+              [routerLink]="['/document/' + row.id + '/change-flow']" *ngIf="this.currentUser.hasValidRole(['admin'])">
+        <mat-icon aria-label="View">outbound</mat-icon>
+      </button>
     </td>
   </ng-container>
 

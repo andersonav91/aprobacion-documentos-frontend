@@ -145,6 +145,7 @@ export class UserFormComponent implements OnInit {
         role: ['', Validators.required],
         password: ['', Validators.required],
         passwordRepeat: ['', Validators.required],
+        active: ['1', Validators.required],
       }, { validators: MatchValidator('password', 'passwordRepeat') });
     } else {
       tmpForm = this.formBuilder.group({
@@ -152,6 +153,7 @@ export class UserFormComponent implements OnInit {
         email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
         username: ['', Validators.required],
         phone: ['', Validators.required],
+        active: ['', Validators.required],
         role: [{value: '', disabled: ! this.isNew}, Validators.required],
       });
     }
