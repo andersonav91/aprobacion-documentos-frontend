@@ -17,7 +17,7 @@ export class DocumentListComponent implements OnInit {
 
   @ViewChild(MatPaginator, {read: true}) paginator: MatPaginator;
 
-  public displayedColumns: string[] = ['position', 'id', 'date', 'observation', 'document', 'path', 'actions'];
+  public displayedColumns: string[] = ['position', 'id', 'date', 'name', 'path', 'documentState', 'actions'];
   public dataSource: MatTableDataSource<DocumentModel>;
   public currentUser: UserModel;
   public totalRows: number = 0;

@@ -37,27 +37,27 @@
     <th mat-header-cell *matHeaderCellDef> Fecha </th>
     <td mat-cell *matCellDef="let element"> {{element.date}} </td>
   </ng-container>
-
-  <ng-container matColumnDef="observation">
-    <th mat-header-cell *matHeaderCellDef> Observación </th>
-    <td mat-cell *matCellDef="let element"> {{element.observation}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="document">
-    <th mat-header-cell *matHeaderCellDef> Documento </th>
-    <td mat-cell *matCellDef="let element"> {{element.document.name}} </td>
+  
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
   </ng-container>
 
   <ng-container matColumnDef="path">
     <th mat-header-cell *matHeaderCellDef> Ruta </th>
-    <td mat-cell *matCellDef="let element"> {{element.document.path}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.path}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="documentState">
+    <th mat-header-cell *matHeaderCellDef> Estado </th>
+    <td mat-cell *matCellDef="let element"> {{element.documentState}} </td>
   </ng-container>
 
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Acciones</th>
     <td mat-cell *matCellDef="let row">
       <button mat-icon-button matTooltip="Click para gestionar" class="iconbutton" color="warn"
-              [routerLink]="['/document/' + row.id + '/show']">
+              [routerLink]="['/document/' + row.id + '/show']" *ngIf="this.currentUser.hasValidRole(['asesor'])">
         <mat-icon aria-label="View">find_in_page</mat-icon>
       </button>
 
