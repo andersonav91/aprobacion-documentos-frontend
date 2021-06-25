@@ -38,4 +38,11 @@ export class DocumentService extends ParentService {
     return this.postMethod('documents/manage-documents/', documentData);
   }
 
+  /**
+   * Constructs a `POST` request that changes the flow of a document.
+   */
+  changeDocumentFlow(documentData: any): any {
+    return this.postMethod('documents/reassign-documents/', documentData);
+  }
+
 }

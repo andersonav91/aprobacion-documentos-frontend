@@ -58,4 +58,10 @@ export class UserService extends ParentService {
     return this.putMethod('users/change-password-admin/' + id, data);
   }
 
+  /**
+   * Constructs a `GET` request that obtain the all the user tha could be assigned to a flow.
+   */
+  getAssignedUsersByDocument(idDocument: number): any {
+    return this.getMethod('documents/' + idDocument.toString() + '/users/');
+  }
 }

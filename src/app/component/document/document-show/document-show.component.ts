@@ -51,7 +51,7 @@ export class DocumentShowComponent implements OnInit {
     let data: any = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value, action: 'AP'};
     this.documentService.approveDocument(data).subscribe((data: any[]) => {
       this.noticeService.show("Documento aprobado correctamente.", "success");
-      this.router.navigate(['document']);
+      this.router.navigate(['/document']);
     });
   }
 
@@ -59,7 +59,7 @@ export class DocumentShowComponent implements OnInit {
     let data: any = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value, action: 'DF'};
     this.documentService.approveDocument(data).subscribe((data: any[]) => {
       this.noticeService.show("Documento rechazado correctamente.", "success");
-      this.router.navigate(['document']);
+      this.router.navigate(['/document']);
     });
   }
 

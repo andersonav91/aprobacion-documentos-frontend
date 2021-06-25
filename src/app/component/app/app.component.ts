@@ -79,7 +79,7 @@ export class AppComponent implements OnInit {
   constructor(
     public authService: AuthService,
     public sidebarService: SidebarService,
-    private router: Router,
+    private router: Router
   ) {
     this.authService.currentUser.subscribe((user: UserModel) => {
       this.currentUser = user;
