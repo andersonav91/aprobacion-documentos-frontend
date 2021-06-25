@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DocumentService } from "../../../service/document.service";
 import { AuthService } from "../../../service/auth.service";
 import { UserModel } from "../../../model/user";
-import { ActivatedRoute, ParamMap } from "@angular/router";
+import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import { DocumentModel } from "../../../model/document";
 import { NoticeService } from "../../../service/notice.service";
 
@@ -28,7 +28,8 @@ export class DocumentShowComponent implements OnInit {
     private documentService: DocumentService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    public noticeService: NoticeService
+    public noticeService: NoticeService,
+    private router: Router
   ) {
     this.authService.currentUser.subscribe((user: UserModel) => {
       this.currentUser = user;
@@ -50,6 +51,7 @@ export class DocumentShowComponent implements OnInit {
     let data: any = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value, action: 'AP'};
     this.documentService.approveDocument(data).subscribe((data: any[]) => {
       this.noticeService.show("Documento aprobado correctamente.", "success");
+      this.router.navigate(['document']);
     });
   }
 
@@ -57,6 +59,7 @@ export class DocumentShowComponent implements OnInit {
     let data: any = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value, action: 'DF'};
     this.documentService.approveDocument(data).subscribe((data: any[]) => {
       this.noticeService.show("Documento rechazado correctamente.", "success");
+      this.router.navigate(['document']);
     });
   }
 
