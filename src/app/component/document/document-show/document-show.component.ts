@@ -15,6 +15,7 @@ export class DocumentShowComponent implements OnInit {
 
   public documentStatusEnabled: string = 'PROCESO';
   public documentStatusEnded: string = 'FINALIZADO';
+  public status: string = '';
   public pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
   public currentDocument: DocumentModel;
   public currentUser: UserModel;
@@ -63,6 +64,14 @@ export class DocumentShowComponent implements OnInit {
     });
   }
 
+  returnDocument() {
+    let data: any = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value, action: 'DV'};
+    this.documentService.approveDocument(data).subscribe((data: any[]) => {
+      this.noticeService.show("Documento devuelto correctamente.", "success");
+      this.router.navigate(['/document']);
+    });
+  }
+
   getObservations(document: any): any[] {
     if(! document || (document && ! document.traceabilities)) {
       return [];
@@ -72,6 +81,29 @@ export class DocumentShowComponent implements OnInit {
 
   isEnded(document: DocumentModel): boolean {
     return document && document.documentState == this.documentStatusEnded ? true : false;
+  }
+
+  setStatus(target: any) {
+    this.status = target.value;
+    console.log(this.status);
+  }
+
+  manageDocument() {
+    switch (this.status) {
+      case 'AP':
+        this.approveDocument();
+        break;
+      case 'DF':
+        this.denyDocument();
+        break;
+      case 'DV':
+        this.returnDocument();
+        break;
+    }
+  }
+
+  cancel() {
+    this.router.navigate(['/document']);
   }
 
 }
