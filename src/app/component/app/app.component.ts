@@ -19,13 +19,6 @@ export class AppComponent implements OnInit {
 
   public menuItems: MenuModel[] = [
     {
-      name: 'home',
-      title: 'Inicio',
-      icon: 'home',
-      separator: false,
-      roles: ['all']
-    },
-    {
       name: 'profile',
       title: 'Perfil',
       icon: 'account_circle',
