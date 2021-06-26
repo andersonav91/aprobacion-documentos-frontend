@@ -41,7 +41,9 @@ export class DocumentChangeFlowComponent implements OnInit {
         this.currentDocument = Object.assign(new DocumentModel(), data);
       });
       this.userService.getAssignedUsersByDocument(this.id).subscribe((data: any[]) => {
-        console.log(data);
+        data.map((item: any) => {
+          this.availableUsers.push(Object.assign(new UserModel(), item));
+        })
       });
     });
   }
