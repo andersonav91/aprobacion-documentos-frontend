@@ -61,7 +61,7 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Acciones</th>
     <td mat-cell *matCellDef="let row">
-      <button mat-icon-button matTooltip="Click para gestionar" class="iconbutton" color="warn"
+      <button mat-icon-button matTooltip="Click para gestionar" class="iconbutton" color="accent"
               [routerLink]="['/document/' + row.id + '/show']" *ngIf="this.currentUser.hasValidRole(['asesor'])">
         <mat-icon aria-label="View">find_in_page</mat-icon>
       </button>
