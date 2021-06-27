@@ -2,9 +2,10 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DocumentService } from "../../../service/document.service";
 import { AuthService } from "../../../service/auth.service";
 import { UserModel } from "../../../model/user";
-import { ActivatedRoute, ParamMap } from "@angular/router";
+import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { DocumentModel } from "../../../model/document";
 import { NoticeService } from "../../../service/notice.service";
+import { environment } from "../../../../environments/environment";
 
 @Component({
   selector: 'app-document-show',
@@ -15,12 +16,14 @@ export class DocumentShowComponent implements OnInit {
 
   public documentStatusEnabled: string = 'PROCESO';
   public documentStatusEnded: string = 'FINALIZADO';
-  public pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
+  public status: string = 'AP';
   public currentDocument: DocumentModel;
   public currentUser: UserModel;
   public id: number = 0;
   public userId: number = 0;
   public observations: string[] = [];
+  public pdfViewerUrl: string = environment.apiEndpointProtocol + "://" +
+    environment.apiEndpointUrl + 'documents/view-documents/';
 
   @ViewChild('observation') observation: ElementRef;
 
@@ -28,7 +31,8 @@ export class DocumentShowComponent implements OnInit {
     private documentService: DocumentService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    public noticeService: NoticeService
+    public noticeService: NoticeService,
+    private router: Router
   ) {
     this.authService.currentUser.subscribe((user: UserModel) => {
       this.currentUser = user;
@@ -36,6 +40,7 @@ export class DocumentShowComponent implements OnInit {
     });
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.id = Number(params.get('id'));
+      this.pdfViewerUrl = this.pdfViewerUrl + this.id.toString();
       this.documentService.getDocument(this.currentUser.id, this.id).subscribe((data: any[]) => {
         this.currentDocument = Object.assign(new DocumentModel(), data);
         this.observations = this.getObservations(this.currentDocument);
@@ -50,6 +55,7 @@ export class DocumentShowComponent implements OnInit {
     let data: any = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value, action: 'AP'};
     this.documentService.approveDocument(data).subscribe((data: any[]) => {
       this.noticeService.show("Documento aprobado correctamente.", "success");
+      this.router.navigate(['/document']);
     });
   }
 
@@ -57,6 +63,15 @@ export class DocumentShowComponent implements OnInit {
     let data: any = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value, action: 'DF'};
     this.documentService.approveDocument(data).subscribe((data: any[]) => {
       this.noticeService.show("Documento rechazado correctamente.", "success");
+      this.router.navigate(['/document']);
+    });
+  }
+
+  returnDocument() {
+    let data: any = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value, action: 'DV'};
+    this.documentService.approveDocument(data).subscribe((data: any[]) => {
+      this.noticeService.show("Documento devuelto correctamente.", "success");
+      this.router.navigate(['/document']);
     });
   }
 
@@ -69,6 +84,28 @@ export class DocumentShowComponent implements OnInit {
 
   isEnded(document: DocumentModel): boolean {
     return document && document.documentState == this.documentStatusEnded ? true : false;
+  }
+
+  setStatus(target: any) {
+    this.status = target.value;
+  }
+
+  manageDocument() {
+    switch (this.status) {
+      case 'AP':
+        this.approveDocument();
+        break;
+      case 'DF':
+        this.denyDocument();
+        break;
+      case 'DV':
+        this.returnDocument();
+        break;
+    }
+  }
+
+  cancel() {
+    this.router.navigate(['/document']);
   }
 
 }

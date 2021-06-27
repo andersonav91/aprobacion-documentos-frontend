@@ -1,0 +1,82 @@
+@import '~@angular/material/theming';
+
+// Be sure that you only ever include 'mat-core' mixin once!
+// it should not be included for each theme.
+@include mat-core();
+
+// define a real custom palette (using http://mcg.mbitson.com)
+$bv-brand: (
+  50: #E0E9F3,
+  100: #B3C8E0,
+  200: #80A3CB,
+  300: #4D7EB6,
+  400: #2663A7,
+  500: #004797,
+  600: #00408F,
+  700: #003784,
+  800: #002F7A,
+  900: #002069,
+  A100: #98AEFF,
+  A200: #6586FF,
+  A400: #325EFF,
+  A700: #194AFF,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: $black-87-opacity,
+    A700: white,
+  )
+);
+
+$bv-orange: (
+  50: #FDEBE5,
+  100: #F9CEBE,
+  200: #F5AD92,
+  300: #F18C66,
+  400: #EE7446,
+  500: #EB5B25,
+  600: #E95321,
+  700: #E5491B,
+  800: #E24016,
+  900: #DD2F0D,
+  A100: #FFFFFF,
+  A200: #FFDBD5,
+  A400: #FFAEA2,
+  A700: #FF9889,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: $black-87-opacity,
+    A700: white,
+  )
+);
+
+// mandatory stuff for theming
+$bv-palette-primary: mat-palette($bv-brand);
+$bv-palette-accent:  mat-palette($bv-orange);
+
+// include the custom theme components into a theme object
+$bv-theme: mat-light-theme($bv-palette-primary, $bv-palette-accent);
+
+// include the custom theme object into the angular material theme
+@include angular-material-theme($bv-theme);

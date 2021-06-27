@@ -12,6 +12,7 @@
 
 <mat-sidenav-container [ngClass]="authService.isAuthenticated() ? '' : 'mat-sidenav-container-full'">
   <mat-sidenav class="mat-elevation-z8" mode="side" opened="true" *ngIf="authService.isAuthenticated() && (sidebarService.visibility | async)">
+    <img class="img-logo" src="/assets/img/alkosto-logo.svg" [routerLink]="'/'" />
     <mat-list>
       <ng-container *ngFor="let menu of menuItems">
         <mat-list-item *ngIf="(authService.currentUser | async)?.hasValidRole(menu.roles)" (click)="this.invokeMenu(menu)">

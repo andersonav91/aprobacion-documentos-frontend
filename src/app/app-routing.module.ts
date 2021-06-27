@@ -15,6 +15,7 @@ import { UserNewComponent } from "./component/user/user-new/user-new.component";
 import {DocumentListComponent} from "./component/document/document-list/document-list.component";
 import {DocumentShowComponent} from "./component/document/document-show/document-show.component";
 import {FlowCreateComponent} from "./component/status-flow/flow-create/flow-create.component";
+import {DocumentChangeFlowComponent} from "./component/document/document-change-flow/document-change-flow.component";
 
 
 const routes: Routes = [
@@ -24,7 +25,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: HomeComponent,
+    component: DocumentListComponent,
     canActivate: [AuthGuard],
     data: { roles: ['all'] }
   },
@@ -97,6 +98,12 @@ const routes: Routes = [
   {
     path: 'flow',
     component: FlowCreateComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
+  },
+  {
+    path: 'document/:id/change-flow',
+    component: DocumentChangeFlowComponent,
     canActivate: [AuthGuard],
     data: { roles: ['admin'] }
   },

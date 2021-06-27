@@ -41,8 +41,47 @@
           </mat-form-field>
         </mat-card-content>
 
+        <mat-card-content *ngIf="(authService.currentUser | async)?.hasValidRole(['admin'])">
+          <mat-form-field  appearance="fill" class="form-element">
+            <mat-label>Estados</mat-label>
+            <mat-chip-list #chipList aria-label="Estados del Usuario">
+              <mat-chip
+                *ngFor="let status of statuses"
+                [selectable]="selectable"
+                [removable]="removable"
+                (removed)="remove(status.name)">
+                {{status.name}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input
+                placeholder="Nuevo Estado..."
+                #statusInput
+                [formControl]="statusCtrl"
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+              <mat-option *ngFor="let status of filteredStatuses | async" [value]="status.name">
+                {{status.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </mat-card-content>
+
+        <mat-card-content *ngIf="(authService.currentUser | async)?.hasValidRole(['admin'])">
+          <mat-form-field appearance="fill" class="form-element">
+            <mat-label>Activo</mat-label>
+            <select matNativeControl required formControlName="active">
+              <option value="true" selected>Sí</option>
+              <option value="false" selected>No</option>
+            </select>
+          </mat-form-field>
+        </mat-card-content>
+
         <div class="form-element">
-          <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!userForm.valid">{{(isNew ? 'Guardar' : 'Editar')}}</button>
+          <button mat-raised-button color="accent" type="submit" class="button" [disabled]="!userForm.valid">{{(isNew ? 'Guardar' : 'Editar')}}</button>
           <button mat-raised-button type="button" class="button cancel-button" (click)="cancelUserForm()">Cancelar</button>
         </div>
       </form>
@@ -75,7 +114,7 @@
         </mat-card-content>
 
         <div class="form-element">
-          <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!passwordForm.valid">Guardar</button>
+          <button mat-raised-button color="accent" type="submit" class="button" [disabled]="!passwordForm.valid">Guardar</button>
           <button mat-raised-button type="button" class="button cancel-button" (click)="cancelPasswordForm()">Cancelar</button>
         </div>
 
@@ -139,7 +178,7 @@
       </mat-form-field>
     </mat-card-content>
 
-    <mat-card-content>
+    <mat-card-content *ngIf="(authService.currentUser | async)?.hasValidRole(['admin'])">
       <mat-form-field  appearance="fill" class="form-element">
         <mat-label>Estados</mat-label>
         <mat-chip-list #chipList aria-label="Estados del Usuario">
@@ -168,8 +207,18 @@
       </mat-form-field>
     </mat-card-content>
 
+    <mat-card-content *ngIf="(authService.currentUser | async)?.hasValidRole(['admin'])">
+      <mat-form-field appearance="fill" class="form-element">
+        <mat-label>Activo</mat-label>
+        <select matNativeControl required formControlName="active">
+          <option value="true" selected>Sí</option>
+          <option value="false" selected>No</option>
+        </select>
+      </mat-form-field>
+    </mat-card-content>
+
     <div class="form-element">
-      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!userForm.valid">{{(isNew ? 'Guardar' : 'Editar')}}</button>
+      <button mat-raised-button color="accent" type="submit" class="button" [disabled]="!userForm.valid">{{(isNew ? 'Guardar' : 'Editar')}}</button>
       <button mat-raised-button type="button" class="button cancel-button" (click)="cancelUserForm()">Cancelar</button>
     </div>
 

@@ -21,8 +21,6 @@ export class UserNewComponent implements OnInit {
   }
 
   addUser(data: any) {
-    console.log(data);
-
     let user: UserModel = Object.assign(new UserModel(), data);
     user.userRoles = [{id: data.role}];
 

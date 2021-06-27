@@ -74,6 +74,7 @@ import { TokenHttpInterceptor } from "./interceptor/token.http.interceptor";
 
 // Guards
 import { AuthGuard } from "./guard/auth.guard";
+import { DocumentChangeFlowComponent } from './component/document/document-change-flow/document-change-flow.component';
 
 let ls = new SecureLS({});
 
@@ -138,7 +139,8 @@ export function tokenGetter() {
     UserEditComponent,
     DocumentListComponent,
     DocumentShowComponent,
-    FlowCreateComponent
+    FlowCreateComponent,
+    DocumentChangeFlowComponent
   ],
   imports: [
     BrowserModule,

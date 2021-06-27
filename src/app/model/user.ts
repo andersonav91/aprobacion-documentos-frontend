@@ -1,3 +1,5 @@
+import {StatusModel} from "./status";
+
 export class UserModel {
   id?: number = 0;
   email?: string = '';
@@ -10,6 +12,9 @@ export class UserModel {
   usersRoles?: any[] = [];
   token?: string = '';
   role?: number = 0;
+  active: boolean = true;
+  statuses: string = '';
+  usersStates: any[] = [];
 
   constructor() {
   }

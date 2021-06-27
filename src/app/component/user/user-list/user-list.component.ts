@@ -12,7 +12,7 @@ import { UserService } from "../../../service/user.service";
 })
 export class UserListComponent implements OnInit {
 
-  public displayedColumns: string[] = ['position', 'id', 'email', 'name', 'username', 'phone', 'roles', 'actions'];
+  public displayedColumns: string[] = ['position', 'id', 'email', 'name', 'username', 'phone', 'roles', 'active', 'actions'];
   public dataSource: MatTableDataSource<UserModel>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

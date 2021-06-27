@@ -20,8 +20,8 @@ export class DocumentService extends ParentService {
    */
   listDocuments(userId: number, offset: number, limit: number, documentTypeId: number, documentState: string): any {
     return documentTypeId == 0 || documentTypeId === null ?
-      this.getMethod('documents/' + userId + '?page=' + (offset / limit) + '&size=' + limit + '&state=' + documentState) :
-      this.getMethod('documents/' + userId + '?page=' + (offset / limit) + '&size=' + limit + '&documentType=' + documentTypeId + '&state=' + documentState);
+      this.getMethod('documents/' + userId + '?page=' + (offset) + '&size=' + limit + '&state=' + documentState) :
+      this.getMethod('documents/' + userId + '?page=' + (offset) + '&size=' + limit + '&documentType=' + documentTypeId + '&state=' + documentState);
   }
 
   /**
@@ -36,6 +36,13 @@ export class DocumentService extends ParentService {
    */
   approveDocument(documentData: any): any {
     return this.postMethod('documents/manage-documents/', documentData);
+  }
+
+  /**
+   * Constructs a `POST` request that changes the flow of a document.
+   */
+  changeDocumentFlow(documentData: any): any {
+    return this.postMethod('documents/reassign-documents/', documentData);
   }
 
 }

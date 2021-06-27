@@ -2,8 +2,8 @@
 
 <div class="show-document-container" fxLayout fxLayoutAlign="start top">
   <div fxFlex="55%" class="pdf-container">
-    <div class="pdf-visor" >
-      <ng2-pdfjs-viewer #pdfViewerAutoLoad [pdfSrc]="pdfSrc"></ng2-pdfjs-viewer>
+    <div class="pdf-visor" *ngIf="pdfViewerUrl">
+      <ng2-pdfjs-viewer #pdfViewerAutoLoad [pdfSrc]="pdfViewerUrl ? pdfViewerUrl : '' "></ng2-pdfjs-viewer>
     </div>
   </div>
   <div fxFlex="45%" style="margin: 10px; margin-left: 20px;">
@@ -19,9 +19,20 @@
       <mat-label>Observaciones</mat-label>
       <textarea matInput #observation placeholder="Observaciones"></textarea>
     </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-element">
+      <mat-label>Asignar Estado</mat-label>
+      <select matNativeControl (change)="setStatus($event.target)">
+        <option value="AP">Aprobar</option>
+        <option value="DF" *ngIf="currentDocument && currentDocument.traceabilities &&
+          currentDocument.traceabilities.length > 1">Rechazar</option>
+        <option value="DV">Devolver</option>
+      </select>
+    </mat-form-field>
+
     <div class="form-element" *ngIf="! isEnded(currentDocument)">
-      <button mat-raised-button color="primary" type="button" (click)="approveDocument()" class="button">Aprobar Documento</button>
-      <button mat-raised-button type="button" class="button cancel-button" (click)="denyDocument()">Rechazar Documento</button>
+      <button mat-raised-button color="accent" type="button" (click)="manageDocument()" class="button">Gestionar Documento</button>
+      <button mat-raised-button type="button" class="button cancel-button" (click)="cancel()">Cancelar</button>
     </div>
   </div>
 </div>

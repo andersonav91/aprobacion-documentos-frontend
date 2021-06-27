@@ -17,7 +17,7 @@ export class DocumentListComponent implements OnInit {
 
   @ViewChild(MatPaginator, {read: true}) paginator: MatPaginator;
 
-  public displayedColumns: string[] = ['position', 'id', 'date', 'observation', 'document', 'path', 'actions'];
+  public displayedColumns: string[] = ['position', 'id', 'date', 'name', 'path', 'documentState'];
   public dataSource: MatTableDataSource<DocumentModel>;
   public currentUser: UserModel;
   public totalRows: number = 0;
@@ -34,6 +34,13 @@ export class DocumentListComponent implements OnInit {
   ) {
     this.authService.currentUser.subscribe((user: UserModel) => {
       this.currentUser = user;
+      if(this.currentUser.hasValidRole(['admin'])) {
+        this.displayedColumns.push('user');
+        this.displayedColumns.push('actions');
+      } else {
+        this.displayedColumns.push('actions');
+      }
+
     });
     this.documentTypeService.listDocumentTypes().subscribe((data: any[]) => {
       this.documentTypes = data.map(item => Object.assign(new DocumentTypeModel(), item));

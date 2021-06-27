@@ -19,13 +19,6 @@ export class AppComponent implements OnInit {
 
   public menuItems: MenuModel[] = [
     {
-      name: 'home',
-      title: 'Inicio',
-      icon: 'home',
-      separator: false,
-      roles: ['all']
-    },
-    {
       name: 'profile',
       title: 'Perfil',
       icon: 'account_circle',
@@ -79,7 +72,7 @@ export class AppComponent implements OnInit {
   constructor(
     public authService: AuthService,
     public sidebarService: SidebarService,
-    private router: Router,
+    private router: Router
   ) {
     this.authService.currentUser.subscribe((user: UserModel) => {
       this.currentUser = user;

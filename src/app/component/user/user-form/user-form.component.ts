@@ -26,14 +26,13 @@ export class UserFormComponent implements OnInit {
   public currentUser: UserModel;
 
   @Input() isNew: boolean;
-  @Input() model: any = {};
+  @Input() model: UserModel;
   @Input() eventModel: Observable<UserModel> = new Observable();
 
   @Output() onSubmit = new EventEmitter();
   @Output() onCancel = new EventEmitter();
   @Output() onPasswordSubmit = new EventEmitter();
   @Output() onPasswordCancel = new EventEmitter();
-
 
   public visible = true;
   public selectable = true;
@@ -43,10 +42,10 @@ export class UserFormComponent implements OnInit {
   public filteredStatuses: Observable<StatusModel[]>;
   public statuses: StatusModel[] = [];
   public allStatuses: StatusModel[] = [];
+  public initialStatuses: any[] = [];
 
   @ViewChild('statusInput') statusInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
-
 
   constructor(
     private formBuilder: FormBuilder,
@@ -73,8 +72,15 @@ export class UserFormComponent implements OnInit {
     this.statusCtrl.setValue(null);
   }
 
+  addFromStatus(status: any): void {
+    const value = (status.name || '').trim();
+    if (value) {
+      this.statuses.push(this.allStatuses.find((status: StatusModel) => status.name == value));
+    }
+    this.statusCtrl.setValue(null);
+  }
+
   remove(value: string): void {
-    console.log(value, this.statuses);
     const index = this.statuses.indexOf(this.statuses.find((status: StatusModel) => status.name == value));
     if (index >= 0) {
       this.statuses.splice(index, 1);
@@ -102,34 +108,54 @@ export class UserFormComponent implements OnInit {
       this.currentUser = user;
     });
 
+    if(this.isNew) {
+      this.statusService.listStatuses().subscribe((statuses: StatusModel[]) => {
+        this.allStatuses = statuses;
+      });
+    }
+
     this.eventModel.subscribe((user: UserModel) => {
+
       if(! this.isNew) {
         delete user.id;
         // validate this fields
-        user.role = user.usersRoles[0].role.id;
+        user.role = user.usersRoles.length > 0 ? user.usersRoles[0].role.id : null;
         delete user.userRoles;
         delete user.token;
         delete user.usersRoles;
         delete user.currentPassword;
         delete user.passwordRepeat;
         delete user.password;
+        this.initialStatuses = user.usersStates;
+        delete user.usersStates;
         this.userForm.setValue(user);
       }
+      this.model = user;
+
+      this.statusService.listStatuses().subscribe((statuses: StatusModel[]) => {
+        this.allStatuses = statuses;
+        if(! this.isNew && this.currentUser.hasValidRole(['admin'])) {
+          if(this.initialStatuses && this.initialStatuses.length > 0) {
+            for (let statusObj of this.initialStatuses) {
+              this.addFromStatus(statusObj.state);
+            }
+          }
+        }
+      });
     });
+
 
     if(this.isNew) {
       this.userForm.addControl('password', new FormControl('', Validators.required));
       this.userForm.addControl('passwordRepeat', new FormControl('', Validators.required));
-      this.userForm.addControl('statuses', this.statusCtrl);
     }
+
+    this.userForm.addControl('statuses', this.statusCtrl);
 
     if(this.currentUser.hasValidRole(['admin'])) {
       this.passwordForm.removeControl('currentPassword');
     }
-
-    this.statusService.listStatuses().subscribe((statuses: StatusModel[]) => {
-      this.allStatuses = statuses;
-    });
+    
   }
 
   createUserForm() {
@@ -145,6 +171,7 @@ export class UserFormComponent implements OnInit {
         role: ['', Validators.required],
         password: ['', Validators.required],
         passwordRepeat: ['', Validators.required],
+        active: [true, Validators.required],
       }, { validators: MatchValidator('password', 'passwordRepeat') });
     } else {
       tmpForm = this.formBuilder.group({
@@ -152,6 +179,7 @@ export class UserFormComponent implements OnInit {
         email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
         username: ['', Validators.required],
         phone: ['', Validators.required],
+        active: [true, Validators.required],
         role: [{value: '', disabled: ! this.isNew}, Validators.required],
       });
     }
@@ -171,7 +199,11 @@ export class UserFormComponent implements OnInit {
 
   sendUserForm() {
     if(this.userForm.valid){
-      this.onSubmit.emit(Object.assign(this.userForm.value, {userStates: this.statuses}));
+      this.onSubmit.emit(Object.assign(this.userForm.value, {usersStates:
+          ( this.currentUser.hasValidRole(['admin']) ? this.statuses : this.initialStatuses.map(
+            (item: any) => Object.assign(new StatusModel(), item.state)
+          ))
+      }));
     }
   }
 

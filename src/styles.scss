@@ -19,7 +19,7 @@ body {
 app-document-type-list, app-document-type-form, app-document-type-new, app-document-type-edit,
 app-status-list, app-status-form, app-status-new, app-status-edit,
 app-user-list, app-user-form, app-user-new, app-user-edit,
-app-document-list, app-document-show, app-flow-create{
+app-document-list, app-document-show, app-flow-create, app-document-change-flow {
   width: 100%;
 }
 
@@ -97,7 +97,6 @@ app-document-list, app-document-show, app-flow-create{
 .login-wrapper .mat-stroked-button {
   border: 1px solid currentColor;
   line-height: 54px;
-  background: #FFF7FA;
 }
 
 .login-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix {
@@ -166,4 +165,8 @@ mat-sidenav {
 
 .margin-notice{
   margin-left: 32px !important;
+}
+
+.mat-h2, .mat-title, .mat-typography h2 {
+  margin: 0 0 10px;
 }
