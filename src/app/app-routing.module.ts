@@ -25,7 +25,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: HomeComponent,
+    component: DocumentListComponent,
     canActivate: [AuthGuard],
     data: { roles: ['all'] }
   },
