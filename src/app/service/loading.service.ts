@@ -6,23 +6,27 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LoadingService {
 
-  public visibility: BehaviorSubject<any>;
+  public count: BehaviorSubject<number>;
+  public i: number;
 
   constructor() {
-    this.visibility = new BehaviorSubject(false);
+    this.i = 0;
+    this.count = new BehaviorSubject(0);
   }
 
   /**
    * Shows the loading indicator.
    */
   show() {
-    this.visibility.next(true);
+    this.i = this.i + 1;
+    this.count.next(this.i);
   }
 
   /**
    * Hides the loading indicator.
    */
   hide() {
-    this.visibility.next(false);
+    this.i = this.i - 1;
+    this.count.next(this.i);
   }
 }
