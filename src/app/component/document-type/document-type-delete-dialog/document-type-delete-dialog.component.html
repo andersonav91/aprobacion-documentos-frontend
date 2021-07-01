@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Eliminar Registro.</h1>
+<div mat-dialog-content>
+  <p>¿Desea eliminar el Tipo de Documento "{{data.row.name}}"?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="accent" type="button" class="button" cdkFocusInitial (click)="deleteItem()">Eliminar</button>
+  <button mat-raised-button type="button" (click)="cancel()">No</button>
+</div>

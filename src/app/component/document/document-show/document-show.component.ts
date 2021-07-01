@@ -79,7 +79,8 @@ export class DocumentShowComponent implements OnInit {
     if(! document || (document && ! document.traceabilities)) {
       return [];
     }
-    return document.traceabilities.map((item: any) => { return item.observation; });
+    return document.traceabilities.map((item: any) => { return item.observation; })
+      .filter((item: any) => item && item != '' && item != undefined && item != null);
   }
 
   isEnded(document: DocumentModel): boolean {
@@ -91,17 +92,23 @@ export class DocumentShowComponent implements OnInit {
   }
 
   manageDocument() {
-    switch (this.status) {
-      case 'AP':
-        this.approveDocument();
-        break;
-      case 'DF':
-        this.denyDocument();
-        break;
-      case 'DV':
-        this.returnDocument();
-        break;
+    let observation: string = this.observation.nativeElement.value;
+    if(! observation || observation == '' || observation == null || observation == undefined) {
+      this.noticeService.show('El Campo observación es requerido.', 'error');
+    } else {
+      switch (this.status) {
+        case 'AP':
+          this.approveDocument();
+          break;
+        case 'DF':
+          this.denyDocument();
+          break;
+        case 'DV':
+          this.returnDocument();
+          break;
+      }
     }
+
   }
 
   cancel() {

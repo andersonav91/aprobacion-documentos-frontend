@@ -44,4 +44,11 @@ export class DocumentTypeService extends ParentService {
     return this.putMethod('document-types/' + data.id, data);
   }
 
+  /**
+   * Constructs a `DELETE` request that deletes a document type by the id.
+   */
+  deleteDocumentType(id: number): any {
+    return this.deleteMethod('document-types/' + id)
+  }
+
 }

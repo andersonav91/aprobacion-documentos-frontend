@@ -4,6 +4,8 @@ import { StatusService } from "../../../service/status.service";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { StatusModel } from "../../../model/status";
+import {MatDialog} from "@angular/material/dialog";
+import {StatusDeleteDialogComponent} from "../status-delete-dialog/status-delete-dialog.component";
 
 @Component({
   selector: 'app-status-list',
@@ -18,7 +20,8 @@ export class StatusListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private statusService: StatusService
+    private statusService: StatusService,
+    public dialog: MatDialog
   ) {
     this.statusService.listStatuses().subscribe((data: any[]) => {
       this.dataSource = new MatTableDataSource(
@@ -31,6 +34,13 @@ export class StatusListComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  openDeleteDialog(row: StatusModel): void {
+    const dialogRef = this.dialog.open(StatusDeleteDialogComponent, {
+      width: '250px',
+      data: {row: row}
+    });
   }
 
 }

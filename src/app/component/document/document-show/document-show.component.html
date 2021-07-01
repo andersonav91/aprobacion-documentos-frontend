@@ -20,7 +20,7 @@
       <textarea matInput #observation placeholder="Observaciones"></textarea>
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="form-element">
+    <mat-form-field appearance="fill" class="form-element" *ngIf="! isEnded(currentDocument)">
       <mat-label>Asignar Estado</mat-label>
       <select matNativeControl (change)="setStatus($event.target)">
         <option value="AP">Aprobar</option>

@@ -33,11 +33,16 @@ export class AuthService extends ParentService {
     this.postMethod('auth', data, {}).subscribe((data: any) => {
       var user: UserModel = Object.assign(new UserModel(), data);
       user.userRoles = user.usersRoles;
-      this.ls.set('token', user.token);
-      this.ls.set('userData', JSON.stringify(user));
-      this.setCurrentUser(Object.assign(user));
-      this.router.navigate(['']);
-      this.sidebarService.show();
+      if(! user.hasValidRole(['digitalizacion'])) {
+        this.ls.set('token', user.token);
+        this.ls.set('userData', JSON.stringify(user));
+        this.setCurrentUser(Object.assign(user));
+        this.router.navigate(['']);
+        this.sidebarService.show();
+      } else {
+        this.router.navigate(['/login']);
+        this.noticeService.show('No tiene permisos para acceder a la aplicación con el rol de Digitalización.', 'error');
+      }
     });
   }
 
