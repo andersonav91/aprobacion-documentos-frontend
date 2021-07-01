@@ -41,6 +41,13 @@ export class ParentService {
   }
 
   /**
+   * Constructs a `DELETE` request that consumes the API.
+   */
+  protected deleteMethod(path: string, options?: object) {
+    return this.httpClient.delete(this.apiEndpointUrl + path, options).pipe(catchError(error => this.handleError(error, this.noticeService)));
+  }
+
+  /**
    * Catch the error message from HttpService and display it as a notice message.
    */
   protected handleError(error: HttpErrorResponse, noticeService: NoticeService) {

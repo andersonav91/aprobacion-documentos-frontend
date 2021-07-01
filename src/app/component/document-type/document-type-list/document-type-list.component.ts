@@ -4,6 +4,8 @@ import { MatPaginator} from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { DocumentTypeModel } from "../../../model/document-type";
 import { MatSort } from "@angular/material/sort";
+import { MatDialog } from "@angular/material/dialog";
+import { DocumentTypeDeleteDialogComponent } from "../document-type-delete-dialog/document-type-delete-dialog.component";
 
 @Component({
   selector: 'app-document-type-list',
@@ -18,7 +20,8 @@ export class DocumentTypeListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private documentTypeService: DocumentTypeService
+    private documentTypeService: DocumentTypeService,
+    public dialog: MatDialog
   ) {
     this.documentTypeService.listDocumentTypes().subscribe((data: any[]) => {
       this.dataSource = new MatTableDataSource(
@@ -31,6 +34,13 @@ export class DocumentTypeListComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  openDeleteDialog(row: DocumentTypeModel): void {
+    const dialogRef = this.dialog.open(DocumentTypeDeleteDialogComponent, {
+      width: '250px',
+      data: {row: row}
+    });
   }
 
 }

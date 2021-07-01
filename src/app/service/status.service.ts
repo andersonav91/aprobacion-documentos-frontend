@@ -51,4 +51,11 @@ export class StatusService extends ParentService {
     return this.getMethod('documents/' + idDocumentType + '/states')
   }
 
+  /**
+   * Constructs a `DELETE` request that deletes an status by the id.
+   */
+  deleteStatus(id: number): any {
+    return this.deleteMethod('states/' + id)
+  }
+
 }

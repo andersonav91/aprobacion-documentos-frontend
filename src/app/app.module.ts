@@ -45,6 +45,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { JwtModule } from "@auth0/angular-jwt";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
+import { MatDialogModule } from "@angular/material/dialog";
 
 // Components
 import { AppComponent } from "./component/app/app.component";
@@ -67,6 +68,8 @@ import { UserEditComponent } from './component/user/user-edit/user-edit.componen
 import { DocumentListComponent } from './component/document/document-list/document-list.component';
 import { DocumentShowComponent } from './component/document/document-show/document-show.component';
 import { FlowCreateComponent } from './component/status-flow/flow-create/flow-create.component';
+import { DocumentChangeFlowComponent } from './component/document/document-change-flow/document-change-flow.component';
+import { StatusDeleteDialogComponent } from './component/status/status-delete-dialog/status-delete-dialog.component';
 
 // Interceptors
 import { CustomHttpInterceptor } from "./interceptor/custom.http.interceptor";
@@ -74,7 +77,7 @@ import { TokenHttpInterceptor } from "./interceptor/token.http.interceptor";
 
 // Guards
 import { AuthGuard } from "./guard/auth.guard";
-import { DocumentChangeFlowComponent } from './component/document/document-change-flow/document-change-flow.component';
+import { DocumentTypeDeleteDialogComponent } from './component/document-type/document-type-delete-dialog/document-type-delete-dialog.component';
 
 let ls = new SecureLS({});
 
@@ -111,7 +114,8 @@ const materialModules = [
   MatRadioModule,
   MatDatepickerModule,
   MatTooltipModule,
-  DragDropModule
+  DragDropModule,
+  MatDialogModule
 ];
 
 export function tokenGetter() {
@@ -140,7 +144,9 @@ export function tokenGetter() {
     DocumentListComponent,
     DocumentShowComponent,
     FlowCreateComponent,
-    DocumentChangeFlowComponent
+    DocumentChangeFlowComponent,
+    StatusDeleteDialogComponent,
+    DocumentTypeDeleteDialogComponent
   ],
   imports: [
     BrowserModule,

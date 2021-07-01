@@ -26,7 +26,7 @@
               [routerLink]="['/document-type/' + row.id + '/edit']">
         <mat-icon aria-label="Edit">edit</mat-icon>
       </button>
-      <button mat-icon-button matTooltip="Click para eliminar" class="iconbutton" color="accent">
+      <button mat-icon-button matTooltip="Click para eliminar" class="iconbutton" color="accent" (click)="openDeleteDialog(row)">
         <mat-icon aria-label="Delete">delete</mat-icon>
       </button>
     </td>
