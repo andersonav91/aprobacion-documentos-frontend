@@ -24,9 +24,8 @@
       <mat-label>Asignar Estado</mat-label>
       <select matNativeControl (change)="setStatus($event.target)">
         <option value="AP">Aprobar</option>
-        <option value="DF" *ngIf="currentDocument && currentDocument.traceabilities &&
-          currentDocument.traceabilities.length > 1">Rechazar</option>
-        <option value="DV">Devolver</option>
+        <option value="DF">Rechazar</option>
+        <option value="DV" *ngIf="priorityStatus > 1">Devolver</option>
       </select>
     </mat-form-field>
 

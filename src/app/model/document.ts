@@ -1,3 +1,5 @@
+import { FlowModel } from "./flow";
+
 export class DocumentModel {
   id?: number = 0;
   date?: string = '';
@@ -7,6 +9,7 @@ export class DocumentModel {
   path?: string = '';
   traceabilities?: any[];
   documentState?: string = '';
+  flow?: FlowModel;
 
   constructor() {
   }
