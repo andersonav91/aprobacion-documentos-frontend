@@ -4,8 +4,8 @@ import { StatusService } from "../../../service/status.service";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { StatusModel } from "../../../model/status";
-import {MatDialog} from "@angular/material/dialog";
-import {StatusDeleteDialogComponent} from "../status-delete-dialog/status-delete-dialog.component";
+import { MatDialog } from "@angular/material/dialog";
+import { StatusDeleteDialogComponent } from "../status-delete-dialog/status-delete-dialog.component";
 
 @Component({
   selector: 'app-status-list',
@@ -23,6 +23,14 @@ export class StatusListComponent implements OnInit {
     private statusService: StatusService,
     public dialog: MatDialog
   ) {
+    this.refreshList();
+  }
+
+  ngOnInit(): void {
+
+  }
+
+  refreshList(): void {
     this.statusService.listStatuses().subscribe((data: any[]) => {
       this.dataSource = new MatTableDataSource(
         data.map(item => Object.assign(new StatusModel(), item))
@@ -32,14 +40,15 @@ export class StatusListComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-
-  }
-
   openDeleteDialog(row: StatusModel): void {
     const dialogRef = this.dialog.open(StatusDeleteDialogComponent, {
       width: '250px',
       data: {row: row}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(()=>{
+        this.refreshList();
+      }, 1000);
     });
   }
 
