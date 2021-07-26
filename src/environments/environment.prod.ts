@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiEndpointUrl: 'https://aprobaciondocumentos.herokuapp.com/',
-  apiEndpointProtocol: 'https'
+  apiEndpointUrl: 'localhost:9000/',
+  apiEndpointProtocol: 'http'
 };

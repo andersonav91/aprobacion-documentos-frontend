@@ -16,6 +16,7 @@ export class DocumentShowComponent implements OnInit {
 
   public documentStatusEnabled: string = 'PROCESO';
   public documentStatusEnded: string = 'FINALIZADO';
+  public documentStatusRejected: string = 'RECHAZADO';
   public status: string = 'AP';
   public currentDocument: DocumentModel;
   public currentUser: UserModel;
@@ -24,6 +25,7 @@ export class DocumentShowComponent implements OnInit {
   public observations: string[] = [];
   public pdfViewerUrl: string = environment.apiEndpointProtocol + "://" +
     environment.apiEndpointUrl + 'documents/view-documents/';
+  public priorityStatus: number = 0;
 
   @ViewChild('observation') observation: ElementRef;
 
@@ -44,8 +46,17 @@ export class DocumentShowComponent implements OnInit {
       this.documentService.getDocument(this.currentUser.id, this.id).subscribe((data: any[]) => {
         this.currentDocument = Object.assign(new DocumentModel(), data);
         this.observations = this.getObservations(this.currentDocument);
+        this.validateStatus(this.currentDocument);
       });
     });
+  }
+
+    validateStatus(currentDocument: DocumentModel){
+    var idStatus = currentDocument.traceabilities.reduce((item, curr) => {
+      return item.id < curr.id ? curr : item;
+    }).state.id;
+    var flowState = currentDocument.flow.flowStates.filter(flowState => flowState.state.id == idStatus).map(flowState => flowState)[0];
+    this.priorityStatus = flowState.priority;
   }
 
   ngOnInit(): void {
@@ -60,7 +71,7 @@ export class DocumentShowComponent implements OnInit {
   }
 
   denyDocument() {
-    let data: any = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value, action: 'DF'};
+    let data: any = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value, action: 'DR'};
     this.documentService.approveDocument(data).subscribe((data: any[]) => {
       this.noticeService.show("Documento rechazado correctamente.", "success");
       this.router.navigate(['/document']);
@@ -79,12 +90,11 @@ export class DocumentShowComponent implements OnInit {
     if(! document || (document && ! document.traceabilities)) {
       return [];
     }
-    return document.traceabilities.map((item: any) => { return item.observation; })
-      .filter((item: any) => item && item != '' && item != undefined && item != null);
+    return document.traceabilities.map((item: any) => { return item.observation; });
   }
 
   isEnded(document: DocumentModel): boolean {
-    return document && document.documentState == this.documentStatusEnded ? true : false;
+    return document && (document.documentState == this.documentStatusEnded || document.documentState == this.documentStatusRejected) ? true : false;
   }
 
   setStatus(target: any) {

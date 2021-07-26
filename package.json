@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "build": "ng build --watch --deploy-url /aprobacion/ --base-href /aprobacion/ --configuration=production",
+    "build-dev": "ng build --watch --deploy-url /aprobacion/ --base-href /aprobacion/ --configuration=development",
     "test": "ng test"
   },
   "private": true,
