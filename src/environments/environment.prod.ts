@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiEndpointUrl: 'localhost:9000/',
+  apiEndpointUrl: '192.168.120.57:9000/',
   apiEndpointProtocol: 'http'
 };

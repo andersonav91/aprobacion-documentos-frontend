@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { DocumentModel } from "../../../model/document";
@@ -7,6 +7,8 @@ import { UserModel } from "../../../model/user";
 import { AuthService } from "../../../service/auth.service";
 import { DocumentTypeService } from "../../../service/document-type.service";
 import { DocumentTypeModel } from "../../../model/document-type";
+import { FormControl } from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-document-list',
@@ -15,9 +17,14 @@ import { DocumentTypeModel } from "../../../model/document-type";
 })
 export class DocumentListComponent implements OnInit {
 
-  @ViewChild(MatPaginator, {read: true}) paginator: MatPaginator;
+  today = new Date();
+  serializedDateEnd = new FormControl((this.today).toISOString().slice(0, 10))
+  serializedDateStart = new FormControl((this.today).toISOString().slice(0, 10))
 
-  public displayedColumns: string[] = ['position', 'id', 'date', 'name', 'path', 'documentState'];
+  @ViewChild(MatPaginator, {read: true}) paginator: MatPaginator;
+  @ViewChild('identificador') identificador: ElementRef;
+
+  public displayedColumns: string[] = ['position', 'id', 'date', 'name', 'documentState', 'tipoDocumental'];
   public dataSource: MatTableDataSource<DocumentModel>;
   public currentUser: UserModel;
   public totalRows: number = 0;
@@ -52,13 +59,17 @@ export class DocumentListComponent implements OnInit {
   }
 
   getData() {
-    this.documentService.listDocuments(this.currentUser.id!, this.offset, this.limit, this.filter, this.status).subscribe((data: any) => {
+    this.documentService.listDocuments(this.currentUser.id!, this.offset, this.limit, this.filter, this.status,moment(this.serializedDateStart.value).format('YYYY-MM-DD'), moment(this.serializedDateEnd.value).format('YYYY-MM-DD'),this.identificador.nativeElement.value).subscribe((data: any) => {
       this.dataSource = new MatTableDataSource(
         data.documents.map((item: any) => Object.assign(new DocumentModel(), item))
       );
       this.totalRows = data.totalItems;
       this.dataSource.paginator = this.paginator;
     });
+  }
+
+  consultar(){
+    this.getData();
   }
 
   pageChanged(event: any){
@@ -76,5 +87,7 @@ export class DocumentListComponent implements OnInit {
     this.status = target.value;
     this.getData();
   }
+
+
 
 }

@@ -23,6 +23,7 @@ export class DocumentTypeListComponent implements OnInit {
     private documentTypeService: DocumentTypeService,
     public dialog: MatDialog
   ) {
+    this.refreshList();
     this.documentTypeService.listDocumentTypes().subscribe((data: any[]) => {
       this.dataSource = new MatTableDataSource(
         data.map(item => Object.assign(new DocumentTypeModel(), item))
@@ -36,11 +37,23 @@ export class DocumentTypeListComponent implements OnInit {
 
   }
 
+  refreshList(): void {
+    this.documentTypeService.listDocumentTypes().subscribe((data: any[]) => {
+      this.dataSource = new MatTableDataSource(
+        data.map(item => Object.assign(new DocumentTypeModel(), item)))
+      }
+      );
+    }
+
   openDeleteDialog(row: DocumentTypeModel): void {
     const dialogRef = this.dialog.open(DocumentTypeDeleteDialogComponent, {
       width: '250px',
       data: {row: row}
     });
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(()=>{
+        this.refreshList();
+      }, 1000);
+    });
   }
-
 }

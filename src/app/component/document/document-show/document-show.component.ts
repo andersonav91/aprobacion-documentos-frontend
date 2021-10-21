@@ -110,7 +110,7 @@ export class DocumentShowComponent implements OnInit {
         case 'AP':
           this.approveDocument();
           break;
-        case 'DF':
+        case 'DR':
           this.denyDocument();
           break;
         case 'DV':

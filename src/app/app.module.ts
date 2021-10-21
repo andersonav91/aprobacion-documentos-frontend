@@ -47,6 +47,8 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
 import { MatDialogModule } from "@angular/material/dialog";
 
+import { MatNativeDateModule } from '@angular/material/core';
+
 // Components
 import { AppComponent } from "./component/app/app.component";
 import { LoginComponent } from "./component/login/login.component";
@@ -115,7 +117,8 @@ const materialModules = [
   MatDatepickerModule,
   MatTooltipModule,
   DragDropModule,
-  MatDialogModule
+  MatDialogModule,
+  MatNativeDateModule
 ];
 
 export function tokenGetter() {

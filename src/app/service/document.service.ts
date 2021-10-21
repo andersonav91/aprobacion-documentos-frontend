@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { ParentService } from "./parent.service";
 import { NoticeService } from "./notice.service";
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,10 +19,10 @@ export class DocumentService extends ParentService {
   /**
    * Constructs a `GET` request that obtains the full list of documents by the user id.
    */
-  listDocuments(userId: number, offset: number, limit: number, documentTypeId: number, documentState: string): any {
+  listDocuments(userId: number, offset: number, limit: number, documentTypeId: number, documentState: string, dateStart: string, dateEnd:string, identifacion:String): any {
     return documentTypeId == 0 || documentTypeId === null ?
-      this.getMethod('documents/' + userId + '?page=' + (offset) + '&size=' + limit + '&state=' + documentState) :
-      this.getMethod('documents/' + userId + '?page=' + (offset) + '&size=' + limit + '&documentType=' + documentTypeId + '&state=' + documentState);
+      this.getMethod('documents/' + userId + '?page=' + (offset) + '&size=' + limit + '&state=' + documentState + '&startDate=' + dateStart + '&endDate=' + dateEnd+'&idDocument='+identifacion) :
+      this.getMethod('documents/' + userId + '?page=' + (offset) + '&size=' + limit + '&documentType=' + documentTypeId + '&state=' + documentState+ '&startDate=' + dateStart + '&endDate=' + dateEnd+'&idDocument='+identifacion);
   }
 
   /**

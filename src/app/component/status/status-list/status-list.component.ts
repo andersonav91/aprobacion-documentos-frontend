@@ -23,6 +23,7 @@ export class StatusListComponent implements OnInit {
     private statusService: StatusService,
     public dialog: MatDialog
   ) {
+    this.refreshList();
     this.statusService.listStatuses().subscribe((data: any[]) => {
       this.dataSource = new MatTableDataSource(
         data.map(item => Object.assign(new StatusModel(), item))
@@ -36,10 +37,22 @@ export class StatusListComponent implements OnInit {
 
   }
 
+  refreshList(): void {
+    this.statusService.listStatuses().subscribe((data: any[]) => {
+      this.dataSource = new MatTableDataSource(
+        data.map(item => Object.assign(new StatusModel(), item)))
+      });
+    }
+
   openDeleteDialog(row: StatusModel): void {
     const dialogRef = this.dialog.open(StatusDeleteDialogComponent, {
       width: '250px',
       data: {row: row}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(()=>{
+        this.refreshList();
+      }, 1000);
     });
   }
 

@@ -38,8 +38,11 @@ export class LoginComponent implements OnInit {
 
   sendLoginForm() {
     this.authService.login({
-      username: this.f.username.value,
-      password: this.f.password.value,
+      codigoCatalogo: 'TIPO_RELACION',
+      pais: '57',
+      departamento:null,
+      tipoPersona:null,
+      subCodigoParametro:null
     });
   }
 
