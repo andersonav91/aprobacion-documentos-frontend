@@ -49,10 +49,13 @@ export class DocumentListComponent implements OnInit {
       }
 
     });
+
     this.documentTypeService.listDocumentTypes().subscribe((data: any[]) => {
       this.documentTypes = data.map(item => Object.assign(new DocumentTypeModel(), item));
       this.getData();
     });
+
+    this.authService.getUsers();
   }
 
   ngOnInit(): void {

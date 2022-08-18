@@ -16,11 +16,11 @@ export class TokenHttpInterceptor implements HttpInterceptor {
     let ls = new SecureLS({});
     // Clone the request to add the new header
     var clonedRequest = null;
-    if(ls.getAllKeys().indexOf('token') != -1){
+    /*if(ls.getAllKeys().indexOf('token') != -1){
       clonedRequest = req.clone({ headers: req.headers.append('Authorization', 'Bearer ' + ls.get('token')) });
-    } else {
+    } else {*/
       clonedRequest = req.clone();
-    }
+   // }
 
     // Pass the cloned request instead of the original request to the next handle
     return next.handle(clonedRequest);

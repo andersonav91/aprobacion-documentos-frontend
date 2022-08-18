@@ -135,7 +135,7 @@
 
     <mat-card-content>
       <mat-form-field class="form-element">
-        <input matInput placeholder="Email" formControlName="email" formControlName="email">
+        <input matInput placeholder="Email" formControlName="email" formControlName="email" type="email">
         <mat-error *ngIf="f.email.touched && f.email.invalid">Email es requerido y debe tener un formato válido.</mat-error>
       </mat-form-field>
     </mat-card-content>
@@ -154,14 +154,14 @@
       </mat-form-field>
     </mat-card-content>
 
-    <mat-card-content>
+    <mat-card-content *ngIf="f.role.value == '3'">
       <mat-form-field class="form-element">
         <input matInput placeholder="Contraseña" formControlName="password" type="password">
         <mat-error *ngIf="f.password.touched && f.password.invalid">Contraseña es requerido.</mat-error>
       </mat-form-field>
     </mat-card-content>
 
-    <mat-card-content>
+    <mat-card-content *ngIf="f.role.value == '3'">
       <mat-form-field class="form-element">
         <input matInput placeholder="Repetición Contraseña" formControlName="passwordRepeat" type="password">
         <mat-error *ngIf="f.passwordRepeat.touched && f.passwordRepeat.invalid && (f.passwordRepeat.errors && !f.passwordRepeat.errors.confirmedValidator)">Repetición Contraseña es requerido.</mat-error>
@@ -172,7 +172,7 @@
     <mat-card-content *ngIf="(authService.currentUser | async)?.hasValidRole(['admin'])">
       <mat-form-field appearance="fill" class="form-element">
         <mat-label>Rol</mat-label>
-        <select matNativeControl required formControlName="role" >
+        <select matNativeControl required formControlName="role" (change)="changeRole($event)">
           <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</option>
         </select>
       </mat-form-field>

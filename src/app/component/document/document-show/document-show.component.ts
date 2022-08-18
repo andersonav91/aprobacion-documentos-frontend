@@ -6,6 +6,8 @@ import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { DocumentModel } from "../../../model/document";
 import { NoticeService } from "../../../service/notice.service";
 import { environment } from "../../../../environments/environment";
+import { FlowModel } from 'src/app/model/flow';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-document-show',
@@ -22,10 +24,13 @@ export class DocumentShowComponent implements OnInit {
   public currentUser: UserModel;
   public id: number = 0;
   public userId: number = 0;
+  public userApproverId: number = 0;
   public observations: string[] = [];
   public pdfViewerUrl: string = environment.apiEndpointProtocol + "://" +
     environment.apiEndpointUrl + 'documents/view-documents/';
   public priorityStatus: number = 0;
+  public assignedUser: UserModel;
+  public users: UserModel[];
 
   @ViewChild('observation') observation: ElementRef;
 
@@ -34,7 +39,8 @@ export class DocumentShowComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     public noticeService: NoticeService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {
     this.authService.currentUser.subscribe((user: UserModel) => {
       this.currentUser = user;
@@ -45,9 +51,14 @@ export class DocumentShowComponent implements OnInit {
       this.pdfViewerUrl = this.pdfViewerUrl + this.id.toString();
       this.documentService.getDocument(this.currentUser.id, this.id).subscribe((data: any[]) => {
         this.currentDocument = Object.assign(new DocumentModel(), data);
+        this.assignedUser = this.currentDocument.user;
         this.observations = this.getObservations(this.currentDocument);
         this.validateStatus(this.currentDocument);
       });
+    });
+
+    this.userService.getUsersApprovers().subscribe((data: any[]) => {
+      this.users = data.map(user => Object.assign(new UserModel(), user));
     });
   }
 
@@ -63,7 +74,12 @@ export class DocumentShowComponent implements OnInit {
   }
 
   approveDocument() {
-    let data: any = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value, action: 'AP'};
+    let data:any;
+    if(this.userApproverId != 0){
+      data = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value, action: 'AP', idUserApprover:this.userApproverId};  
+    } else {
+      data = { idUser: this.userId, idDocument: this.id, observation: this.observation.nativeElement.value, action: 'AP'};
+    }
     this.documentService.approveDocument(data).subscribe((data: any[]) => {
       this.noticeService.show("Documento aprobado correctamente.", "success");
       this.router.navigate(['/document']);
@@ -99,6 +115,10 @@ export class DocumentShowComponent implements OnInit {
 
   setStatus(target: any) {
     this.status = target.value;
+  }
+
+  setUserApprover(target:any){
+    this.userApproverId = target.value;
   }
 
   manageDocument() {

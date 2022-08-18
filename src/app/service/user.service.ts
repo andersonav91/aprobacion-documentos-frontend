@@ -3,15 +3,23 @@ import { HttpClient } from "@angular/common/http";
 import { ParentService } from "./parent.service";
 import { NoticeService } from "./notice.service";
 import { UserModel } from "../model/user";
+import { AuthCodeMSALBrowserAuthenticationProvider } from '@microsoft/microsoft-graph-client/authProviders/authCodeMsalBrowser';
+import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
+import { MsalService } from '@azure/msal-angular';
+import { OAuthSettings } from '../model/oauth';
+import * as MicrosoftGraph from '@microsoft/microsoft-graph-types';
+import { Client } from '@microsoft/microsoft-graph-client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService extends ParentService {
+  public graphClient?: Client;
 
   constructor(
     public httpClient: HttpClient,
-    public noticeService: NoticeService
+    public noticeService: NoticeService,
+    private msalService: MsalService
   ) {
     super(httpClient, noticeService);
   }
@@ -63,5 +71,34 @@ export class UserService extends ParentService {
    */
   getAssignedUsersByDocument(idDocument: number): any {
     return this.getMethod('documents/' + idDocument.toString() + '/users');
+  }
+
+  async getUserOffice365(email:String):Promise<boolean>{
+    // Create an authentication provider for the current user
+    const authProvider = new AuthCodeMSALBrowserAuthenticationProvider(
+      this.msalService.instance as PublicClientApplication,
+      {
+        account: this.msalService.instance.getActiveAccount()!,
+        scopes: OAuthSettings.scopes,
+        interactionType: InteractionType.Popup
+      }
+    );
+  
+    this.graphClient = Client.initWithMiddleware({
+      authProvider: authProvider
+    });
+    const graphUser: MicrosoftGraph.User = await this.graphClient
+      .api('/users')
+      .select('displayName,mail,userPrincipalName')
+      .filter('endswith(mail,a@contoso.com)')
+      .get(); 
+    return graphUser ? true : false;
+  }
+
+  /**
+   * Constructs a `GET` request that obtain the data for a user.
+   */
+   getUsersApprovers(): any {
+    return this.getMethod('roles/APROBADOR/users');
   }
 }

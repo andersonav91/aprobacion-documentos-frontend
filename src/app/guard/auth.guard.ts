@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
 
     let roles = route.data.roles as Array<string>;
 
-    if (! this.authService.isAuthenticated()) {
+    if (!this.authService.authenticated) {
       this.router.navigate(['login']);
       return false;
     }
@@ -34,6 +34,10 @@ export class AuthGuard implements CanActivate {
       this.router.navigate(['']);
       return false;
     }
+  }
+
+  get authenticated(): boolean {
+    return this.authService.authenticated;
   }
 
 }

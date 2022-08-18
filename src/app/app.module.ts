@@ -81,6 +81,32 @@ import { TokenHttpInterceptor } from "./interceptor/token.http.interceptor";
 import { AuthGuard } from "./guard/auth.guard";
 import { DocumentTypeDeleteDialogComponent } from './component/document-type/document-type-delete-dialog/document-type-delete-dialog.component';
 
+//Office 365 Graph
+import { IPublicClientApplication,
+         PublicClientApplication,
+         BrowserCacheLocation } from '@azure/msal-browser';
+import { MsalModule,
+         MsalService,
+         MSAL_INSTANCE } from '@azure/msal-angular';
+import { OAuthSettings } from '../app/model/oauth';
+
+let msalInstance: IPublicClientApplication | undefined = undefined;
+
+export function MSALInstanceFactory(): IPublicClientApplication {
+  msalInstance = msalInstance ?? new PublicClientApplication({
+    auth: {
+      clientId: OAuthSettings.appId,
+      redirectUri: OAuthSettings.redirectUri,
+      postLogoutRedirectUri: OAuthSettings.redirectUri
+    },
+    cache: {
+      cacheLocation: BrowserCacheLocation.LocalStorage,
+    }
+  });
+
+  return msalInstance;
+}
+
 let ls = new SecureLS({});
 
 const materialModules = [
@@ -166,6 +192,7 @@ export function tokenGetter() {
     }),
     PdfJsViewerModule,
     ...materialModules,
+    MsalModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
@@ -175,7 +202,12 @@ export function tokenGetter() {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenHttpInterceptor,
     multi: true
-  }, AuthGuard],
+  }, AuthGuard,
+  {
+    provide: MSAL_INSTANCE,
+    useFactory: MSALInstanceFactory
+  },
+  MsalService],
   bootstrap: [AppComponent],
   exports: [
     ...materialModules

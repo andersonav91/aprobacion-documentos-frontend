@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "../../service/auth.service";
 import { Router } from "@angular/router";
 import { NoticeService } from "../../service/notice.service";
+import { User365 } from 'src/app/model/user365';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,9 @@ import { NoticeService } from "../../service/notice.service";
 export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
+
+  authenticated: boolean = false;
+  user?: User365 = undefined;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,13 +41,11 @@ export class LoginComponent implements OnInit {
   }
 
   sendLoginForm() {
-    this.authService.login({
-      codigoCatalogo: 'TIPO_RELACION',
-      pais: '57',
-      departamento:null,
-      tipoPersona:null,
-      subCodigoParametro:null
-    });
+    this.authService.signIn();
+    /*this.authService.login({
+      username: this.f.username.value,
+      password: this.f.password.value,
+    });*/
   }
 
   get f(){

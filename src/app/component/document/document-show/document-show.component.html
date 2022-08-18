@@ -30,6 +30,14 @@
       </select>
     </mat-form-field>
 
+    <mat-form-field *ngIf="this.currentUser.hasValidRole(['digitalizacion']) && !isEnded(currentDocument)" appearance="fill" class="form-element">
+      <mat-label>Usuario aprobador</mat-label>
+      <select matNativeControl (change)="setUserApprover($event.target)">
+        <option value=""></option>
+        <option *ngFor="let user of users" value="{{user.id}}">{{user.name}}</option>
+      </select>
+    </mat-form-field>
+
     <div class="form-element" *ngIf="! isEnded(currentDocument)">
       <button mat-raised-button color="accent" type="button" (click)="manageDocument()" class="button">Gestionar Documento</button>
       <button mat-raised-button type="button" class="button cancel-button" (click)="cancel()">Cancelar</button>

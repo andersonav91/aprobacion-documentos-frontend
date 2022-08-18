@@ -25,6 +25,8 @@ export class UserFormComponent implements OnInit {
   public roles: RoleModel[];
   public currentUser: UserModel;
 
+  public tmpForm: FormGroup;
+
   @Input() isNew: boolean;
   @Input() model: UserModel;
   @Input() eventModel: Observable<UserModel> = new Observable();
@@ -99,6 +101,7 @@ export class UserFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.userForm = this.createUserForm();
     this.passwordForm = this.createPasswordForm();
     this.roleService.listRoles().subscribe((data: any[]) => {
@@ -145,10 +148,10 @@ export class UserFormComponent implements OnInit {
     });
 
 
-    if(this.isNew) {
+    /*if(this.isNew) {
       this.userForm.addControl('password', new FormControl('', Validators.required));
       this.userForm.addControl('passwordRepeat', new FormControl('', Validators.required));
-    }
+    }*/
 
     this.userForm.addControl('statuses', this.statusCtrl);
 
@@ -159,22 +162,17 @@ export class UserFormComponent implements OnInit {
   }
 
   createUserForm() {
-
-    let tmpForm: FormGroup = null;
-
     if(this.isNew) {
-      tmpForm = this.formBuilder.group({
+      this.tmpForm = this.formBuilder.group({
         name: ['', Validators.required],
-        email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+        email: ['', [Validators.required, Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$")]],
         username: ['', Validators.required],
         phone: ['', Validators.required],
         role: ['', Validators.required],
-        password: ['', Validators.required],
-        passwordRepeat: ['', Validators.required],
         active: [true, Validators.required],
-      }, { validators: MatchValidator('password', 'passwordRepeat') });
+      });
     } else {
-      tmpForm = this.formBuilder.group({
+      this.tmpForm = this.formBuilder.group({
         name: ['', Validators.required],
         email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
         username: ['', Validators.required],
@@ -184,7 +182,7 @@ export class UserFormComponent implements OnInit {
       });
     }
 
-    return tmpForm;
+    return this.tmpForm;
   }
 
   createPasswordForm() {
@@ -236,4 +234,13 @@ export class UserFormComponent implements OnInit {
     return password === passwordRepeat ? null : { notSame: true }
   }
 
+  changeRole(event:any){
+    if(event.target.value == 3){
+      this.userForm.addControl('password', new FormControl('', Validators.required));
+      this.userForm.addControl('passwordRepeat', new FormControl('', Validators.required));
+    }else{
+      this.userForm.removeControl('password');
+      this.userForm.removeControl('passwordRepeat');
+    }
+  }
 }

@@ -1,4 +1,5 @@
 import { FlowModel } from "./flow";
+import { UserModel } from "./user";
 
 export class DocumentModel {
   id?: number = 0;
@@ -10,6 +11,7 @@ export class DocumentModel {
   traceabilities?: any[];
   documentState?: string = '';
   flow?: FlowModel;
+  user?: UserModel;
 
   constructor() {
   }
